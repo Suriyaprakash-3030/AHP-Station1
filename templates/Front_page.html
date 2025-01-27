@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHP STATION1</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-grow: 1;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .button-box {
+      width: 150px;
+      height: 150px;
+      background-color: #008CBA;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-box:hover {
+      transform: scale(1.1);
+      background-color: #005f73;
+    }
+
+
+   
+	.logo {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 200px;
+        }
+  </style>
+</head>
+<body>
+  <header>
+    AHP STATION1
+  </header>
+
+  <div class="button-container">
+    <a href="Line_Rejection" class="button-box">Line Rejection</a>
+    <a href="Linesetup" class="button-box">Line Setup</a>
+    <a href="Maintainance" class="button-box">Secondary Level Maintainance</a>
+    <a href="Poka_yoke" class="button-box">POKA-YOKE</a>
+    <a href="Tool_Monitoring" class="button-box">Tool_Monitoring</a>
+  </div>
+
+  <footer>
+    <img src="static/images/pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo">
+  </footer>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1.0">
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+<!-- DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<title>Report For AHP</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    width: 1280px;
+    height: 800px;
+    overflow: auto;
+  }
+  .container {
+    width: 100%;
+    min-height: 800px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+  .header {
+    background: linear-gradient;
+    font-family:Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00a65a;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    position: relative;
+  }
+  .header .title {
+    flex: 1;        
+    text-align: center;
+  }
+  .header .title h1 {
+    color: #black;
+    margin: 0;
+  }
+  .header .title h2, .header .title h3 {
+    margin: 5px 0;
+    color: #black;
+    font-weight: normal
+  }
+  .header .logo {
+    position: absolute;
+    top:20px;
+    left: 10px;
+    width: 200px;
+    height :100px;
+  }
+  .sidenav {
+    height: calc(90% - 140px);
+    width: 230px;
+    position: fixed;
+    z-index: 1;
+    top: 160px;
+    left: 0;
+    background-color:#a9e8e6;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  .sidenav a {
+    padding: 50px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #050505;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 10px;
+  }
+  #content {
+    margin: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+ /* Container for the table */
+.table-container {
+  width: 100%; /* Full width of parent container */
+  max-height: 500px; /* Limit height, adjust as needed */
+  overflow-x: auto; /* Horizontal scrolling */
+  overflow-y: auto; /* Vertical scrolling */
+  border: 1px solid #ccc; /* Optional: Add a border around the table */
+  margin: 20px 0; /* Space above and below */
+  padding: 10px; /* Optional: Add padding inside the box */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visuals */
+  border-radius: 5px; /* Optional: Rounded corners */
+  background: #fff; /* Optional: Background color */
+}
+
+/* Styling for the table */
+table {
+  width: 100%; /* Ensure the table takes full width of the container */
+  border-collapse: collapse; /* Collapse table borders */
+}
+
+table th, table td {
+  border: 1px solid #ddd; /* Add borders to table cells */
+  padding: 8px; /* Padding inside cells */
+  text-align: left; /* Align text to the left */
+}
+
+table th {
+  background-color: #f4f4f4; /* Light background for headers */
+  font-weight: bold; /* Bold headers */
+}
+
+  .vl1 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 200px;
+			margin-left: -3px;
+			top: 0;
+			}
+			.header .doc-info {
+			color: #black;
+            position: absolute;
+            right: 10px;
+            text-align: left;			
+            font-size: 0.9em;
+           
+        }
+        .header .logo {
+            position: absolute;
+            left: 10px;
+            width: 200px;
+			height :100px;
+        }
+		.vl1 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 200px;
+			margin-left: -3px;
+			top: 0;
+			}
+			.vl2 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 1050px;
+			margin-left: -3px;
+			top: 0;
+			}
+</style>
+</head>
+<body>
+<div class="date-time" id="date-time"></div>
+<script>
+    const dateTimeElement = document.getElementById('date-time');
+    setInterval(() => {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: false 
+        };
+        dateTimeElement.textContent = now.toLocaleString('en-GB', options); // 'en-GB' for 24-hour format
+    }, 1000);
+</script>
+    <div class="container">
+        <header class="header">
+		<a href="\">
+		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
+		  <div class="vl1"></div>
+		  <div class="vl2"></div>
+            <div class="doc-info"></div>
+            <div class="title">
+                <h1>Table & Data Analytics</h1>
+                <h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
+            </div>
+        </header>
+		
+<div id="mySidenav" class="sidenav">
+
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+  <a href="javascript:void(0)" onclick="loadExcelData('Line_Rejection');Line_Rejection();">Line_Rejection</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('Line_Setup');Line_Setup(); ">Line_Setup</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('POKA-YOKE'); P_Y();">POKA-YOKE</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('Maintainance'); Maintainance();">Maintainance</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>
+<div id="content"></div>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  setTimeout(closeNav, 6000);
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+function loadExcelData(fileName) {
+  closeNav(); // Call closeNav function (ensure this function exists and is defined elsewhere)
+  
+  fetch(`/get_excel_data/${fileName}`) // Fetch data from the endpoint
+    .then(response => response.json()) // Parse the response as JSON
+    .then(data => {
+      if (data.table_html) {
+        document.getElementById("content").innerHTML = `
+          <div class="table-container">
+            ${data.table_html}
+          </div>`;
+      } else {
+        document.getElementById("content").innerHTML = `<p>Error: ${data.error}</p>`;
+      }
+    })
+    .catch(error => {
+      document.getElementById("content").innerHTML = `<p>Error: ${error}</p>`;
+    });
+}
+
+
+function Line_Rejection() {
+      const headerTitle1 = document.querySelector('.title h1');
+      const headerSubtitle1 = document.querySelector('.title h2');
+      const headerProduct1 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle1.textContent = "Line Rejection Datasheet";
+      headerSubtitle1.textContent = "1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly";
+      headerProduct1.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	    // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+    <p>Doc.No.: PBA/QC/R/06</p>
+                <p>Original Date: 30-10-2019</p>
+                <p>Rev.No.: </p>
+                <p>Rev.Date: </p>
+  `;
+    }
+	function Line_Setup() {
+      const headerTitle2 = document.querySelector('.title h1');
+      const headerSubtitle2 = document.querySelector('.title h2');
+      const headerProduct2 = document.querySelector('.title h3');	  
+	  
+      
+      // Update content
+	  
+      headerTitle2.textContent = "Set Up Approval & Inprocess Inspection Report";
+      headerSubtitle2.textContent = "1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly";
+      headerProduct2.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+    <p>Doc.No.: PBA/QC/R/06</p>
+                <p>Original Date: 30-10-2019</p>
+                <p>Rev.No.: </p>
+                <p>Rev.Date: </p>
+  `;
+	  
+    }
+	function P_Y() {
+      const headerTitle3 = document.querySelector('.title h1');
+      const headerSubtitle3 = document.querySelector('.title h2');
+      const headerProduct3 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle3.textContent = "POKA-YOKE Check Sheet";
+     headerSubtitle3.textContent = "1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly";
+      headerProduct3.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+<p>Doc.No.: PBA/QC/R/16</p>
+                
+                <p>Dated:30.10.2019</p>
+                <p>Rev.No&Date: 02/12.10.2023</p>
+  `;
+    }
+	function Tool_Monitoring() {
+      const headerTitle4 = document.querySelector('.title h1');
+      const headerSubtitle4 = document.querySelector('.title h2');
+      const headerProduct4 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle4.textContent = "Tool Life Monitoring Sheet";
+      headerSubtitle4.textContent = "1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly";
+      headerProduct4.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+     <p>Doc.No.: PBA/QC/R/11</p>
+                
+                <p>Original Date:30.10.2019</p>
+                <p>Rev.No&Date: 01/01.08.2020</p>
+  `;
+    }
+	function Maintainance() {
+      const headerTitle5 = document.querySelector('.title h1');
+      const headerSubtitle5 = document.querySelector('.title h2');
+      const headerProduct5 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle5.textContent = "Secondary Level Maintainance";
+     headerSubtitle5.textContent = "1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly";
+      headerProduct5.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+<p>Doc.No.: PBA/MTCE/R/02</p>
+                
+                <p>Rev.No.: 04</p>
+                <p>Rev.Date: 02.12.2023</p>
+  `;
+    }
+	
+</script>
+<style>
+   
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+        background-color: #ffffff; 
+    }
+</style>
+
+</body>
+</html>

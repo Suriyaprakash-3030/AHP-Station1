@@ -295,6 +295,22 @@
                 document.querySelectorAll('select').forEach(select => select.value = 'OK');
             });
         });
+		
+		function clearForm() {
+        document.getElementById("LR_1").value = "";
+		document.getElementById("LR_2").value = "";
+		document.getElementById("LR_3").value = "";
+		document.getElementById("LR_4").value = "";
+		document.getElementById("LR_5").value = "";
+		document.getElementById("LR_6").value = "";
+		document.getElementById("LR_7").value = "";
+		document.getElementById("LR_8").value = "";
+		document.getElementById("LR_9").value = "";
+		document.getElementById("LR_10").value = "";		        
+    }
+		
+		
+		
 		function Validate() {
 		const fields = [
         {
@@ -396,7 +412,7 @@
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                alert("Please select a date before saving!"); // Optional: Show an alert
+                
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -404,8 +420,9 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		if (isValid) {
-        showAlert(); // Call the function to display the success message
+		 
+	else if (!isValid) {
+        alert("Please give input before saving!");
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
@@ -416,13 +433,14 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
-		
+			return isValid;
 		
 		}
 		
     </script>
 </head>
 <body>
+<form method="post" action="/Line_Rejection" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -454,21 +472,22 @@
             </div>
             <div class="title">
                 <h1>Line Rejection Datasheet</h1>
-                <h2>1st station: Valve plate & clamping sleeve Assembly</h2>
-                <h3>Product No:2447.222.126</h3>
+                <h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
 
         <div class="content">
           <div class="calendar">
-                <h4 style="font-weight: normal;">Date:
-                    <input type="date" id="LR_calendar" />
+                <h4 style="font-weight: normal;">
+				<label for = "LR_calendar">Date:</label>
+                   <input for = "date" name="date" type="datetime-local" id="LR_calendar" />
                 </h4>
-                <h4 style="font-weight: normal;">Shift:
-                    <select>
-                        <option>SHIFT_1</option>
-                        <option>SHIFT_2</option>
-                        <option>SHIFT_3</option>
+                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+                    <select name = "shift">
+                        <option id="LR_S1" value="SHIFT1">SHIFT_1</option>
+                        <option id="LR_S2" value="SHIFT2">SHIFT_2</option>
+                        <option id="LR_S3" value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
             </div>
@@ -486,57 +505,57 @@
                     <tr>
                         <td>1</td>
                         <td>Threaded Ferrule Damage</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Threaded Ferrule Damage" id="LR_1" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>2</td>
                         <td>Threaded Ferrule Thread Damage</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Threaded Ferrule Thread Damage" id="LR_2" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3</td>
                         <td>Valve Plate Damage</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Valve Plate Damage" id="LR_3" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4</td>
                         <td>Spring short Length</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_4" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Spring short Length" id="LR_4" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
 					<tr>
                         <td>5</td>
                         <td>Filler Piece damage</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_5" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Filler Piece damage" id="LR_5" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
 					<tr>
                         <td>6</td>
                         <td>Clamping Sleeve Damage</td>
-                        <td><input type="text" name="valvePlateStatus1"  id="LR_6" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Clamping Sleeve Damage"  id="LR_6" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
 					<tr>
                         <td>7</td>
                         <td>Leakage Not ok(LN1)</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_7" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Leakage Not ok(LN1)" id="LR_7" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
 					<tr>
                         <td>8</td>
                         <td>Rust on clamping sleeve</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_8" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Rust on clamping sleeve" id="LR_8" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>9</td>
                         <td>Filler Piece missing</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_9" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Filler Piece missing" id="LR_9" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
 					<tr>
                         <td>10</td>
                         <td>Fallen Down Part  (FD1)</td>
-                        <td><input type="text" name="valvePlateStatus1" id="LR_10" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Fallen Down Part  (FD1)" id="LR_10" style="width: 80px; height: 20px;"></td>
                     </tr>
                     
                 </table>
@@ -548,16 +567,16 @@
             <footer class="footer">
               <div class="signatures">
 			  <div class="signature-box">
-        <label for="qa-sign">Remark</label>
-        <input type="text" id="LR_remark" class="remark-input">
+        <label for="remark">Remark:</label>
+        <input type="text" name ="remark"id="LR_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" id="LR_qa-sign" class="signature-input">
+        <input type="text" name="qa-sign" id="LR_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" id="LR_eng-sign" class="signature-input">
+        <input type="text" name = "eng-sign"id="LR_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
@@ -566,7 +585,7 @@
 					<span>✅ Success: Data Sved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
-                    <button class="clear">CLEAR</button>
+                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>
 
@@ -574,5 +593,6 @@
 
         
     </div>
+	</form>
 </body>
 </html>

@@ -304,7 +304,13 @@
             });
         });
 		
-		
+		function clearForm() {      
+		document.getElementById("PY_remark").value = "";
+		document.getElementById("PY_eng-sign").value = "";
+		document.getElementById("PY_qa-sign").value = "";
+		document.getElementById("PY_calendar").value = "";
+        
+    }
 		
 				function Validate() {
 				let isValid = true;
@@ -332,7 +338,7 @@
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                alert("Please select a date before saving!"); // Optional: Show an alert
+                
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -340,8 +346,8 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		if (isValid) {
-        showAlert(); // Call the function to display the success message
+		else if (!isValid) {
+        alert("Please give input before saving!");
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
@@ -352,11 +358,12 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
-				
+				return isValid;
 				}
     </script>
 </head>
 <body>
+<form method="post" action="/Poka_yoke" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -389,21 +396,22 @@
             </div>
             <div class="title">
                 <h1>POKA-YOKE Check Sheet</h1>  
-				<h2>STATION 1</h2>				
-                <h3>Frequency:Once a Day(Start of 1st Shift)</h3>
+				<h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
 
         <div class="content">
           <div class="calendar">
-                <h4 style="font-weight: normal;">Date:
-                    <input type="date" id="PY_calendar" />
+                <h4 style="font-weight: normal;">
+				<label for = "PY_calendar">Date:</label>
+                    <input for = "date" name="date" type="datetime-local" id="PY_calendar" />
                 </h4>
-                <h4 style="font-weight: normal;">Shift:
-                    <select>
-                        <option>SHIFT_1</option>
-                        <option>SHIFT_2</option>
-                        <option>SHIFT_3</option>
+                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+                    <select name = "shift">
+                        <option value="SHIFT1">SHIFT_1</option>
+                        <option value="SHIFT2">SHIFT_2</option>
+                        <option value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
             </div>
@@ -415,8 +423,8 @@
                 <table>
                     <tr>
                         <th>Sr.No</th>
-                        <th>Discription</th>
-                        <th>ERR.Discription</th>
+                        <th>Description</th>
+                        <th>ERR.Description</th>
 						<th>Status</th>
 						
                     </tr>
@@ -425,71 +433,71 @@
                         <td>Without Valve Plate</td>
 						<td>Cycle Will Not Start</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1A"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1B1</td>
-                        <td>Without Spring Assemblt</td>
+                        <td>Without Spring Assembly</td>
 						<td>ERR:Spring check Fail</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1B1"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1B2</td>
                         <td>Spring Length</td>
 						<td>ERR:Spring check Fail</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1B2"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1C1</td>
                        <td>Leakage Not Ok</td>
 						<td>ERR:LTM Result Not oK</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1C1"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1C2</td>
                        <td>Leakage OK Master</td>
 						<td><=300 cm3/min</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1C2"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1C3</td>
                        <td>Rejection Bin Photoelectric Sensor</td>
 						<td>Alarm Will Come</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1C3"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1D1</td>
                        <td>Filler Piece Wrong Orientation</td>
 						<td>Cycle Will Not Start</td>
 						
-                       <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                       <td><select name = "1D1"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1D2</td>
-                       <td>Without Clamping Sleave</td>
+                       <td>Without Clamping Sleeve</td>
 						<td>Cycle Will Not Start</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1D2"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>1D3</td>
                        <td>Without Filler Piece</td>
 						<td>Cycle Will Not Start</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1D3"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					
 					<tr>
                         <td>1A-1D</td>
-                       <td>Safty Light Curtain</td>
+                       <td>Safety Light Curtain</td>
 						<td>Cycle Will Stop</td>
 						
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "1A-1D"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
                     </tr>
 					
                 </table>
@@ -499,27 +507,27 @@
             </section>
 
             <footer class="footer">
-              <div class="signatures">
+             <div class="signatures">
 			  <div class="signature-box">
-        <label for="qa-sign">Remark</label>
-        <input type="text" id="PY_remark" class="remark-input">
+        <label for="remark">Remark:</label>
+        <input type="text" name ="remark"id="PY_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" id="PY_qa-sign" class="signature-input">
+        <input type="text" name="qa-sign" id="PY_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" id="PY_eng-sign" class="signature-input">
+        <input type="text" name = "eng-sign"id="PY_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
                     <button class="save" onclick="Validate()">SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Sved into Excel!</span>
+					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
-                    <button class="clear">CLEAR</button>
+                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>
 
@@ -527,6 +535,7 @@
 
         
     </div>
+	</form>
 </body>
 </html>
 

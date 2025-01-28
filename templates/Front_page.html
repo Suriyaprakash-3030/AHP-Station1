@@ -40,22 +40,53 @@
       text-decoration: none;
     }
 
-    .button-box {
-      width: 150px;
-      height: 150px;
-      background-color: #008CBA;
-      color: white;
+   .button-box {
+  width: 180px; /* Increased width to fit longer text */
+  height: 150px;
+  background-color: #008CBA;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center-align the text */
+  font-size: 16px; /* Adjusted font size */
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 10px; /* Added padding for better spacing */
+  word-wrap: break-word; /* Ensure text breaks into multiple lines */
+}
+
+  .button-container1 {
       display: flex;
       justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      align-items: 10px;
+      gap: 20px;
+      flex-grow: 1;
     }
+	
+.button-box1 {
+  width: 1100px; /* Increased width to fit longer text */
+  height: 50px;
+  background-color: #008CBA;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center-align the text */
+  font-size: 16px; /* Adjusted font size */
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 10px; /* Added padding for better spacing */
+  word-wrap: break-word; /* Ensure text breaks into multiple lines */
+}
 
     .button-box:hover {
       transform: scale(1.1);
@@ -83,8 +114,11 @@
     <a href="Maintainance" class="button-box">Secondary Level Maintainance</a>
     <a href="Poka_yoke" class="button-box">POKA-YOKE</a>
     <a href="Tool_Monitoring" class="button-box">Tool_Monitoring</a>
+	
   </div>
-
+ <div class="button-container1">
+ <a href="Report" class="button-box1">VIEW REPORT</a>
+  </div>
   <footer>
     <img src="static/images/pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo">
   </footer>

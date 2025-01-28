@@ -297,6 +297,22 @@
             });
         });
 		
+			function clearForm() {
+        document.getElementById("LS_4.1").value = "";
+		document.getElementById("LS_4.2").value = "";
+		document.getElementById("LS_5.1").value = "";
+		document.getElementById("LS_5.2").value = "";
+		document.getElementById("LS_6.1").value = "";
+		document.getElementById("LS_6.2").value = "";
+		document.getElementById("LS_7.1").value = "";		
+		document.getElementById("LS_7.2").value = "";				
+		document.getElementById("LS_remark").value = "";
+		document.getElementById("LS_qa-sign").value = "";
+		document.getElementById("LS_eng-sign").value = "";
+		document.getElementById("LS_calendar").value = "";
+        
+    }
+	
 		function Validate() {
 		const fields = [
         {
@@ -384,7 +400,7 @@
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                alert("Please select a date before saving!"); // Optional: Show an alert
+               
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -392,8 +408,8 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		if (isValid) {
-        showAlert(); // Call the function to display the success message
+else if (!isValid) {
+        alert("Please give input before saving!");
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
@@ -404,11 +420,13 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
+		return isValid;
 }
 
     </script>
 </head>
 <body>
+<form method="post" action="/Linesetup" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -441,20 +459,21 @@
             <div class="title">
                 <h1>Set Up Approval & Inprocess Inspection Report</h1>
                 <h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
-                <h3>Product Name: AL Hand Primer Assembly</h3>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
 
         <div class="content">
           <div class="calendar">
-                <h4 style="font-weight: normal;">Date:
-                    <input type="date" id="LS_calendar" />
+                <h4 style="font-weight: normal;">
+				<label for = "LS_calendar">Date:</label>
+                    <input type="datetime-local" name="date"  id="LS_calendar" />
                 </h4>
-                <h4 style="font-weight: normal;">Shift:
-                    <select>
-                        <option>SHIFT_1</option>
-                        <option>SHIFT_2</option>
-                        <option>SHIFT_3</option>
+                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+                    <select  name = "shift">
+                        <option value = "SHIFT_1">SHIFT_1</option>
+                        <option value = "SHIFT_2">SHIFT_2</option>
+                        <option value = "SHIFT_3">SHIFT_3</option>
                     </select>
                 </h4>
             </div>
@@ -477,16 +496,16 @@
                         <td>Vacuum pressure</td>
                         <td>0.95 - 1.50 bar</td>
                         <td>Digital Pressure Indicator</td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "VP_setup"><option>OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "VP_Re_Setup"><option>OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Leak Test pressure</td>
                         <td>1.0 + 0.2 bar</td>
                         <td>ATEQ unit</td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "LT_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "LT_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                 </table>
             </section>
@@ -507,81 +526,81 @@
                         <td>Assembly of valve plate into threaded ferrule</td>
                         <td>Presence and correct orientation of valve plate & Threaded Ferrule</td>
                         <td>Visual</td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Assembly of filler piece</td>
                         <td>Presence of filler piece</td>
                         <td>Visual</td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics2_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics2_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Assembly of Compression Spring into the threaded ferrule</td>
-                        <td>Presence of Compression Spring & Threaded ferrule assembly</td>
+                        <td>Presence of Compression Spring into Threaded ferrule assembly</td>
                         <td>Visual</td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics3_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics3_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Leakage Testing</td>
                         <td>&le; 300 cm³/min</td>
                         <td>Leakage Indicator</td>                
-						<td><input type="text" name="valvePlateStatus1" id = "LS_4.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="valvePlateStatus2" id = "LS_4.2" style="width: 80px; height: 20px;"></td>						
+						<td><input type="text" name="product-characteristics4_setup" id = "LS_4.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics4_Re_setup" id = "LS_4.2" style="width: 80px; height: 20px;"></td>						
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Depth ICL</td>
                         <td>1.3 - 0.3mm</td>
                         <td>Diameter Checking gauge</td>
-                        <td><input type="text" name="valvePlateStatus1" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="valvePlateStatus2" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics5_setup" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics5_Re_setup" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>6</td>
                         <td>Diameter ICL</td>
                         <td>7.25 +0.25mm</td>
                         <td>Diameter Checking gauge</td>
-                        <td><input type="text" name="valvePlateStatus1" id = "LS_6.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="valvePlateStatus2" id = "LS_6.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics6_setup" id = "LS_6.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics6_Re_setup" id = "LS_6.2" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>7</td>
                         <td>Leakage Ok Master</td>
                         <td> &le; 0 to 1 cm³/min</td>
                         <td>ATEQ unit & Display</td>
-                        <td><input type="text" name="valvePlateStatus1" id = "LS_7.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="valvePlateStatus2" id = "LS_7.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics7_setup" id = "LS_7.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics7_Re_setup" id = "LS_7.2" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>8</td>
-                        <td>Apperance</td>
-                        <td>Visual Deffct Not Allowed</td>
+                        <td>Appearance</td>
+                        <td>Visual Defect Not Allowed</td>
                         <td>Visual</td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                        <td><select><option>OK</option><option>NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics8_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics8_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                 </table>
             </section>
 
             <footer class="footer">
-              <div class="signatures">
-			   <div class="signature-box">
-        <label for="qa-sign">Remark</label>
-        <input type="text" id="LS_remark" class="remark-input">
+               <div class="signatures">
+			  <div class="signature-box">
+        <label for="remark">Remark:</label>
+        <input type="text" name ="remark"id="LS_remark" class="remark-input">
     </div>
     <div class="signature-box">
-        <label for="qa-sign">QA Sign:</label>
-        <input type="text" id="LS_qa-sign" class="signature-input">
+        <label for="qa-sign">Operator Sign:</label>
+        <input type="text" name="qa-sign" id="LS_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" id="LS_eng-sign" class="signature-input">
+        <input type="text" name = "eng-sign"id="LS_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
@@ -590,7 +609,7 @@
 					<span>✅ Success: Data Sved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
-                    <button class="clear">CLEAR</button>
+                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>
 
@@ -598,5 +617,6 @@
 
         
     </div>
+	</form>
 </body>
 </html>

@@ -262,6 +262,7 @@
             align-items: center;
             animation: fadeIn 0.5s ease-in-out;
         }
+		
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -281,6 +282,7 @@
             color: #155724;
             cursor: pointer;
         }
+		
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -305,6 +307,36 @@
                 document.querySelectorAll('select').forEach(select => select.value = 'OK');
             });
         });
+		
+		function clearForm() {
+        document.getElementById("TM_1T").value = "";
+		document.getElementById("TM_2T").value = "";
+		document.getElementById("TM_3T").value = "";
+		document.getElementById("TM_4T").value = "";
+		document.getElementById("TM_5T").value = "";
+		document.getElementById("TM_6T").value = "";
+		document.getElementById("TM_7T").value = "";
+		document.getElementById("TM_8T").value = "";
+		document.getElementById("TM_9T").value = "";
+		document.getElementById("TM_10T").value = "";
+		document.getElementById("TM_11T").value = "";
+		document.getElementById("TM_12T").value = "";
+		document.getElementById("TM_13T").value = "";
+		document.getElementById("TM_14T").value = "";
+		document.getElementById("TM_15T").value = "";
+		document.getElementById("TM_remark").value = "";
+		document.getElementById("TM_qa-sign").value = "";
+		document.getElementById("TM_eng-sign").value = "";
+		document.getElementById("TM_calendar").value = "";
+        
+    }
+		
+		
+		
+		
+		
+		
+		
 		
 		function Validate() {
 		const fields = [
@@ -427,7 +459,7 @@
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                alert("Please select a date before saving!"); // Optional: Show an alert
+                
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -435,8 +467,8 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		if (isValid) {
-        showAlert(); // Call the function to display the success message
+		else if (!isValid) {
+        alert("Please give input before saving!");
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
@@ -447,6 +479,8 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
+		
+		return isValid;
 }
 		
 		
@@ -454,6 +488,7 @@
     </script>
 </head>
 <body>
+<form method="post" action="/Tool_Monitoring" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -486,28 +521,29 @@
             </div>
             <div class="title">
                 <h1>Tool Life Monitoring Sheet</h1>  
-				<h2>HAND PRIMER</h2>				
-                <h3>Tool Life Monitoring sheet  (Threaded ferrule, Filler Piece and Clamping Sleeve Assembly))</h3>
+				<h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
 
         <div class="content">
           <div class="calendar">
-                <h4 style="font-weight: normal;">Date:
-                    <input type="date" id="TM_calendar" />
+                <h4 style="font-weight: normal;">
+				<label for = "TM_calendar">Date:</label>
+                    <input for = "date" name="date" type="datetime-local" id="TM_calendar" />
                 </h4>
                 <h4 style="font-weight: normal;">Shift:
-                    <select>
-                        <option>SHIFT_1</option>
-                        <option>SHIFT_2</option>
-                        <option>SHIFT_3</option>
+                    <select name = "shift">
+                        <option value="SHIFT1">SHIFT_1</option>
+                        <option value="SHIFT2">SHIFT_2</option>
+                        <option value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
             </div>
 			
 			
 
-            <section class="process-characteristics">
+            <section class="process-characteristics"> 
                 
                 <table>
                     <tr>
@@ -528,40 +564,40 @@
                 <td rowspan="3">Top Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_1T" style="width: 80px; height: 20px;"></td>
+                <td><select name="VPA_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="VPA_TF1_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_2T"style="width: 80px; height: 20px;"></td>
+                <td><select  name="VPA_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="VPA_TF2_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_3T"style="width: 80px; height: 20px;"></td>
+                <td><select name="VPA_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="VPA_TF3_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
 			 <td rowspan="3">2</td>
                 <td rowspan="3">Bottom Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_4T"style="width: 80px; height: 20px;"></td>
+                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="VPA_BF1_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1"id="TM_5T" style="width: 80px; height: 20px;"></td>
+                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="VPA_BF2_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1"id="TM_6T" style="width: 80px; height: 20px;"></td>
+                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="VPA_BF3_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td rowspan="3">3</td>
@@ -569,60 +605,60 @@
                 <td rowspan="3">Top Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1"id="TM_7T" style="width: 80px; height: 20px;"></td>
+                <td><select name="LTU_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_TF1_Tool_Life_cnt"id="TM_7T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1"id="TM_8T" style="width: 80px; height: 20px;"></td>
+                <td><select name="LTU_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_TF2_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_9T"style="width: 80px; height: 20px;"></td>
+                <td><select name="LTU_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_TF3_Tool_Life_cnt" id="TM_9T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
 			<td rowspan="3">4</td>
                 <td rowspan="4">Bottom Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_10T"style="width: 80px; height: 20px;"></td>
+                <td><select name="LTU_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_BF1_Tool_Life_cnt" id="TM_10T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_11T"style="width: 80px; height: 20px;"></td>
+                <td><select name="LTU_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_BF2_Tool_Life_cnt" id="TM_11T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_12T"style="width: 80px; height: 20px;"></td>
+                <td><select name="LTU_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_BF3_Tool_Life_cnt" id="TM_12T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
 			<td rowspan="3">5</td>
                 <td>Check PU Pad</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1"id="TM_13T" style="width: 80px; height: 20px;"></td>
+                <td><select  name="LTU_BF4_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LTU_BF4_Tool_Life_cnt"id="TM_13T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td rowspan="2">PU Pad</td>
                 <td>Check the Butting Face of the PU Pad</td>
                 <td>There should be no Face damage.</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1"id="TM_14T" style="width: 80px; height: 20px;"></td>
+                <td><select name="LPU_PU1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LPU_PU1_Tool_Life_cnt"id="TM_14T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check PU Pad Face wear out (Visual)</td>
                 <td>No usage of Wear out PU Pad</td>
-                <td><select><option>OK</option><option>NOT_OK</option></select></td>
-                <td><input type="text" name="valvePlateStatus1" id="TM_15T"style="width: 80px; height: 20px;"></td>
+                <td><select name="LPU_PU2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="text" name="LPU_PU2_Tool_Life_cnt" id="TM_15T"style="width: 80px; height: 20px;"></td>
             </tr>
         </tbody>
 					
@@ -635,16 +671,16 @@
             <footer class="footer">
               <div class="signatures">
 			  <div class="signature-box">
-        <label for="qa-sign">Remark</label>
-        <input type="text" id="TM_remark" class="remark-input">
+       <label for="remark">Remark:</label>
+        <input type="text" name ="remark"id="TM_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" id="TM_qa-sign" class="signature-input">
+        <input type="text" name="qa-sign" id="TM_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" id="TM_eng-sign" class="signature-input">
+        <input type="text" name = "eng-sign"id="TM_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
@@ -653,7 +689,8 @@
 					<span>✅ Success: Data Sved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
-                    <button class="clear">CLEAR</button>
+					
+                   <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>
 
@@ -661,6 +698,7 @@
 
         
     </div>
+	</form>
 </body>
 </html>
 

@@ -304,7 +304,18 @@
             });
         });
 		
-		
+		function clearForm() {
+        document.getElementById("4P7A").value = "";
+		document.getElementById("4P7C").value = "";
+		document.getElementById("4P7D").value = "";
+		document.getElementById("M_remark").value = "";
+		document.getElementById("M_qa-sign").value = "";
+		document.getElementById("M_eng-sign").value = "";
+		document.getElementById("M_calendar").value = "";
+        
+    }
+	
+	
 		function Validate() {
 		const fields = [
         {
@@ -327,20 +338,27 @@
 
     // Validate range-based fields
     fields.forEach(({ id, validate, errorMessage }) => {
-        const field = document.getElementById(id);
-        const value = parseFloat(field.value.trim());
+    const field = document.getElementById(id);
+    const value = field.value.trim();
 
-        if (isNaN(value) || !validate(value)) {
-			 isValid = false;
-            field.classList.remove('glow-green');
-            field.classList.add('glow-red');
-            field.title = errorMessage; // Set tooltip for error message
-        } else {
-            field.classList.remove('glow-red');
-            field.classList.add('glow-green');
-            field.title = ""; // Clear tooltip
-        }
-    });
+    if (value === "") {
+        // If the field is empty, set isValid to false and apply error styling
+        isValid = false;
+        field.classList.remove('glow-green');
+        field.classList.add('glow-red');
+        field.title = "This field cannot be empty"; // Tooltip for empty field
+    } else if (!validate(parseFloat(value))) {
+        // If validation fails but the field is not empty, apply error styling without affecting isValid
+        field.classList.remove('glow-green');
+        field.classList.add('glow-red');
+        field.title = errorMessage; // Tooltip for specific validation error
+    } else {
+        // If valid, apply success styling
+        field.classList.remove('glow-red');
+        field.classList.add('glow-green');
+        field.title = ""; // Clear tooltip
+    }
+});
 
     // Validate empty-only fields
     const emptyFields = ['M_remark', 'M_qa-sign', 'M_eng-sign'];
@@ -367,7 +385,7 @@
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                alert("Please select a date before saving!"); // Optional: Show an alert
+               // alert("Please select a date before saving!"); // Optional: Show an alert
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -375,12 +393,8 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		if (isValid) {
-        showAlert(); // Call the function to display the success message
-		
-	
-		
-		
+	else if (!isValid) {
+        alert("Please give input before saving!");
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
@@ -391,13 +405,17 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
+		
+		
+		
 		return isValid;
 }
 
     </script>
+	
 </head>
 <body>
-	<form method="post" action="/Maintainance" onsubmit="return Validate()">
+	<form method="post" action="/Maintainance" onsubmit="return Validate()" autocomplete="off">
     
     <div class="date-time" id="date-time"></div>
 <script>
@@ -431,9 +449,9 @@
                 <p>Rev.Date: 02.12.2023</p>
             </div>
             <div class="title">
-                <h1>Seconary Level Maintainance</h1>  
-				<h2>STATION 1</h2>				
-                <h3>Frequency:Once a Day(Start of 1st Shift)</h3>
+                <h1>Secondary Level Maintainance</h1>  
+				<h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
 
@@ -441,7 +459,7 @@
           <div class="calendar">
                 <h4 style="font-weight: normal;">
 				<label for = "M_calendar">Date:</label>
-                    <input for = "date" name="date" type="date" id="M_calendar" />
+                    <input for = "date" name="date" type="datetime-local" id="M_calendar" />
                 </h4>
                 <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
                     <select name = "shift">
@@ -476,7 +494,7 @@
                         <td>Leakage Test (Fixture Alignment)</td>
 						<td>Miss alignment not allowed</td>
 						<td>By Manual</td>
-                        <td><select><option id="4PAB" name ="Leakage Test (Fixture Alignment)" value="M_OK">OK</option><option id="4PAB" value="M_NOK">NOT_OK</option></select></td>
+                        <td><select name ="Leakage Test (Fixture Alignment)"><option id="4PAB"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
                         <td>4 P7 C</td>
@@ -520,10 +538,10 @@
                     <button class="save" type = "submit" id="saveButton" onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Sved into Excel!</span>
-					<button class="close-btn" onclick="closeAlert()">×</button>
+					
 					</div>
 
-                    <button class="clear">CLEAR</button>
+                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
 				
             </footer>

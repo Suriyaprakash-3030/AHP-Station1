@@ -1,0 +1,5 @@
+![Secondary_Level_Main](https://github.com/user-attachments/assets/b4506d7c-32a6-4e9e-b51f-82875206aadc)
+![Poka-yoke](https://github.com/user-attachments/assets/26990d0b-d128-4ed5-9d2c-4d08b09bd7c6)
+![Line_Rejection](https://github.com/user-attachments/assets/9073c942-ac83-475b-8047-8f2a6c6077d2)
+![Tool_Monitoring](https://github.com/user-attachments/assets/bd9afaa2-95db-4ea9-937d-9e6eb0ed90e0)
+![Setup_appro](https://github.com/user-attachments/assets/06ad9d43-9045-4d36-acf3-65f5b5e7889a)

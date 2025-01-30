@@ -30,7 +30,11 @@ def save_to_excel(app_name, data):
     
 @app.route("/")
 def index():
-    return render_template("Front_page.html")
+    return render_template("index.html")
+    
+@app.route("/Front_page")
+def Front_page():
+    return render_template("Front_page.html")    
     
 @app.route("/Line_Rejection")
 def Line_Rejection():

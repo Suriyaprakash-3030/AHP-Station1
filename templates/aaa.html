@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Monitoring System</title>
+    <style>
+        /* Body and overall styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Text animation styles */
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #008CBA;
+            text-align: center;
+            animation: fadeInOut 4s ease-in-out infinite, slideUp 2s ease-out forwards;
+        }
+
+        /* Animation for fading in and out */
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+
+        /* Slide-up animation effect */
+        @keyframes slideUp {
+            0% {
+                transform: translateY(50px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Background animation */
+        @keyframes backgroundAnimation {
+            0% {
+                background-color: #ff5733;
+            }
+            50% {
+                background-color: #33c1ff;
+            }
+            100% {
+                background-color: #f0f0f0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">Daily Monitoring System</div>
+
+</body>
+</html>

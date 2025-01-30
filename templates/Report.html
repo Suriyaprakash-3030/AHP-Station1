@@ -27,7 +27,7 @@
     let container = document.getElementById("charts_container");
     container.innerHTML = ""; // Clear existing charts before redrawing
 
-    let colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF', '#33FFF1', '#F1FF33', '#FF3333', '#33A1FF', '#B833FF'];
+    let colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF', '#33FFF1', '#000000', '#FF3333', '#33A1FF', '#B833FF'];
 
     // Loop through each column (starting from index 2 to 12)
     for (let colIndex = 2; colIndex < 13; colIndex++) {
@@ -77,7 +77,7 @@
         chartArea: { width: '70%', height: '70%' }
       };
 
-      let chart = new google.visualization.ScatterChart(chartDiv);
+      let chart = new google.visualization.LineChart(chartDiv);
       chart.draw(data, options);
     }
   }
@@ -317,7 +317,7 @@ table th {
 </script>
     <div class="container">
         <header class="header">
-		<a href="\">
+		<a href="\Front_page">
 		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>

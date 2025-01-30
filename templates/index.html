@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Kaushan Script' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Kelly Slab' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Long Cang' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>Line_Rejection</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            width: 1280px;
+            height: 800px;
+            overflow: auto;
+        }
+        .container {
+            width: 100%;
+            min-height: 800px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+       .header {
+		 background: linear-gradient;
+			font-family:Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00a65a;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            position: relative;
+        }
+        .header .title {
+            text-align: center;
+            flex: 1;
+        }
+        .header .title h1 {
+            color: #black;
+            margin: 0;
+        }
+        .header .title h2, .header .title h3 {
+            margin: 5px 0;
+			color: #black;
+			font-weight: normal
+        }
+        .header .doc-info {
+			color: #black;
+            position: absolute;
+            right: 10px;
+            text-align: left;			
+            font-size: 0.9em;
+           
+        }
+        .header .logo {
+            position: absolute;
+            left: 10px;
+            width: 220px;
+			height :110px;
+			
+        }
+		.vl1 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 200px;
+			margin-left: -3px;
+			top: 0;
+			}
+			.vl2 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 1050px;
+			margin-left: -3px;
+			top: 0;
+			}
+        .date-time {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1em;
+            color: #333;
+        }
+        .calendar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            text-align: left;
+            border: 2px solid #000;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .calendar h4 {
+            margin: 0;
+        }
+		.shift {
+           
+            text-align: right;            
+                                    
+        }
+        .process-characteristics, .product-characteristics {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        table th {
+            background-color: #00a65a;
+            color: white;
+        }
+        .signatures {
+    display: flex;
+	align-items: center;
+    gap: 20px;
+}
+
+.signature-box {
+    border: 2px solid #333; /* Border around the signature box */
+    padding: 10px;
+    width: 200px; /* Adjust the width as needed */
+    background-color: #f4f4f4; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.signature-box label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.signature-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc; /* Border for input */
+    border-radius: 4px; /* Rounded corners for input */
+    font-size: 14px; /* Adjust the font size */
+    box-sizing: border-box;
+}
+.remark-input {
+    width: 100%;	
+    padding: 8px;
+    border: 1px solid #ccc; /* Border for input */
+    border-radius: 4px; /* Rounded corners for input */
+    font-size: 14px; /* Adjust the font size */
+    box-sizing: border-box;
+}
+.signature-input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none;
+}
+
+        .actions {
+            text-align: center;
+            margin: 20px 0;
+        }
+		.actions button {
+        margin-right: 10px;  /* Adds space between the buttons */
+    }
+
+    .actions button:last-child {
+        margin-right: 0;  /* Removes margin on the last button */
+    }
+        .save {
+            background-color: #00a65a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .save:hover {
+            background-color: #007d4f;
+            transform: scale(1.1);
+        }
+        .clear {
+            background-color: #d9534f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .clear:hover {
+            background-color: #c12f2a;
+            transform: scale(1.1);
+        }
+        select {
+            padding: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        select:hover {
+            background-color: #e0e0e0;
+        }
+        select:focus {
+            background-color: #d9ffd9;
+            color: #000;
+        }
+        .logo {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+        }
+		.glow-red {
+            border: 2px solid red;
+            box-shadow: 0 0 10px red;
+        }
+        .glow-green {
+            border: 2px solid green;
+            box-shadow: 0 0 10px green;
+        }
+	.input-field {
+            width: 50px;
+			height : 40px;
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            transition: box-shadow 0.3s ease, border 0.3s ease;
+        }
+		  .alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .alert .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
+		span {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+   
+		
+ 
+
+</head>
+<body>
+<form method="post" action="/Line_Rejection" onsubmit="return Validate()" autocomplete="off">
+    <div class="date-time" id="date-time"></div>
+<script>
+    const dateTimeElement = document.getElementById('date-time');
+    setInterval(() => {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: false 
+        };
+        dateTimeElement.textContent = now.toLocaleString('en-GB', options); // 'en-GB' for 24-hour format
+    }, 1000);
+</script>
+    <div class="container">
+        <header class="header">
+		<a href="\">
+		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
+		  <div class="vl1"></div>
+		  <div class="vl2"></div>
+            <div class="doc-info">
+                <p>Doc.No.: PBA/QC/R/06</p>
+                <p>Original Date: 30-10-2019</p>
+                <p>Rev.No.: </p>
+                <p>Rev.Date: </p>
+            </div>
+            <div class="title">
+                <h1>Line Rejection Datasheet</h1>
+                <h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
+            </div>
+        </header>
+
+
+           
+
+	</form>
+</body>
+</html>
+

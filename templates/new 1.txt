@@ -83,7 +83,7 @@
   }
 
   // Auto-refresh the charts every 5 seconds
-       setInterval(drawCharts, 5000);
+       setInterval(drawCharts, 1000);
 </script>
 
 
@@ -280,12 +280,12 @@ table th {
 }
 
 	 #charts_container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-	  overflow-y: auto; 
-      margin-top: 20px;
-    }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 charts per row */
+    gap: 10px;  /* Space between charts */
+    overflow-y: auto;  /* Scroll vertically if there are too many charts */
+    padding: 10px;  /* Optional padding */
+  }
 
   /* You can also add custom styles for each individual chart if needed */
   .chart_div {
@@ -336,7 +336,7 @@ table th {
 
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-  <a href="javascript:void(0)" onclick="loadExcelData('Line_Rejection');Line_Rejection();">Line_Rejection</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('Line_Rejection');Line_Rejection()">Line_Rejection</a>
   <a href="javascript:void(0)" onclick="loadExcelData('Line_Setup');Line_Setup(); ">Line_Setup</a>
   <a href="javascript:void(0)" onclick="loadExcelData('POKA-YOKE'); P_Y();">POKA-YOKE</a>
   <a href="javascript:void(0)" onclick="loadExcelData('Maintainance'); Maintainance();">Maintainance</a>
@@ -365,18 +365,9 @@ table th {
  <div id="charts_container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"></div>
 
 
-
-
-
-
-
-
 <script>
 
- function showCharts() {
-    // Show the charts container when the button is clicked
-    document.getElementById("charts_container").style.display = "grid";
-  }
+
    
 
 

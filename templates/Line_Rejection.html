@@ -64,6 +64,7 @@
             left: 10px;
             width: 200px;
 			height :100px;
+			
         }
 		.vl1 {
 			border-left: 2px double green;
@@ -271,6 +272,10 @@
             color: #155724;
             cursor: pointer;
         }
+		span {
+            font-weight: bold;
+            color: green;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -306,7 +311,8 @@
 		document.getElementById("LR_7").value = "";
 		document.getElementById("LR_8").value = "";
 		document.getElementById("LR_9").value = "";
-		document.getElementById("LR_10").value = "";		        
+		document.getElementById("LR_10").value = "";
+document.getElementById("TC").value = "";		
     }
 		
 		
@@ -388,7 +394,7 @@
     });
 
     // Validate empty-only fields
-    const emptyFields = ['LR_remark', 'LR_qa-sign', 'LR_eng-sign'];
+    const emptyFields = ['TC','LR_remark', 'LR_qa-sign', 'LR_eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -421,7 +427,7 @@
     }
 	 
 		 
-	else if (!isValid) {
+	else  {
         alert("Please give input before saving!");
     }
 	function showAlert() {
@@ -433,11 +439,34 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
-			return isValid;
+				return isValid;
 		
 		}
 		
     </script>
+	<script>
+	function calculateResults() {
+    // Get the total count value
+    const totalCount = parseFloat(document.getElementById("TC").value);
+
+    // Loop through the 10 mean count inputs
+    for (let i = 1; i <= 10; i++) {
+        const meanCount = parseFloat(document.getElementById(`LR_${i}`).value);
+        const resultElement = document.getElementById(`result${i}`);
+
+        // Check if both totalCount and meanCount are valid numbers
+        if (!isNaN(totalCount) && !isNaN(meanCount) && meanCount !== 0) {
+            const result = (meanCount/totalCount)*100 ; // Perform the division
+            resultElement.textContent = " " + result.toFixed(2); // Display result
+            console.log(`Result ${i}: ${result.toFixed(2)}`); // Print result in console
+        } else {
+            resultElement.textContent = ""; // Clear result if invalid input
+            console.log(`Result ${i}: Invalid input or division by zero.`); // Log invalid result
+        }
+    }
+}
+
+	</script>
 </head>
 <body>
 <form method="post" action="/Line_Rejection" onsubmit="return Validate()" autocomplete="off">
@@ -481,15 +510,20 @@
           <div class="calendar">
                 <h4 style="font-weight: normal;">
 				<label for = "LR_calendar">Date:</label>
-                   <input for = "date" name="date" type="datetime-local" id="LR_calendar" />
+                   <input for = "date" name="Date" type="datetime-local" id="LR_calendar" />
                 </h4>
+				 
                 <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
-                    <select name = "shift">
+                    <select name = "Shift">
                         <option id="LR_S1" value="SHIFT1">SHIFT_1</option>
                         <option id="LR_S2" value="SHIFT2">SHIFT_2</option>
                         <option id="LR_S3" value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
+				<h4 style="font-weight: normal;"><label for = "Total_Count">Total_Count:</label>
+                    <input type="number" name="Total Count:" id="TC" oninput="calculateResults()" style="width: 80px; height: 20px;">
+                </h4>
+				
             </div>
 			
 			
@@ -500,62 +534,74 @@
                     <tr>
                         <th>Sr.No</th>
                         <th>Rejection Type</th>
-                        <th>Count</th>                        
+                        <th>Count</th> 
+						<th>Percentage</th> 
+						
                     </tr>
                     <tr>
                         <td>1</td>
                         <td>Threaded Ferrule Damage</td>
-                        <td><input type="text" name="Threaded Ferrule Damage" id="LR_1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Threaded Ferrule Damage" id="LR_1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result1"></span></td>
                     </tr>
 					<tr>
                         <td>2</td>
                         <td>Threaded Ferrule Thread Damage</td>
-                        <td><input type="text" name="Threaded Ferrule Thread Damage" id="LR_2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Threaded Ferrule Thread Damage" id="LR_2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result2"></span></td>
                     </tr>
 					<tr>
                         <td>3</td>
                         <td>Valve Plate Damage</td>
-                        <td><input type="text" name="Valve Plate Damage" id="LR_3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Valve Plate Damage" id="LR_3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result3"></span></td>
                     </tr>
 					<tr>
                         <td>4</td>
                         <td>Spring short Length</td>
-                        <td><input type="text" name="Spring short Length" id="LR_4" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Spring short Length" id="LR_4" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result4"></span></td>
                     </tr>
 					
 					<tr>
                         <td>5</td>
                         <td>Filler Piece damage</td>
-                        <td><input type="text" name="Filler Piece damage" id="LR_5" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Filler Piece damage" id="LR_5" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result5"></span></td>
                     </tr>
 					
 					<tr>
                         <td>6</td>
                         <td>Clamping Sleeve Damage</td>
-                        <td><input type="text" name="Clamping Sleeve Damage"  id="LR_6" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Clamping Sleeve Damage"  id="LR_6" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result6"></span></td>
                     </tr>
 					
 					<tr>
                         <td>7</td>
                         <td>Leakage Not ok(LN1)</td>
-                        <td><input type="text" name="Leakage Not ok(LN1)" id="LR_7" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Leakage Not ok(LN1)" id="LR_7" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result7"></span></td>
                     </tr>
 					
 					<tr>
                         <td>8</td>
                         <td>Rust on clamping sleeve</td>
-                        <td><input type="text" name="Rust on clamping sleeve" id="LR_8" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Rust on clamping sleeve" id="LR_8" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result8"></span></td>
                     </tr>
 					<tr>
                         <td>9</td>
                         <td>Filler Piece missing</td>
-                        <td><input type="text" name="Filler Piece missing" id="LR_9" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Filler Piece missing" id="LR_9" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result9"></span></td>
                     </tr>
 					
 					<tr>
                         <td>10</td>
                         <td>Fallen Down Part  (FD1)</td>
-                        <td><input type="text" name="Fallen Down Part  (FD1)" id="LR_10" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Fallen Down Part  (FD1)" id="LR_10" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						 <td><span id="result10"></span></td>
                     </tr>
                     
                 </table>
@@ -568,15 +614,15 @@
               <div class="signatures">
 			  <div class="signature-box">
         <label for="remark">Remark:</label>
-        <input type="text" name ="remark"id="LR_remark" class="remark-input">
+        <input type="text" name ="Remark"id="LR_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="qa-sign" id="LR_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="LR_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "eng-sign"id="LR_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="LR_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">

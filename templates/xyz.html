@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Calculator</title>
+    <style>
+        /* Basic styling for the table */
+        table {
+            width: 100%;
+            margin: 20px;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+        input[type="number"] {
+            padding: 5px;
+            width: 100px;
+        }
+        span {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Sum Calculator</h2>
+
+    <!-- Table with Total Count and Mean Counts inputs -->
+    <table>
+        <tr>
+            <td>Total Count</td>
+            <td><input type="number" id="totalCount" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+        </tr>
+        <tr>
+            <td>Mean Count 1</td>
+            <td><input type="number" id="meanCount1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+        </tr>
+        <tr>
+            <td>Mean Count 2</td>
+            <td><input type="number" id="meanCount2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+        </tr>
+        <tr>
+            <td>Mean Count 3</td>
+            <td><input type="number" id="meanCount3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+        </tr>
+        <tr>
+            <td>Result 1 (Total + Mean 1)</td>
+            <td><span id="result1"></span></td>
+        </tr>
+        <tr>
+            <td>Result 2 (Total + Mean 2)</td>
+            <td><span id="result2"></span></td>
+        </tr>
+        <tr>
+            <td>Result 3 (Total + Mean 3)</td>
+            <td><span id="result3"></span></td>
+        </tr>
+    </table>
+
+    <script>
+        // Function to calculate and display the three results
+        function calculateResults() {
+            // Get the values from all input fields
+            const totalCount = parseFloat(document.getElementById("totalCount").value);
+            const meanCount1 = parseFloat(document.getElementById("meanCount1").value);
+            const meanCount2 = parseFloat(document.getElementById("meanCount2").value);
+            const meanCount3 = parseFloat(document.getElementById("meanCount3").value);
+
+            // Get the result elements to display the results
+            const result1Element = document.getElementById("result1");
+            const result2Element = document.getElementById("result2");
+            const result3Element = document.getElementById("result3");
+
+            // Check if all inputs are valid numbers
+            if (!isNaN(totalCount) && !isNaN(meanCount1) && !isNaN(meanCount2) && !isNaN(meanCount3)) {
+                // Calculate the three results
+                const result1 = totalCount + meanCount1;
+                const result2 = totalCount + meanCount2;
+                const result3 = totalCount + meanCount3;
+
+                // Display the results in their respective span elements
+                result1Element.textContent = " = " + result1;
+                result2Element.textContent = " = " + result2;
+                result3Element.textContent = " = " + result3;
+            } else {
+                // Clear all results if any input is not valid
+                result1Element.textContent = "0";
+                result2Element.textContent = "0";
+                result3Element.textContent = "0";
+            }
+        }
+    </script>
+
+</body>
+</html>

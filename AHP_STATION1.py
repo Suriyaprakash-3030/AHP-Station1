@@ -56,30 +56,46 @@ def Tool_Monitoring():
 def Report():
     return render_template("Report.html")    
 
-@app.route('/get_excel_data/<filename>')
+@app.route('/get_excel_data/<filename>', methods=['GET'])
 def get_excel_data(filename):
     try:
-        # Build the file path for the Excel file
         file_path = os.path.join(EXCEL_FOLDER, f'{filename}.xlsx')
         
-        # Check if the file exists
         if not os.path.exists(file_path):
             return jsonify({'error': f'File {filename}.xlsx not found.'}), 404
         
-        # Read the Excel file using pandas
         df = pd.read_excel(file_path)
         
-        # Convert the dataframe to HTML with center-aligned cells
-        table_html = df.to_html(classes='table table-bordered', index=False, 
-                                justify='center')  # Center align all columns
+        # Get filtering parameters
+        start_date = request.args.get('start_date')  # Format: YYYY-MM-DD
+        end_date = request.args.get('end_date')      # Format: YYYY-MM-DD
+        query = request.args.get('query')           # Text to search
         
-        # You can also manually center-align if required
+        # Convert 'Date' column to datetime if it exists
+        if 'Date' in df.columns:
+            df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+
+            # Filter by date range
+            if start_date and end_date:
+                start_date = pd.to_datetime(start_date)
+                end_date = pd.to_datetime(end_date)
+                df = df[(df['Date'] >= start_date) & (df['Date'] <= end_date)]
+
+            # Sort by Date (ascending order)
+            df = df.sort_values(by='Date', ascending=True)
+        
+        # Filter by text query
+        if query:
+            df = df[df.apply(lambda row: row.astype(str).str.contains(query, case=False).any(), axis=1)]
+        
+        # Convert DataFrame to HTML
+        table_html = df.to_html(classes='table table-bordered', index=False)
         table_html = table_html.replace('<table', '<table style="text-align: center;"')
-
-
-        return jsonify({'table_html': table_html})  # Return the HTML table data as JSON
+        
+        return jsonify({'table_html': table_html})  
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 
 @app.route("/<app_name>", methods=["POST"])

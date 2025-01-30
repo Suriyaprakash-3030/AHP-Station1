@@ -32,10 +32,6 @@ def save_to_excel(app_name, data):
 def index():
     return render_template("index.html")
     
-@app.route("/AhpAllStation")
-def AhpAllStation():
-    return render_template("AhpAllStation.html")      
-    
 @app.route("/Front_page")
 def Front_page():
     return render_template("Front_page.html")    

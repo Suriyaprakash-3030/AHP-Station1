@@ -6,7 +6,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Long Cang' rel='stylesheet'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280, initial-scale=1.0">
-    <title>Tool_Monitoring</title>
+    <title>Set Up Approval & Inprocess Inspection Report</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
     <style>
@@ -39,9 +39,8 @@
             position: relative;
         }
         .header .title {
-		            
-            flex: 1;		
             text-align: center;
+            flex: 1;
         }
         .header .title h1 {
             color: #black;
@@ -49,7 +48,6 @@
         }
         .header .title h2, .header .title h3 {
             margin: 5px 0;
-			
 			color: #black;
 			font-weight: normal
         }
@@ -79,7 +77,7 @@
 			border-left: 2px double green;
 			height: 120px;
 			position: absolute;
-			left: 1000px;
+			left: 1050px;
 			margin-left: -3px;
 			top: 0;
 			}
@@ -162,6 +160,7 @@
     font-size: 14px; /* Adjust the font size */
     box-sizing: border-box;
 }
+
 .signature-input:focus {
     border-color: #007bff; /* Change border color on focus */
     outline: none;
@@ -221,14 +220,6 @@
             right: 10px;
             width: 100px;
         }
-		.logo3 {
-			position: absolute;          
-            top: 0px;
-            left: 900px;
-            width: 50px;
-			height:60px;
-			z-index: 1000;
-        }
 		.glow-red {
             border: 2px solid red;
             box-shadow: 0 0 10px red;
@@ -262,7 +253,6 @@
             align-items: center;
             animation: fadeIn 0.5s ease-in-out;
         }
-		
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -282,7 +272,6 @@
             color: #155724;
             cursor: pointer;
         }
-		
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -308,110 +297,86 @@
             });
         });
 		
-		function clearForm() {
-        document.getElementById("TM_1T").value = "";
-		document.getElementById("TM_2T").value = "";
-		document.getElementById("TM_3T").value = "";
-		document.getElementById("TM_4T").value = "";
-		document.getElementById("TM_5T").value = "";
-		document.getElementById("TM_6T").value = "";
-		document.getElementById("TM_7T").value = "";
-		document.getElementById("TM_8T").value = "";
-		document.getElementById("TM_9T").value = "";
-		document.getElementById("TM_10T").value = "";
-		document.getElementById("TM_11T").value = "";
-		document.getElementById("TM_12T").value = "";
-		document.getElementById("TM_13T").value = "";
-		document.getElementById("TM_14T").value = "";
-		document.getElementById("TM_15T").value = "";
-		document.getElementById("TM_remark").value = "";
-		document.getElementById("TM_qa-sign").value = "";
-		document.getElementById("TM_eng-sign").value = "";
-		document.getElementById("TM_calendar").value = "";
+			function clearForm() {
+        document.getElementById("VP_1.1").value = "";
+		document.getElementById("VP_1.2").value = "";
+		document.getElementById("LTP_1.1").value = "";
+		document.getElementById("LTP_1.2").value = "";
+		document.getElementById("LS_4.1").value = "";
+		document.getElementById("LS_4.2").value = "";
+		document.getElementById("LS_5.1").value = "";
+		document.getElementById("LS_5.2").value = "";
+		document.getElementById("LS_6.1").value = "";
+		document.getElementById("LS_6.2").value = "";
+		document.getElementById("LS_7.1").value = "";		
+		document.getElementById("LS_7.2").value = "";				
+		document.getElementById("LS_remark").value = "";
+		document.getElementById("LS_qa-sign").value = "";
+		document.getElementById("LS_eng-sign").value = "";
+		document.getElementById("LS_calendar").value = "";
         
     }
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		function Validate() {
 		const fields = [
         {
-            id: 'TM_1T',
-            validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-        {
-            id: 'TM_2T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-        {
-            id: 'TM_3T',
+            id: 'LS_4.1',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_4T',
-             validate: (value) => value >= 0  ,
+            id: 'VP_1.1',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_5T',
-             validate: (value) => value >= 0  ,
+            id: 'VP_1.2',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_6T',
-             validate: (value) => value >= 0  ,
+            id: 'LTP_1.1',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_7T',
-             validate: (value) => value >= 0  ,
+            id: 'LTP_1.2',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+        {
+            id: 'LS_4.2',
+           validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+        {
+            id: 'LS_5.1',
+           validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_8T',
-             validate: (value) => value >= 0  ,
+            id: 'LS_5.2',
+           validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_9T',
-             validate: (value) => value >= 0  ,
+            id: 'LS_6.1',
+           validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_10T',
-             validate: (value) => value >= 0  ,
+            id: 'LS_6.2',
+           validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_11T',
-             validate: (value) => value >= 0  ,
+            id: 'LS_7.1',
+           validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'TM_12T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },{
-            id: 'TM_13T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_14T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_15T',
-             validate: (value) => value >= 0  ,
+            id: 'LS_7.2',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
     ];
@@ -435,7 +400,7 @@
     });
 
     // Validate empty-only fields
-    const emptyFields = ['TM_remark', 'TM_qa-sign', 'TM_eng-sign'];
+    const emptyFields = ['LS_remark', 'LS_qa-sign', 'LS_eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -454,12 +419,12 @@
     });
 	
 	
-	 const dateInput = document.getElementById("TM_calendar");
+	 const dateInput = document.getElementById("LS_calendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                
+               
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -467,7 +432,7 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		else if (!isValid) {
+else if (!isValid) {
         alert("Please give input before saving!");
     }
 	function showAlert() {
@@ -479,16 +444,13 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
-		
 		return isValid;
 }
-		
-		
-		
+
     </script>
 </head>
 <body>
-<form method="post" action="/Tool_Monitoring" onsubmit="return Validate()" autocomplete="off">
+<form method="post" action="/ST1_Linesetup" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -508,20 +470,19 @@
 </script>
     <div class="container">
         <header class="header">
-		 <a href="\Front_page">
-		  <img src="/static/images/pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
-		   <img src="/static/images/Tool_Monitoring.png" alt="PreBo Logo" class="logo3">
+		  <a href="\Station1">
+		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>
             <div class="doc-info">
-                <p>Doc.No.: PBA/QC/R/11</p>
-                
-                <p>Original Date:30.10.2019</p>
-                <p>Rev.No&Date: 01/01.08.2020</p>
+                <p>Doc.No.: PBA/QC/R/09</p>
+                <p>Original Date: 30-10-2019</p>
+                <p>Rev.No.: 09</p>
+                <p>Rev.Date: 06-04-2024</p>
             </div>
             <div class="title">
-                <h1>Tool Life Monitoring Sheet</h1>  
-				<h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h1>Set Up Approval & Inprocess Inspection Report</h1>
+                <h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
@@ -529,168 +490,150 @@
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "TM_calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="TM_calendar" />
+				<label for = "LS_calendar">Date:</label>
+                    <input type="datetime-local" name="Date"  id="LS_calendar" />
                 </h4>
-                <h4 style="font-weight: normal;">Shift:
-                    <select name = "Shift">
-                        <option value="SHIFT1">SHIFT_1</option>
-                        <option value="SHIFT2">SHIFT_2</option>
-                        <option value="SHIFT3">SHIFT_3</option>
+                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+                    <select  name = "Shift">
+                        <option value = "SHIFT_1">SHIFT_1</option>
+                        <option value = "SHIFT_2">SHIFT_2</option>
+                        <option value = "SHIFT_3">SHIFT_3</option>
                     </select>
                 </h4>
             </div>
 			
 			
 
-            <section class="process-characteristics"> 
-                
+            <section class="process-characteristics">
+                <h4>Process Characteristics</h4>
                 <table>
                     <tr>
-                <th>Sl.No</th>
-                <th>Machine</th>
-                <th>Tool Name</th>
-                <th>Check Points</th>
-                <th>Criteria</th>
-                <th>Observation</th>
-                <th>Total Life Count</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td rowspan="3">1</td>
-				 
-                <td rowspan="6">Valve Plate Assembly</td>
-                <td rowspan="3">Top Fixture</td>
-                <td>Check Fixture (Visual)</td>
-                <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF1_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check the Tip of the Fixture</td>
-                <td>There should be no Tip damage.</td>
-                <td><select  name="VPA_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF2_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check Fixture wear out (Visual)</td>
-                <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF3_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-			 <td rowspan="3">2</td>
-                <td rowspan="3">Bottom Fixture</td>
-                <td>Check Fixture (Visual)</td>
-                <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check the Tip of the Fixture</td>
-                <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check Fixture wear out (Visual)</td>
-                <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td rowspan="3">3</td>
-                <td rowspan="9">Leak Test Unit</td>
-                <td rowspan="3">Top Fixture</td>
-                <td>Check Fixture (Visual)</td>
-                <td>There should be no Cracks or damage.</td>
-                <td><select name="LTU_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF1_Tool_Life_cnt"id="TM_7T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check the Tip of the Fixture</td>
-                <td>There should be no Tip damage.</td>
-                <td><select name="LTU_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF2_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check Fixture wear out (Visual)</td>
-                <td>No usage of Wear out Fixture</td>
-                <td><select name="LTU_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF3_Tool_Life_cnt" id="TM_9T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-			<td rowspan="3">4</td>
-                <td rowspan="4">Bottom Fixture</td>
-                <td>Check Fixture (Visual)</td>
-                <td>There should be no Cracks or damage.</td>
-                <td><select name="LTU_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_BF1_Tool_Life_cnt" id="TM_10T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check the Tip of the Fixture</td>
-                <td>There should be no Tip damage.</td>
-                <td><select name="LTU_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_BF2_Tool_Life_cnt" id="TM_11T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check Fixture wear out (Visual)</td>
-                <td>No usage of Wear out Fixture</td>
-                <td><select name="LTU_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_BF3_Tool_Life_cnt" id="TM_12T"style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-			<td rowspan="3">5</td>
-                <td>Check PU Pad</td>
-                <td>There should be no Cracks or damage.</td>
-                <td><select  name="LTU_BF4_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_BF4_Tool_Life_cnt"id="TM_13T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td rowspan="2">PU Pad</td>
-                <td>Check the Butting Face of the PU Pad</td>
-                <td>There should be no Face damage.</td>
-                <td><select name="LPU_PU1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LPU_PU1_Tool_Life_cnt"id="TM_14T" style="width: 80px; height: 20px;"></td>
-            </tr>
-            <tr>
-                <td>Check PU Pad Face wear out (Visual)</td>
-                <td>No usage of Wear out PU Pad</td>
-                <td><select name="LPU_PU2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LPU_PU2_Tool_Life_cnt" id="TM_15T"style="width: 80px; height: 20px;"></td>
-            </tr>
-        </tbody>
-					
+                        <th>Sr.No</th>
+                        <th>Parameter</th>
+                        <th>Requirements</th>
+                        <th>Verification Method</th>
+                        <th>Set Up Approval</th>
+                        <th>Re-Release Setup Approval</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Vacuum pressure</td>
+                        <td>0.95 - 1.50 bar</td>
+                        <td>Digital Pressure Indicator</td>                        
+						<td><input type="number" name="VP_setup" id = "VP_1.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="VP_Re_Setup" id = "VP_1.2" style="width: 80px; height: 20px;"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Leak Test pressure</td>
+                        <td>1.0 + 0.2 bar</td>
+                        <td>ATEQ unit</td>                      
+						<td><input type="number" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
+                    </tr>
                 </table>
             </section>
 
-            
+            <section class="product-characteristics">
+                <h4>Product Characteristics</h4>
+                <table>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Parameter</th>
+                        <th>Requirements</th>
+                        <th>Verification Method</th>
+                        <th>Set Up Approval</th>
+                        <th>Re-Release Setup Approval</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Assembly of valve plate into threaded ferrule</td>
+                        <td>Presence and correct orientation of valve plate & Threaded Ferrule</td>
+                        <td>Visual</td>
+                        <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Assembly of filler piece</td>
+                        <td>Presence of filler piece</td>
+                        <td>Visual</td>
+                        <td><select name = "product-characteristics2_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics2_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Assembly of Compression Spring into the threaded ferrule</td>
+                        <td>Presence of Compression Spring into Threaded ferrule assembly</td>
+                        <td>Visual</td>
+                        <td><select name = "product-characteristics3_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics3_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Leakage Testing</td>
+                        <td>&le; 300 cm³/min</td>
+                        <td>Leakage Indicator</td>                
+						<td><input type="text" name="product-characteristics4_setup" id = "LS_4.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics4_Re_setup" id = "LS_4.2" style="width: 80px; height: 20px;"></td>						
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Depth ICL</td>
+                        <td>1.3 - 0.3mm</td>
+                        <td>Diameter Checking gauge</td>
+                        <td><input type="text" name="product-characteristics5_setup" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics5_Re_setup" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
+                    </tr>
+					<tr>
+                        <td>6</td>
+                        <td>Diameter ICL</td>
+                        <td>7.25 +0.25mm</td>
+                        <td>Diameter Checking gauge</td>
+                        <td><input type="text" name="product-characteristics6_setup" id = "LS_6.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics6_Re_setup" id = "LS_6.2" style="width: 80px; height: 20px;"></td>
+                    </tr>
+					<tr>
+                        <td>7</td>
+                        <td>Leakage Ok Master</td>
+                        <td> &le; 0 to 1 cm³/min</td>
+                        <td>ATEQ unit & Display</td>
+                        <td><input type="text" name="product-characteristics7_setup" id = "LS_7.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="product-characteristics7_Re_setup" id = "LS_7.2" style="width: 80px; height: 20px;"></td>
+                    </tr>
+					<tr>
+                        <td>8</td>
+                        <td>Appearance</td>
+                        <td>Visual Defect Not Allowed</td>
+                        <td>Visual</td>
+                        <td><select name = "product-characteristics8_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "product-characteristics8_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                    </tr>
+                </table>
             </section>
 
             <footer class="footer">
-              <div class="signatures">
+               <div class="signatures">
 			  <div class="signature-box">
-       <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="TM_remark" class="remark-input">
+        <label for="remark">Remark:</label>
+        <input type="text" name ="Remark"id="LS_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="TM_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="LS_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="TM_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="LS_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
-                     <button class="save"  onclick="Validate()" >SAVE</button>
+                  <button class="save"  onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Sved into Excel!</span>
+					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
-					
-                   <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
+                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>
 
@@ -701,5 +644,3 @@
 	</form>
 </body>
 </html>
-
-

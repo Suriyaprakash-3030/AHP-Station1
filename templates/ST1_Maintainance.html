@@ -6,7 +6,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Long Cang' rel='stylesheet'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280, initial-scale=1.0">
-    <title>POKA-YOKE</title>
+    <title>Secondary Level Maintainance</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
     <style>
@@ -79,7 +79,7 @@
 			border-left: 2px double green;
 			height: 120px;
 			position: absolute;
-			left: 1008px;
+			left: 1050px;
 			margin-left: -3px;
 			top: 0;
 			}
@@ -222,12 +222,10 @@
             width: 100px;
         }
 		.logo2 {
-			position: absolute;          
-            top: 0px;
-            left: 900px;
-            width: 50px;
-			height:60px;
-			z-index: 1000;
+            position: fixed;
+            top: 20px;
+            left: 950px;
+            width: 80px;
         }
 		.glow-red {
             border: 2px solid red;
@@ -306,18 +304,64 @@
             });
         });
 		
-		function clearForm() {      
-		document.getElementById("PY_remark").value = "";
-		document.getElementById("PY_eng-sign").value = "";
-		document.getElementById("PY_qa-sign").value = "";
-		document.getElementById("PY_calendar").value = "";
+		function clearForm() {
+        document.getElementById("4P7A").value = "";
+		document.getElementById("4P7C").value = "";
+		document.getElementById("4P7D").value = "";
+		document.getElementById("M_remark").value = "";
+		document.getElementById("M_qa-sign").value = "";
+		document.getElementById("M_eng-sign").value = "";
+		document.getElementById("M_calendar").value = "";
         
     }
-		
-				function Validate() {
-				let isValid = true;
-				
-				const emptyFields = ['PY_remark', 'PY_qa-sign', 'PY_eng-sign'];
+	
+	
+		function Validate() {
+		const fields = [
+        {
+            id: '4P7A',
+            validate: (value) => value >= 6 && value <= 7.5,
+            errorMessage: "Value must be between 6 and 7.5 BAR",
+        },
+        {
+            id: '4P7C',
+            validate: (value) => value >= 72.51 && value <= 73.51,
+            errorMessage: "Value must be between 72.51 and 73.51 BAR",
+        },
+        {
+            id: '4P7D',
+            validate: (value) => value >= 56.24 && value <= 57.24,
+            errorMessage: "Value must be between 56.24 and 57.24 BAR",
+        },
+    ];
+	let isValid = true; // Flag to check if all conditions are met
+
+    // Validate range-based fields
+    fields.forEach(({ id, validate, errorMessage }) => {
+    const field = document.getElementById(id);
+    const value = field.value.trim();
+
+    if (value === "") {
+        // If the field is empty, set isValid to false and apply error styling
+        isValid = false;
+        field.classList.remove('glow-green');
+        field.classList.add('glow-red');
+        field.title = "This field cannot be empty"; // Tooltip for empty field
+    } else if (!validate(parseFloat(value))) {
+        // If validation fails but the field is not empty, apply error styling without affecting isValid
+        field.classList.remove('glow-green');
+        field.classList.add('glow-red');
+        field.title = errorMessage; // Tooltip for specific validation error
+    } else {
+        // If valid, apply success styling
+        field.classList.remove('glow-red');
+        field.classList.add('glow-green');
+        field.title = ""; // Clear tooltip
+    }
+});
+
+    // Validate empty-only fields
+    const emptyFields = ['M_remark', 'M_qa-sign', 'M_eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -335,12 +379,13 @@
         }
     });
 	
-	const dateInput = document.getElementById("PY_calendar");
+	
+	 const dateInput = document.getElementById("M_calendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                
+               // alert("Please select a date before saving!"); // Optional: Show an alert
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
@@ -348,7 +393,7 @@
         showAlert(); // Call the function to display the success message
     }
 	 
-		else if (!isValid) {
+	else if (!isValid) {
         alert("Please give input before saving!");
     }
 	function showAlert() {
@@ -360,12 +405,18 @@
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
-				return isValid;
-				}
+		
+		
+		
+		return isValid;
+}
+
     </script>
+	
 </head>
 <body>
-<form method="post" action="/Poka_yoke" onsubmit="return Validate()" autocomplete="off">
+	<form method="post" action="/ST1_Maintainance" onsubmit="return Validate()" autocomplete="off">
+    
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -383,21 +434,22 @@
         dateTimeElement.textContent = now.toLocaleString('en-GB', options); // 'en-GB' for 24-hour format
     }, 1000);
 </script>
+
     <div class="container">
         <header class="header">
-		  <a href="\Front_page">
+		  <a href="\Station1">
 		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
-		   <img src="static\images\poka-yoke.png" alt="PreBo Logo" class="logo2">
+		   <img src="static\images\maintanance.png" alt="PreBo Logo" class="logo2">
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>
             <div class="doc-info">
-                <p>Doc.No.: PBA/QC/R/16</p>
+                <p>Doc.No.: PBA/MTCE/R/02</p>
                 
-                <p>Dated:30.10.2019</p>
-                <p>Rev.No&Date: 02/12.10.2023</p>
+                <p>Rev.No.: 04</p>
+                <p>Rev.Date: 02.12.2023</p>
             </div>
             <div class="title">
-                <h1>POKA-YOKE Check Sheet</h1>  
+                <h1>Secondary Level Maintainance</h1>  
 				<h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
@@ -406,14 +458,14 @@
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "PY_calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="PY_calendar" />
+				<label for = "M_calendar">Date:</label>
+                    <input for = "date" name="Date" type="datetime-local" id="M_calendar" />
                 </h4>
-                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+                <h4 style="font-weight: normal;"><label for = "Shift">Shift:</label>
                     <select name = "Shift">
-                        <option value="SHIFT1">SHIFT_1</option>
-                        <option value="SHIFT2">SHIFT_2</option>
-                        <option value="SHIFT3">SHIFT_3</option>
+                        <option id="M_S1" value="SHIFT1">SHIFT_1</option>
+                        <option id="M_S2" value="SHIFT2">SHIFT_2</option>
+                        <option id="M_S3" value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
             </div>
@@ -425,81 +477,38 @@
                 <table>
                     <tr>
                         <th>Sr.No</th>
-                        <th>Description</th>
-                        <th>ERR.Description</th>
-						<th>Status</th>
-						
+                        <th>Parameter</th>
+                        <th>Specification</th>
+						<th>Verification Method</th>
+						<th>Value</th>                        
                     </tr>
                     <tr>
-                        <td>1A</td>
-                        <td>Without Valve Plate</td>
-						<td>Cycle Will Not Start</td>
-						
-                        <td><select name = "1A"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
+                        <td>4 P7 A</td>
+                        <td>Main Pressure</td>
+						<td>6 to 7.5 bar</td>
+						<td>Digital Pressure Gauge Indicator</td>
+                        <td><input type="number" id="4P7A" name = "Main Pressure"class="input-field" style="width: 80px; height: 20px;"></td>
+                    </tr>
+ 					<tr>
+                        <td>4 P7 B</td>
+                        <td>Leakage Test (Fixture Alignment)</td>
+						<td>Miss alignment not allowed</td>
+						<td>By Manual</td>
+                        <td><select name ="Leakage Test (Fixture Alignment)"><option id="4PAB"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
-                        <td>1B1</td>
-                        <td>Without Spring Assembly</td>
-						<td>ERR:Spring check Fail</td>
-						
-                        <td><select name = "Without Spring Assembly"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
+                        <td>4 P7 C</td>
+                        <td>TDC Value</td>
+						<td>MAX : 73.51 MIN : 72.51</td>
+						<td>By Manual</td>
+                        <td><input type="number" id="4P7C" name = "TDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
-                        <td>1B2</td>
-                        <td>Spring Length</td>
-						<td>ERR:Spring check Fail</td>
-						
-                        <td><select name = "Spring Length"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					<tr>
-                        <td>1C1</td>
-                       <td>Leakage Not Ok</td>
-						<td>ERR:LTM Result Not oK</td>
-						
-                        <td><select name = "Leakage Not Ok"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					<tr>
-                        <td>1C2</td>
-                       <td>Leakage OK Master</td>
-						<td><=300 cm3/min</td>
-						
-                        <td><select name = "Leakage OK Master"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					<tr>
-                        <td>1C3</td>
-                       <td>Rejection Bin Photoelectric Sensor</td>
-						<td>Alarm Will Come</td>
-						
-                        <td><select name = "Rejection Bin Photoelectric Sensor"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					<tr>
-                        <td>1D1</td>
-                       <td>Filler Piece Wrong Orientation</td>
-						<td>Cycle Will Not Start</td>
-						
-                       <td><select name = "Filler Piece Wrong Orientation"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					<tr>
-                        <td>1D2</td>
-                       <td>Without Clamping Sleeve</td>
-						<td>Cycle Will Not Start</td>
-						
-                        <td><select name = "Without Clamping Sleeve"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					<tr>
-                        <td>1D3</td>
-                       <td>Without Filler Piece</td>
-						<td>Cycle Will Not Start</td>
-						
-                        <td><select name = "Without Filler Piece"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
-                    </tr>
-					
-					<tr>
-                        <td>1A-1D</td>
-                       <td>Safety Light Curtain</td>
-						<td>Cycle Will Stop</td>
-						
-                        <td><select name = "Safety Light Curtain"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
+                        <td>4 P7 D</td>
+                       <td>BDC Value</td>
+						<td>MAX : 57.24 MIN : 56.24</td>
+						<td>By Manual</td>
+                        <td><input type="number" id="4P7D" name = "BDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>
@@ -509,35 +518,42 @@
             </section>
 
             <footer class="footer">
-             <div class="signatures">
+              <div class="signatures">
 			  <div class="signature-box">
         <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="PY_remark" class="remark-input">
+        <input type="text" name ="Remark"id="M_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="PY_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="M_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="PY_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="M_eng-sign" class="signature-input">
     </div>
 </div>
+
                 <div class="actions">
-                    <button class="save" onclick="Validate()">SAVE</button>
+				
+                    <button class="save" type = "submit" id="saveButton" onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Saved into Excel!</span>
-					<button class="close-btn" onclick="closeAlert()">×</button>
+					<span>✅ Success: Data Sved into Excel!</span>
+					
 					</div>
-                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
+
+                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
+				
             </footer>
 
         </div>
 
         
     </div>
+	
+	
 	</form>
+	
+	
 </body>
 </html>
-

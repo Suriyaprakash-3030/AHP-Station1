@@ -9,10 +9,10 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {packages: ['corechart']});
-  google.charts.setOnLoadCallback(drawCharts);
+  google.charts.load('current', {packages: ['corechart', 'gauge']});
+  google.charts.setOnLoadCallback(LineRejection);
 
-  function drawCharts() {
+  function LineRejection() {
     let table = document.querySelector(".table"); // Ensure the table has class "table"
 
     if (!table) return; // Stop if the table is not found
@@ -27,9 +27,61 @@
     let container = document.getElementById("charts_container");
     container.innerHTML = ""; // Clear existing charts before redrawing
 
-    let colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF', '#33FFF1', '#F1FF33', '#FF3333', '#33A1FF', '#B833FF'];
+    let colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF', '#33FFF1', '#000000', '#FF3333', '#33A1FF', '#B833FF'];
 
-    // Loop through each column (starting from index 2 to 12)
+    // ================================
+    // ✅ STEP 1: PRODUCTION GAUGE CHART (First)
+    // ================================
+    let totalProduction = 0;
+    let totalFailures = 0;
+
+    // Get the latest row (latest data)
+    if (dataRows.length > 0) {
+      let latestRow = dataRows[dataRows.length - 1];
+      let cells = latestRow.querySelectorAll("td");
+
+      // Get total production from column 2
+      totalProduction = parseInt(cells[2].textContent) || 0;
+
+      // Sum up failed counts from columns 3 to 13
+      for (let colIndex = 3; colIndex < 13; colIndex++) {
+        totalFailures += parseInt(cells[colIndex].textContent) || 0;
+      }
+    }
+
+    // Calculate production percentage
+    let productionPercentage = totalProduction > 0
+      ? ((totalProduction - totalFailures) / totalProduction) * 100
+      : 0;
+
+    // Create Gauge Chart container **FIRST**
+    let gaugeDiv = document.createElement("div");
+    gaugeDiv.id = "gauge_chart";
+    gaugeDiv.style.width = "400px";
+    gaugeDiv.style.height = "300px";
+    gaugeDiv.style.display = "inline-block";
+    gaugeDiv.style.margin = "10px";
+    container.appendChild(gaugeDiv); // Append first
+
+    let gaugeData = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Productivity', productionPercentage] // Dynamically set value
+    ]);
+
+    let gaugeOptions = {
+      width: 400, height: 300,
+      redFrom: 0, redTo: 50,
+      yellowFrom: 50, yellowTo: 80,
+      greenFrom: 80, greenTo: 100,
+      minorTicks: 5
+    };
+
+    let gaugeChart = new google.visualization.Gauge(gaugeDiv);
+    gaugeChart.draw(gaugeData, gaugeOptions);
+
+    // ================================
+    // ✅ STEP 2: LINE CHARTS (Second)
+    // ================================
     for (let colIndex = 2; colIndex < 13; colIndex++) {
       let columnName = headers[colIndex].textContent.trim();
       let dataArray = [['Date', 'Count']];
@@ -54,7 +106,7 @@
       chartDiv.style.height = "300px";
       chartDiv.style.display = "inline-block";
       chartDiv.style.margin = "10px";
-      container.appendChild(chartDiv);
+      container.appendChild(chartDiv); // Append after gauge chart
 
       let data = google.visualization.arrayToDataTable(dataArray);
 
@@ -77,14 +129,12 @@
         chartArea: { width: '70%', height: '70%' }
       };
 
-      let chart = new google.visualization.ScatterChart(chartDiv);
+      let chart = new google.visualization.LineChart(chartDiv);
       chart.draw(data, options);
     }
   }
-
-  // Auto-refresh the charts every 5 seconds
-       setInterval(drawCharts, 1000);
 </script>
+
 
 
 
@@ -116,7 +166,8 @@
     box-sizing: border-box;
   }
   .header {
-    background: linear-gradient;
+   background-color: #f1fbfb;
+   
     font-family:Arial, sans-serif;
     display: flex;
     justify-content: space-between;
@@ -147,13 +198,15 @@
     height :100px;
   }
   .sidenav {
+  
     height: calc(90% - 140px);
     width: 230px;
     position: fixed;
     z-index: 1;
     top: 160px;
     left: 0;
-    background-color:#a9e8e6;
+	
+    background-color:#005f73;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 20px;
@@ -162,14 +215,16 @@
   }
   .sidenav a {
     padding: 50px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #050505;
+     text-decoration: none;
+    font-size: 20px;
+    color: #ffffff;
     display: block;
     transition: 0.3s;
   }
   .sidenav a:hover {
-    color: #f1f1f1;
+      color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
   }
   .sidenav .closebtn {
     position: absolute;
@@ -184,6 +239,10 @@
     border-radius: 50%;
     padding: 10px;
   }
+  .sidenav .closebtn:hover {
+    color: red;
+    background-color: rgba(255, 255, 255, 0.3);
+}
   #content {
     margin: 20px;
     font-size: 18px;
@@ -200,7 +259,7 @@
   padding: 10px; /* Optional: Add padding inside the box */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visuals */
   border-radius: 5px; /* Optional: Rounded corners */
-  background: #fff; /* Optional: Background color */
+ background-color: #f1fbfb;
 }
 
 /* Styling for the table */
@@ -265,10 +324,13 @@ table th {
     .table-striped tbody tr:nth-child(even) {
         background-color: #ffffff; 
     }
+	.btn {
+    margin-right: 10px; /* Adjust the spacing between buttons */
+}
 	
 .outer_box {
-    background-color: lightgrey;
-    width: 500px;
+    background-color: #f1fbfb;
+    width: 650px;
     border: 2px solid green;
     padding: 20px;
     margin: 20px;
@@ -276,16 +338,17 @@ table th {
     /* Move to the right corner */
     position: absolute; 
     top: 150px; /* Adjust as needed */
-    right: 20px; /* Moves to the right edge */
+    right: 180px; /* Moves to the right edge */
+	border-radius: 50px;
 }
 
 	 #charts_container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 3 charts per row */
-    gap: 10px;  /* Space between charts */
-    overflow-y: auto;  /* Scroll vertically if there are too many charts */
-    padding: 10px;  /* Optional padding */
-  }
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+	  overflow-y: auto; 
+      margin-top: 20px;
+    }
 
   /* You can also add custom styles for each individual chart if needed */
   .chart_div {
@@ -317,7 +380,7 @@ table th {
 </script>
     <div class="container">
         <header class="header">
-		<a href="\">
+		<a href="\Station1">
 		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>
@@ -336,11 +399,12 @@ table th {
 
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-  <a href="javascript:void(0)" onclick="loadExcelData('Line_Rejection');Line_Rejection()">Line_Rejection</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('Line_Setup');Line_Setup(); ">Line_Setup</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('POKA-YOKE'); P_Y();">POKA-YOKE</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('Maintainance'); Maintainance();">Maintainance</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Line_Rejection');Line_Rejection();setTimeout(LineRejection, 1000);">Line_Rejection</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Line_Setup');Line_Setup(); ">Line_Setup</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST1_POKA-YOKE'); P_Y();">POKA-YOKE</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Maintainance'); Maintainance();">Maintainance</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Tool_Monitoring');Tool_Monitoring();">Over All Report</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>
@@ -353,8 +417,12 @@ table th {
       
        
     
-        <button class="btn btn-primary w-100" onclick="filterTable();drawChart();">Filter</button>
-		 <button class="btn btn-secondary" onclick="clearFilters()">Clear</button></div>
+        <button class="btn btn-primary " onclick="filterTable();">Filter</button>
+		 <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+		 <button class="btn btn-secondary" onclick="setTimeout(LineRejection, 1000);">Chart Refresh</button>
+		 </div>
+		 
+		 
 		 
 <div id="content">
 
@@ -365,10 +433,14 @@ table th {
  <div id="charts_container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"></div>
 
 
+
+
+
+
+
+
 <script>
 
-
-   
 
 
 

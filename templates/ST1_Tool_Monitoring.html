@@ -6,7 +6,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Long Cang' rel='stylesheet'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280, initial-scale=1.0">
-    <title>Line_Rejection</title>
+    <title>Tool_Monitoring</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
     <style>
@@ -39,8 +39,9 @@
             position: relative;
         }
         .header .title {
+		            
+            flex: 1;		
             text-align: center;
-            flex: 1;
         }
         .header .title h1 {
             color: #black;
@@ -48,6 +49,7 @@
         }
         .header .title h2, .header .title h3 {
             margin: 5px 0;
+			
 			color: #black;
 			font-weight: normal
         }
@@ -64,7 +66,6 @@
             left: 10px;
             width: 200px;
 			height :100px;
-			
         }
 		.vl1 {
 			border-left: 2px double green;
@@ -78,7 +79,7 @@
 			border-left: 2px double green;
 			height: 120px;
 			position: absolute;
-			left: 1050px;
+			left: 1000px;
 			margin-left: -3px;
 			top: 0;
 			}
@@ -220,6 +221,14 @@
             right: 10px;
             width: 100px;
         }
+		.logo3 {
+			position: absolute;          
+            top: 0px;
+            left: 900px;
+            width: 50px;
+			height:60px;
+			z-index: 1000;
+        }
 		.glow-red {
             border: 2px solid red;
             box-shadow: 0 0 10px red;
@@ -253,6 +262,7 @@
             align-items: center;
             animation: fadeIn 0.5s ease-in-out;
         }
+		
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -272,10 +282,7 @@
             color: #155724;
             cursor: pointer;
         }
-		span {
-            font-weight: bold;
-            color: green;
-        }
+		
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -302,79 +309,113 @@
         });
 		
 		function clearForm() {
-        document.getElementById("LR_1").value = "";
-		document.getElementById("LR_2").value = "";
-		document.getElementById("LR_3").value = "";
-		document.getElementById("LR_4").value = "";
-		document.getElementById("LR_5").value = "";
-		document.getElementById("LR_6").value = "";
-		document.getElementById("LR_7").value = "";
-		document.getElementById("LR_8").value = "";
-		document.getElementById("LR_9").value = "";
-		document.getElementById("LR_10").value = "";
-document.getElementById("TC").value = "";		
+        document.getElementById("TM_1T").value = "";
+		document.getElementById("TM_2T").value = "";
+		document.getElementById("TM_3T").value = "";
+		document.getElementById("TM_4T").value = "";
+		document.getElementById("TM_5T").value = "";
+		document.getElementById("TM_6T").value = "";
+		document.getElementById("TM_7T").value = "";
+		document.getElementById("TM_8T").value = "";
+		document.getElementById("TM_9T").value = "";
+		document.getElementById("TM_10T").value = "";
+		document.getElementById("TM_11T").value = "";
+		document.getElementById("TM_12T").value = "";
+		document.getElementById("TM_13T").value = "";
+		document.getElementById("TM_14T").value = "";
+		document.getElementById("TM_15T").value = "";
+		document.getElementById("TM_remark").value = "";
+		document.getElementById("TM_qa-sign").value = "";
+		document.getElementById("TM_eng-sign").value = "";
+		document.getElementById("TM_calendar").value = "";
+        
     }
+		
+		
+		
+		
+		
 		
 		
 		
 		function Validate() {
 		const fields = [
         {
-            id: 'LR_1',
+            id: 'TM_1T',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
         {
-            id: 'LR_2',
-            validate: (value) => value >= 0 ,
+            id: 'TM_2T',
+             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
         {
-            id: 'LR_3',
-            validate: (value) => value >=  0,
+            id: 'TM_3T',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LR_4',
-            validate: (value) => value >= 0 ,
+            id: 'TM_4T',
+             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LR_5',
-            validate: (value) => value >= 0 ,
+            id: 'TM_5T',
+             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LR_6',
-            validate: (value) => value >= 0 ,
-            errorMessage: "Invalid_Value",
-        },
-		
-		{
-            id: 'LR_7',
-            validate: (value) => value >=  0,
-            errorMessage: "Invalid_Value",
-        },
-		
-		{
-            id: 'LR_8',
-            validate: (value) => value >= 0 ,
+            id: 'TM_6T',
+             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LR_9',
-            validate: (value) => value >=  0,
+            id: 'TM_7T',
+             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LR_10',
-            validate: (value) => value >= 0 ,
+            id: 'TM_8T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_9T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_10T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_11T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_12T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },{
+            id: 'TM_13T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_14T',
+             validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_15T',
+             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
     ];
-		
-		
-		let isValid = true; // Flag to check if all conditions are met
+	let isValid = true; // Flag to check if all conditions are met
 
     // Validate range-based fields
     fields.forEach(({ id, validate, errorMessage }) => {
@@ -394,7 +435,7 @@ document.getElementById("TC").value = "";
     });
 
     // Validate empty-only fields
-    const emptyFields = ['TC','LR_remark', 'LR_qa-sign', 'LR_eng-sign'];
+    const emptyFields = ['TM_remark', 'TM_qa-sign', 'TM_eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -413,7 +454,7 @@ document.getElementById("TC").value = "";
     });
 	
 	
-	 const dateInput = document.getElementById("LR_calendar");
+	 const dateInput = document.getElementById("TM_calendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
@@ -426,8 +467,7 @@ document.getElementById("TC").value = "";
         showAlert(); // Call the function to display the success message
     }
 	 
-		 
-	else  {
+		else if (!isValid) {
         alert("Please give input before saving!");
     }
 	function showAlert() {
@@ -439,37 +479,16 @@ document.getElementById("TC").value = "";
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("show");
         }
-				return isValid;
 		
-		}
+		return isValid;
+}
+		
+		
 		
     </script>
-	<script>
-	function calculateResults() {
-    // Get the total count value
-    const totalCount = parseFloat(document.getElementById("TC").value);
-
-    // Loop through the 10 mean count inputs
-    for (let i = 1; i <= 10; i++) {
-        const meanCount = parseFloat(document.getElementById(`LR_${i}`).value);
-        const resultElement = document.getElementById(`result${i}`);
-
-        // Check if both totalCount and meanCount are valid numbers
-        if (!isNaN(totalCount) && !isNaN(meanCount) && meanCount !== 0) {
-            const result = (meanCount/totalCount)*100 ; // Perform the division
-            resultElement.textContent = " " + result.toFixed(2); // Display result
-            console.log(`Result ${i}: ${result.toFixed(2)}`); // Print result in console
-        } else {
-            resultElement.textContent = ""; // Clear result if invalid input
-            console.log(`Result ${i}: Invalid input or division by zero.`); // Log invalid result
-        }
-    }
-}
-
-	</script>
 </head>
 <body>
-<form method="post" action="/Line_Rejection" onsubmit="return Validate()" autocomplete="off">
+<form method="post" action="/ST1_Tool_Monitoring" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -489,19 +508,20 @@ document.getElementById("TC").value = "";
 </script>
     <div class="container">
         <header class="header">
-		<a href="\Front_page">
-		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
+		 <a href="\Station1">
+		  <img src="/static/images/pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
+		   <img src="/static/images/Tool_Monitoring.png" alt="PreBo Logo" class="logo3">
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>
             <div class="doc-info">
-                <p>Doc.No.: PBA/QC/R/06</p>
-                <p>Original Date: 30-10-2019</p>
-                <p>Rev.No.: </p>
-                <p>Rev.Date: </p>
+                <p>Doc.No.: PBA/QC/R/11</p>
+                
+                <p>Original Date:30.10.2019</p>
+                <p>Rev.No&Date: 01/01.08.2020</p>
             </div>
             <div class="title">
-                <h1>Line Rejection Datasheet</h1>
-                <h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
+                <h1>Tool Life Monitoring Sheet</h1>  
+				<h2>1st station: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
@@ -509,101 +529,139 @@ document.getElementById("TC").value = "";
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "LR_calendar">Date:</label>
-                   <input for = "date" name="Date" type="datetime-local" id="LR_calendar" />
+				<label for = "TM_calendar">Date:</label>
+                    <input for = "date" name="Date" type="datetime-local" id="TM_calendar" />
                 </h4>
-				 
-                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+                <h4 style="font-weight: normal;">Shift:
                     <select name = "Shift">
-                        <option id="LR_S1" value="SHIFT1">SHIFT_1</option>
-                        <option id="LR_S2" value="SHIFT2">SHIFT_2</option>
-                        <option id="LR_S3" value="SHIFT3">SHIFT_3</option>
+                        <option value="SHIFT1">SHIFT_1</option>
+                        <option value="SHIFT2">SHIFT_2</option>
+                        <option value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
-				<h4 style="font-weight: normal;"><label for = "Total_Count">Production_Quantity:</label>
-                    <input type="number" name="Total Count:" id="TC" oninput="calculateResults()" style="width: 80px; height: 20px;">
-                </h4>
-				
             </div>
 			
 			
 
-            <section class="process-characteristics">
+            <section class="process-characteristics"> 
                 
                 <table>
                     <tr>
-                        <th>Sr.No</th>
-                        <th>Rejection Type</th>
-                        <th>Count</th> 
-						<th>Percentage</th> 
-						
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Threaded Ferrule Damage</td>
-                        <td><input type="number" name="Threaded Ferrule Damage" id="LR_1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result1"></span></td>
-                    </tr>
-					<tr>
-                        <td>2</td>
-                        <td>Threaded Ferrule Thread Damage</td>
-                        <td><input type="number" name="Threaded Ferrule Thread Damage" id="LR_2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result2"></span></td>
-                    </tr>
-					<tr>
-                        <td>3</td>
-                        <td>Valve Plate Damage</td>
-                        <td><input type="number" name="Valve Plate Damage" id="LR_3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result3"></span></td>
-                    </tr>
-					<tr>
-                        <td>4</td>
-                        <td>Spring short Length</td>
-                        <td><input type="number" name="Spring short Length" id="LR_4" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result4"></span></td>
-                    </tr>
+                <th>Sl.No</th>
+                <th>Machine</th>
+                <th>Tool Name</th>
+                <th>Check Points</th>
+                <th>Criteria</th>
+                <th>Observation</th>
+                <th>Total Life Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="3">1</td>
+				 
+                <td rowspan="6">Valve Plate Assembly</td>
+                <td rowspan="3">Top Fixture</td>
+                <td>Check Fixture (Visual)</td>
+                <td>There should be no Cracks or damage.</td>
+                <td><select name="VPA_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="VPA_TF1_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check the Tip of the Fixture</td>
+                <td>There should be no Tip damage.</td>
+                <td><select  name="VPA_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="VPA_TF2_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check Fixture wear out (Visual)</td>
+                <td>No usage of Wear out Fixture</td>
+                <td><select name="VPA_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="VPA_TF3_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+			 <td rowspan="3">2</td>
+                <td rowspan="3">Bottom Fixture</td>
+                <td>Check Fixture (Visual)</td>
+                <td>There should be no Cracks or damage.</td>
+                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check the Tip of the Fixture</td>
+                <td>There should be no Tip damage.</td>
+                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check Fixture wear out (Visual)</td>
+                <td>No usage of Wear out Fixture</td>
+                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td rowspan="3">3</td>
+                <td rowspan="9">Leak Test Unit</td>
+                <td rowspan="3">Top Fixture</td>
+                <td>Check Fixture (Visual)</td>
+                <td>There should be no Cracks or damage.</td>
+                <td><select name="LTU_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_TF1_Tool_Life_cnt"id="TM_7T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check the Tip of the Fixture</td>
+                <td>There should be no Tip damage.</td>
+                <td><select name="LTU_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_TF2_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check Fixture wear out (Visual)</td>
+                <td>No usage of Wear out Fixture</td>
+                <td><select name="LTU_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_TF3_Tool_Life_cnt" id="TM_9T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+			<td rowspan="3">4</td>
+                <td rowspan="4">Bottom Fixture</td>
+                <td>Check Fixture (Visual)</td>
+                <td>There should be no Cracks or damage.</td>
+                <td><select name="LTU_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_BF1_Tool_Life_cnt" id="TM_10T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check the Tip of the Fixture</td>
+                <td>There should be no Tip damage.</td>
+                <td><select name="LTU_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_BF2_Tool_Life_cnt" id="TM_11T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check Fixture wear out (Visual)</td>
+                <td>No usage of Wear out Fixture</td>
+                <td><select name="LTU_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_BF3_Tool_Life_cnt" id="TM_12T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+			<td rowspan="3">5</td>
+                <td>Check PU Pad</td>
+                <td>There should be no Cracks or damage.</td>
+                <td><select  name="LTU_BF4_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LTU_BF4_Tool_Life_cnt"id="TM_13T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">PU Pad</td>
+                <td>Check the Butting Face of the PU Pad</td>
+                <td>There should be no Face damage.</td>
+                <td><select name="LPU_PU1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LPU_PU1_Tool_Life_cnt"id="TM_14T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check PU Pad Face wear out (Visual)</td>
+                <td>No usage of Wear out PU Pad</td>
+                <td><select name="LPU_PU2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="LPU_PU2_Tool_Life_cnt" id="TM_15T"style="width: 80px; height: 20px;"></td>
+            </tr>
+        </tbody>
 					
-					<tr>
-                        <td>5</td>
-                        <td>Filler Piece damage</td>
-                        <td><input type="number" name="Filler Piece damage" id="LR_5" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result5"></span></td>
-                    </tr>
-					
-					<tr>
-                        <td>6</td>
-                        <td>Clamping Sleeve Damage</td>
-                        <td><input type="number" name="Clamping Sleeve Damage"  id="LR_6" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result6"></span></td>
-                    </tr>
-					
-					<tr>
-                        <td>7</td>
-                        <td>Leakage Not ok(LN1)</td>
-                        <td><input type="number" name="Leakage Not ok(LN1)" id="LR_7" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result7"></span></td>
-                    </tr>
-					
-					<tr>
-                        <td>8</td>
-                        <td>Rust on clamping sleeve</td>
-                        <td><input type="number" name="Rust on clamping sleeve" id="LR_8" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result8"></span></td>
-                    </tr>
-					<tr>
-                        <td>9</td>
-                        <td>Filler Piece missing</td>
-                        <td><input type="number" name="Filler Piece missing" id="LR_9" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result9"></span></td>
-                    </tr>
-					
-					<tr>
-                        <td>10</td>
-                        <td>Fallen Down Part  (FD1)</td>
-                        <td><input type="number" name="Fallen Down Part  (FD1)" id="LR_10" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result10"></span></td>
-                    </tr>
-                    
                 </table>
             </section>
 
@@ -613,25 +671,26 @@ document.getElementById("TC").value = "";
             <footer class="footer">
               <div class="signatures">
 			  <div class="signature-box">
-        <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="LR_remark" class="remark-input">
+       <label for="remark">Remark:</label>
+        <input type="text" name ="Remark"id="TM_remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="LR_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="TM_qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="LR_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="TM_eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
-                    <button class="save"  onclick="Validate()" >SAVE</button>
+                     <button class="save"  onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Sved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
-                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
+					
+                   <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>
 
@@ -642,3 +701,5 @@ document.getElementById("TC").value = "";
 	</form>
 </body>
 </html>
+
+

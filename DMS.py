@@ -8,15 +8,16 @@ app = Flask(__name__)
 
 
 # Define the root path for the Excel files
-EXCEL_FOLDER = os.path.join(os.getcwd(), 'templates', 'Excel')
+station1_excel_path = os.path.join(os.getcwd(), 'templates', 'Excel', 'ST1')
+
 
 
 excel_files = {
-    "Maintainance": "templates/Excel/Maintainance.xlsx",
-    "Line_Rejection": "templates/Excel/Line_Rejection.xlsx",
-    "Linesetup": "templates/Excel/Line_setup.xlsx",
-    "Poka_yoke": "templates/Excel/POKA-YOKE.xlsx",    
-    "Tool_Monitoring": "templates/Excel/Tool_Monitoring.xlsx",
+    "ST1_Maintainance": "templates/Excel/ST1/ST1_Maintainance.xlsx",
+    "ST1_Line_Rejection": "templates/Excel/ST1/ST1_Line_Rejection.xlsx",
+    "ST1_Linesetup": "templates/Excel/ST1/ST1_Line_setup.xlsx",
+    "ST1_Poka_yoke": "templates/Excel/ST1/ST1_POKA-YOKE.xlsx",    
+    "ST1_Tool_Monitoring": "templates/ST1/ST1_Excel/Tool_Monitoring.xlsx",
     
 }
 
@@ -32,38 +33,42 @@ def save_to_excel(app_name, data):
 def index():
     return render_template("index.html")
     
-@app.route("/Front_page")
-def Front_page():
-    return render_template("Front_page.html")    
-    
-@app.route("/Line_Rejection")
-def Line_Rejection():
-    return render_template("Line_Rejection.html")
+@app.route("/AhpAllStation")
+def AhpAllStation():
+    return render_template("AhpAllStation.html")      
 
-@app.route("/Linesetup")
-def Linesetup():
-    return render_template("Linesetup.html")
+@app.route("/Station1")
+def Station1():
+    return render_template("Station1.html")       
     
-@app.route("/Maintainance")
-def Maintainance():
-    return render_template("Maintainance.html")
+@app.route("/ST1_Line_Rejection")
+def ST1_Line_Rejection():
+    return render_template("ST1_Line_Rejection.html")
 
-@app.route("/Poka_yoke")
-def Poka_yoke():
-    return render_template("Poka_yoke.html")
-
-@app.route("/Tool_Monitoring")
-def Tool_Monitoring():
-    return render_template("Tool_Monitoring.html")
+@app.route("/ST1_Linesetup")
+def ST1_Linesetup():
+    return render_template("ST1_Linesetup.html")
     
-@app.route("/Report")
+@app.route("/ST1_Maintainance")
+def ST1_Maintainance():
+    return render_template("ST1_Maintainance.html")
+
+@app.route("/ST1_Poka_yoke")
+def ST1_Poka_yoke():
+    return render_template("ST1_Poka_yoke.html")
+
+@app.route("/ST1_Tool_Monitoring")
+def ST1_Tool_Monitoring():
+    return render_template("ST1_Tool_Monitoring.html")
+    
+@app.route("/ST1_Report")
 def Report():
-    return render_template("Report.html")    
+    return render_template("ST1_Report.html")    
 
 @app.route('/get_excel_data/<filename>', methods=['GET'])
 def get_excel_data(filename):
     try:
-        file_path = os.path.join(EXCEL_FOLDER, f'{filename}.xlsx')
+        file_path = os.path.join(station1_excel_path, f'{filename}.xlsx')
         
         if not os.path.exists(file_path):
             return jsonify({'error': f'File {filename}.xlsx not found.'}), 404
@@ -101,16 +106,23 @@ def get_excel_data(filename):
         return jsonify({'error': str(e)}), 500
 
 
-
-@app.route("/<app_name>", methods=["POST"])
+@app.route("/<path:app_name>", methods=["POST"])  # Allows slashes in app_name
 def submit(app_name):
-    if app_name not in excel_files:
+    actual_app_name = os.path.basename(app_name)  # Extracts last part after the final slash
+    
+    print(f"\n---- Processing request for: {actual_app_name} ----")  
+
+    if actual_app_name not in excel_files:
         return "Invalid application", 400
+    
     data = request.form.to_dict()
-    save_to_excel(app_name, data)
-    print(f"Received data for {app_name}: {data}")   
+    save_to_excel(actual_app_name, data)  # Pass only the last part
+    
+    print(f"Received data for {actual_app_name}: {data}")  
+    
     time.sleep(2)    
     return render_template(f"{app_name}.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)

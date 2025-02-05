@@ -312,7 +312,11 @@
 		document.getElementById("LR_8").value = "";
 		document.getElementById("LR_9").value = "";
 		document.getElementById("LR_10").value = "";
-document.getElementById("TC").value = "";		
+		document.getElementById("TC").value = "";	
+		document.getElementById("remark").value = "";
+		document.getElementById("qa-sign").value = "";
+		document.getElementById("eng-sign").value = "";
+		document.getElementById("calendar").value = "";	
     }
 		
 		
@@ -394,7 +398,7 @@ document.getElementById("TC").value = "";
     });
 
     // Validate empty-only fields
-    const emptyFields = ['TC','LR_remark', 'LR_qa-sign', 'LR_eng-sign'];
+    const emptyFields = ['TC','remark', 'qa-sign', 'eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -509,8 +513,8 @@ document.getElementById("TC").value = "";
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "LR_calendar">Date:</label>
-                   <input for = "date" name="Date" type="datetime-local" id="LR_calendar" />
+				<label for = "calendar">Date:</label>
+                   <input for = "date" name="Date" type="datetime-local" id="calendar" />
                 </h4>
 				 
                 <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
@@ -614,15 +618,15 @@ document.getElementById("TC").value = "";
               <div class="signatures">
 			  <div class="signature-box">
         <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="LR_remark" class="remark-input">
+        <input type="text" name ="Remark"id="remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="LR_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="LR_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">

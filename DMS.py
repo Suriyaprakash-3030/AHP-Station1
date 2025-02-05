@@ -13,12 +13,28 @@ station1_excel_path = os.path.join(os.getcwd(), 'templates', 'Excel', 'ST1')
 
 
 excel_files = {
+ 
     "ST1_Maintainance": "templates/Excel/ST1/ST1_Maintainance.xlsx",
+    "ST2_Maintainance": "templates/Excel/ST2/ST2_Maintainance.xlsx",
+    "ST3_Maintainance": "templates/Excel/ST3/ST3_Maintainance.xlsx",
+    "ST4_Maintainance": "templates/Excel/ST4/ST4_Maintainance.xlsx",
     "ST1_Line_Rejection": "templates/Excel/ST1/ST1_Line_Rejection.xlsx",
+    "ST2_Line_Rejection": "templates/Excel/ST2/ST2_Line_Rejection.xlsx",
+    "ST3_Line_Rejection": "templates/Excel/ST3/ST3_Line_Rejection.xlsx",
+    "ST4_Line_Rejection": "templates/Excel/ST4/ST4_Line_Rejection.xlsx",
     "ST1_Linesetup": "templates/Excel/ST1/ST1_Line_setup.xlsx",
+    "ST2_Linesetup": "templates/Excel/ST2/ST2_Line_setup.xlsx",
+    "ST3_Linesetup": "templates/Excel/ST3/ST3_Line_setup.xlsx",
+    "ST4_Linesetup": "templates/Excel/ST4/ST4_Line_setup.xlsx",
     "ST1_Poka_yoke": "templates/Excel/ST1/ST1_POKA-YOKE.xlsx",    
-    "ST1_Tool_Monitoring": "templates/ST1/ST1_Excel/Tool_Monitoring.xlsx",
-    
+    "ST2_Poka_yoke": "templates/Excel/ST2/ST2_POKA-YOKE.xlsx",    
+    "ST3_Poka_yoke": "templates/Excel/ST3/ST3_POKA-YOKE.xlsx",    
+    "ST4_Poka_yoke": "templates/Excel/ST4/ST4_POKA-YOKE.xlsx",    
+    "ST1_Tool_Monitoring": "templates/Excel/ST1/ST1_Tool_Monitoring.xlsx",
+    "ST2_Tool_Monitoring": "templates/Excel/ST2/ST2_Tool_Monitoring.xlsx",
+    "ST3_Tool_Monitoring": "templates/Excel/ST3/ST3_Tool_Monitoring.xlsx",
+    "ST4_Tool_Monitoring": "templates/Excel/ST4/ST4_Tool_Monitoring.xlsx",
+  
 }
 
 def save_to_excel(app_name, data):
@@ -39,31 +55,121 @@ def AhpAllStation():
 
 @app.route("/Station1")
 def Station1():
-    return render_template("Station1.html")       
+    return render_template("Station1.html") 
+
+@app.route("/Station2")
+def Station2():
+    return render_template("Station2.html") 
+
+@app.route("/Station3")
+def Station3():
+    return render_template("Station3.html") 
+
+
+@app.route("/Station4")
+def Station4():
+    return render_template("Station4.html") 
+
     
 @app.route("/ST1_Line_Rejection")
 def ST1_Line_Rejection():
     return render_template("ST1_Line_Rejection.html")
+    
+@app.route("/ST2_Line_Rejection")
+def ST2_Line_Rejection():
+    return render_template("ST2_Line_Rejection.html")
+
+@app.route("/ST3_Line_Rejection")
+def ST3_Line_Rejection():
+    return render_template("ST3_Line_Rejection.html")
+
+
+@app.route("/ST4_Line_Rejection")
+def ST4_Line_Rejection():
+    return render_template("ST4_Line_Rejection.html")
+    
 
 @app.route("/ST1_Linesetup")
 def ST1_Linesetup():
     return render_template("ST1_Linesetup.html")
     
+@app.route("/ST2_Linesetup")
+def ST2_Linesetup():
+    return render_template("ST2_Linesetup.html")
+
+@app.route("/ST3_Linesetup")
+def ST3_Linesetup():
+    return render_template("ST3_Linesetup.html")
+
+@app.route("/ST4_Linesetup")
+def ST4_Linesetup():
+    return render_template("ST4_Linesetup.html")    
+    
 @app.route("/ST1_Maintainance")
 def ST1_Maintainance():
     return render_template("ST1_Maintainance.html")
+    
+@app.route("/ST2_Maintainance")
+def ST2_Maintainance():
+    return render_template("ST2_Maintainance.html")
+
+@app.route("/ST3_Maintainance")
+def ST3_Maintainance():
+    return render_template("ST3_Maintainance.html")
+
+@app.route("/ST4_Maintainance")
+def ST4_Maintainance():
+    return render_template("ST4_Maintainance.html")    
 
 @app.route("/ST1_Poka_yoke")
 def ST1_Poka_yoke():
     return render_template("ST1_Poka_yoke.html")
 
+@app.route("/ST2_Poka_yoke")
+def ST2_Poka_yoke():
+    return render_template("ST2_Poka_yoke.html")
+
+@app.route("/ST3_Poka_yoke")
+def ST3_Poka_yoke():
+    return render_template("ST3_Poka_yoke.html")
+
+
+@app.route("/ST4_Poka_yoke")
+def ST4_Poka_yoke():
+    return render_template("ST4_Poka_yoke.html")    
+
 @app.route("/ST1_Tool_Monitoring")
 def ST1_Tool_Monitoring():
     return render_template("ST1_Tool_Monitoring.html")
     
+@app.route("/ST2_Tool_Monitoring")
+def ST2_Tool_Monitoring():
+    return render_template("ST2_Tool_Monitoring.html")
+
+@app.route("/ST3_Tool_Monitoring")
+def ST3_Tool_Monitoring():
+    return render_template("ST3_Tool_Monitoring.html")
+
+
+@app.route("/ST4_Tool_Monitoring")
+def ST4_Tool_Monitoring():
+    return render_template("ST4_Tool_Monitoring.html")    
+    
 @app.route("/ST1_Report")
-def Report():
-    return render_template("ST1_Report.html")    
+def ST1_Report():
+    return render_template("ST1_Report.html")
+
+@app.route("/ST2_Report")
+def ST2_Report():
+    return render_template("ST2_Report.html")
+
+@app.route("/ST3_Report")
+def ST3_Report():
+    return render_template("ST3_Report.html")
+
+@app.route("/ST4_Report")
+def ST4_Report():
+    return render_template("ST4_Report.html")    
 
 @app.route('/get_excel_data/<filename>', methods=['GET'])
 def get_excel_data(filename):

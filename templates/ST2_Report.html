@@ -1,0 +1,702 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart', 'gauge']});
+  google.charts.setOnLoadCallback(LineRejection);
+
+  function LineRejection() {
+    let table = document.querySelector(".table"); // Ensure the table has class "table"
+
+    if (!table) return; // Stop if the table is not found
+
+    let rows = table.querySelectorAll("tr");
+
+    if (rows.length < 2) return; // Ensure at least one data row
+
+    let headers = rows[0].querySelectorAll("th"); // Get column headers
+    let dataRows = Array.from(rows).slice(1); // Skip header row
+
+    let container = document.getElementById("charts_container");
+    container.innerHTML = ""; // Clear existing charts before redrawing
+
+    let colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF', '#33FFF1', '#000000', '#FF3333', '#33A1FF', '#B833FF'];
+
+    // ================================
+    // ✅ STEP 1: PRODUCTION GAUGE CHART (First)
+    // ================================
+    let totalProduction = 0;
+    let totalFailures = 0;
+
+    // Get the latest row (latest data)
+    if (dataRows.length > 0) {
+      let latestRow = dataRows[dataRows.length - 1];
+      let cells = latestRow.querySelectorAll("td");
+
+      // Get total production from column 2
+      totalProduction = parseInt(cells[2].textContent) || 0;
+
+      // Sum up failed counts from columns 3 to 13
+      for (let colIndex = 3; colIndex < 13; colIndex++) {
+        totalFailures += parseInt(cells[colIndex].textContent) || 0;
+      }
+    }
+
+    // Calculate production percentage
+    let productionPercentage = totalProduction > 0
+      ? ((totalProduction - totalFailures) / totalProduction) * 100
+      : 0;
+
+    // Create Gauge Chart container **FIRST**
+    let gaugeDiv = document.createElement("div");
+    gaugeDiv.id = "gauge_chart";
+    gaugeDiv.style.width = "400px";
+    gaugeDiv.style.height = "300px";
+    gaugeDiv.style.display = "inline-block";
+    gaugeDiv.style.margin = "10px";
+    container.appendChild(gaugeDiv); // Append first
+
+    let gaugeData = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Productivity', productionPercentage] // Dynamically set value
+    ]);
+
+    let gaugeOptions = {
+      width: 400, height: 300,
+      redFrom: 0, redTo: 50,
+      yellowFrom: 50, yellowTo: 80,
+      greenFrom: 80, greenTo: 100,
+      minorTicks: 5
+    };
+
+    let gaugeChart = new google.visualization.Gauge(gaugeDiv);
+    gaugeChart.draw(gaugeData, gaugeOptions);
+
+    // ================================
+    // ✅ STEP 2: LINE CHARTS (Second)
+    // ================================
+    for (let colIndex = 2; colIndex < 13; colIndex++) {
+      let columnName = headers[colIndex].textContent.trim();
+      let dataArray = [['Date', 'Count']];
+
+      // Loop through each row to get values for this column
+      dataRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+        let dateString = cells[0].textContent.trim(); // Assuming first column is Date
+        let countValue = parseInt(cells[colIndex].textContent) || 0; // Get count for this column
+
+        // Convert date string to JavaScript Date object
+        let dateParts = dateString.split('-'); // Assuming format "YYYY-MM-DD"
+        let dateObj = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+
+        dataArray.push([dateObj, countValue]);
+      });
+
+      // Create a div for each chart
+      let chartDiv = document.createElement("div");
+      chartDiv.id = "chart_" + colIndex;
+      chartDiv.style.width = "400px";
+      chartDiv.style.height = "300px";
+      chartDiv.style.display = "inline-block";
+      chartDiv.style.margin = "10px";
+      container.appendChild(chartDiv); // Append after gauge chart
+
+      let data = google.visualization.arrayToDataTable(dataArray);
+
+      let options = {
+        title: columnName,
+        width: 400,
+        height: 300,
+        legend: { position: 'none' },
+        hAxis: {
+          title: 'Date',
+          format: 'MMM dd', // Formats date as "Jan 01"
+          gridlines: { count: 4 }
+        },
+        vAxis: {
+          title: 'Count',
+          minValue: 0
+        },
+        pointSize: 5,
+        colors: [colors[(colIndex - 2) % colors.length]], // Assign unique color
+        chartArea: { width: '70%', height: '70%' }
+      };
+
+      let chart = new google.visualization.LineChart(chartDiv);
+      chart.draw(data, options);
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+<!-- DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<title>Report For AHP</title>
+
+<style>
+  body {
+    max-width: 100%;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    width: 1280px;
+    height: 800px;
+    overflow: auto;
+  }
+  .container {
+    width: 100%;
+    min-height: 800px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+  .header {
+   background-color: #f1fbfb;
+   
+    font-family:Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00a65a;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    position: relative;
+  }
+  .header .title {
+    flex: 1;        
+    text-align: center;
+  }
+  .header .title h1 {
+    color: #black;
+    margin: 0;
+  }
+  .header .title h2, .header .title h3 {
+    margin: 5px 0;
+    color: #black;
+    font-weight: normal
+  }
+  .header .logo {
+    position: absolute;
+    top:20px;
+    left: 10px;
+    width: 200px;
+    height :100px;
+  }
+  .sidenav {
+  
+    height: calc(90% - 140px);
+    width: 230px;
+    position: fixed;
+    z-index: 1;
+    top: 160px;
+    left: 0;
+	
+    background-color:#005f73;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  .sidenav a {
+    padding: 50px 8px 8px 32px;
+     text-decoration: none;
+    font-size: 20px;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidenav a:hover {
+      color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 10px;
+  }
+  .sidenav .closebtn:hover {
+    color: red;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+  #content {
+    margin: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+ /* Container for the table */
+.table-container {
+  width: 100%; /* Full width of parent container */
+  max-height: 500px; /* Limit height, adjust as needed */
+  overflow-x: auto; /* Horizontal scrolling */
+  overflow-y: auto; /* Vertical scrolling */
+  border: 1px solid #ccc; /* Optional: Add a border around the table */
+  margin: 20px 0; /* Space above and below */
+  padding: 10px; /* Optional: Add padding inside the box */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visuals */
+  border-radius: 5px; /* Optional: Rounded corners */
+ background-color: #f1fbfb;
+}
+
+/* Styling for the table */
+table {
+  width: 100%; /* Ensure the table takes full width of the container */
+  border-collapse: collapse; /* Collapse table borders */
+}
+
+table th, table td {
+  border: 1px solid #ddd; /* Add borders to table cells */
+  padding: 8px; /* Padding inside cells */
+  text-align: left; /* Align text to the left */
+}
+
+table th {
+  background-color: #f4f4f4; /* Light background for headers */
+  font-weight: bold; /* Bold headers */
+}
+
+  .vl1 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 200px;
+			margin-left: -3px;
+			top: 0;
+			}
+			.header .doc-info {
+			color: #black;
+            position: absolute;
+            right: 10px;
+            text-align: left;			
+            font-size: 0.9em;
+           
+        }
+        .header .logo {
+            position: absolute;
+            left: 10px;
+            width: 200px;
+			height :100px;
+        }
+		.vl1 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 200px;
+			margin-left: -3px;
+			top: 0;
+			}
+			.vl2 {
+			border-left: 2px double green;
+			height: 120px;
+			position: absolute;
+			left: 1050px;
+			margin-left: -3px;
+			top: 0;
+			}
+			 .table-striped tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+        background-color: #ffffff; 
+    }
+	.btn {
+    margin-right: 10px; /* Adjust the spacing between buttons */
+}
+	
+.outer_box {
+    background-color: #f1fbfb;
+    width: 650px;
+    border: 2px solid green;
+    padding: 20px;
+    margin: 20px;
+    
+    /* Move to the right corner */
+    position: absolute; 
+    top: 150px; /* Adjust as needed */
+    right: 180px; /* Moves to the right edge */
+	border-radius: 50px;
+}
+
+	 #charts_container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+	  overflow-y: auto; 
+      margin-top: 20px;
+    }
+
+  /* You can also add custom styles for each individual chart if needed */
+  .chart_div {
+    width: 100%;  /* Full width within the grid */
+    height: 300px;  /* Fixed height for each chart */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+<div class="date-time" id="date-time"></div>
+<script>
+    const dateTimeElement = document.getElementById('date-time');
+    setInterval(() => {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: false 
+        };
+        dateTimeElement.textContent = now.toLocaleString('en-GB', options); // 'en-GB' for 24-hour format
+    }, 1000);
+</script>
+    <div class="container">
+        <header class="header">
+		<a href="\Station2">
+		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
+		  <div class="vl1"></div>
+		  <div class="vl2"></div>
+            <div class="doc-info"></div>
+            <div class="title">
+                <h1>Table & Data Analytics</h1>
+                <h2>STATION2 - Lip Ring & Spring Seat Assembly</h2>
+                <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
+            </div>
+        </header>
+		
+
+		
+		
+<div id="mySidenav" class="sidenav">
+
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+  <a href="javascript:void(0)" onclick="loadExcelData('ST2_Line_Rejection');Line_Rejection();setTimeout(LineRejection, 1000);">Line_Rejection</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST2_Line_Setup');Line_Setup(); ">Line_Setup</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST2_POKA-YOKE'); P_Y();">POKA-YOKE</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST2_Maintainance'); Maintainance();">Maintainance</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST2_Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST2_Tool_Monitoring');Tool_Monitoring();">Over All Report</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>
+<div class = "outer_box">
+   <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" class="form-control">
+     
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" class="form-control">
+      
+       
+    
+        <button class="btn btn-primary " onclick="filterTable();">Filter</button>
+		 <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+		 <button class="btn btn-secondary" onclick="setTimeout(LineRejection, 1000);">Chart Refresh</button>
+		 </div>
+		 
+		 
+		 
+<div id="content">
+
+</div>
+
+  
+ 
+ <div id="charts_container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"></div>
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  setTimeout(closeNav, 6000);
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+let currentFile = "";
+
+function loadExcelData(fileName) {
+ closeNav();
+            currentFile = fileName; // Save the selected file name
+            fetch(`/get_excel_data/${fileName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.table_html) {
+                        document.getElementById("content").innerHTML = `<div class="table-container">${data.table_html}</div>`;
+                    } else {
+                        document.getElementById("content").innerHTML = `<p>Error: ${data.error}</p>`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("content").innerHTML = `<p>Error: ${error}</p>`;
+                });
+        }
+
+        function filterTable() {
+            if (!currentFile) {
+                alert("Please select an Excel file first!");
+                return;
+            }
+
+
+const startDate = document.getElementById("start_date").value;
+            const endDate = document.getElementById("end_date").value;
+
+            let fetchUrl = `/get_excel_data/${currentFile}?`;
+            if (startDate) fetchUrl += `start_date=${startDate}&`;
+            if (endDate) fetchUrl += `end_date=${endDate}&`;
+
+            fetch(fetchUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.table_html) {
+                        document.getElementById("content").innerHTML = `<div class="table-container">${data.table_html}</div>`;
+                    } else {
+                        document.getElementById("content").innerHTML = `<p>Error: ${data.error}</p>`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("content").innerHTML = `<p>Error: ${error}</p>`;
+                });
+        }
+
+        function clearFilters() {
+            document.getElementById("start_date").value = "";
+            document.getElementById("end_date").value = "";
+            if (currentFile) {
+                loadExcelData(currentFile);
+            }
+        }
+		
+		
+		
+	  
+	  
+function Line_Rejection() {
+      const headerTitle1 = document.querySelector('.title h1');
+      const headerSubtitle1 = document.querySelector('.title h2');
+      const headerProduct1 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle1.textContent = "Line Rejection Datasheet";
+      headerSubtitle1.textContent = "STATION2 - Lip Ring & Spring Seat Assembly";
+      headerProduct1.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	    // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+	
+	
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+    <p>Doc.No.: PBA/QC/R/06</p>
+                <p>Original Date: 30-10-2019</p>
+                <p>Rev.No.: </p>
+                <p>Rev.Date: </p>
+  `;
+    }
+	function Line_Setup() {
+      const headerTitle2 = document.querySelector('.title h1');
+      const headerSubtitle2 = document.querySelector('.title h2');
+      const headerProduct2 = document.querySelector('.title h3');	  
+	  
+      
+      // Update content
+	  
+      headerTitle2.textContent = "Set Up Approval & Inprocess Inspection Report";
+      headerSubtitle2.textContent = "STATION2 - Lip Ring & Spring Seat Assembly";
+      headerProduct2.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+    <p>Doc.No.: PBA/QC/R/06</p>
+                <p>Original Date: 30-10-2019</p>
+                <p>Rev.No.: </p>
+                <p>Rev.Date: </p>
+  `;
+	  
+    }
+	function P_Y() {
+      const headerTitle3 = document.querySelector('.title h1');
+      const headerSubtitle3 = document.querySelector('.title h2');
+      const headerProduct3 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle3.textContent = "POKA-YOKE Check Sheet";
+     headerSubtitle3.textContent = "STATION2 - Lip Ring & Spring Seat Assembly";
+      headerProduct3.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+<p>Doc.No.: PBA/QC/R/16</p>                
+                <p>Dated:30.10.2019</p>
+				 <p>Rev.No: 02</p>
+                <p>Rev.Date: 12.10.2023</p>
+  `;
+    }
+	function Tool_Monitoring() {
+      const headerTitle4 = document.querySelector('.title h1');
+      const headerSubtitle4 = document.querySelector('.title h2');
+      const headerProduct4 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle4.textContent = "Tool Life Monitoring Sheet";
+      headerSubtitle4.textContent = "STATION2 - Lip Ring & Spring Seat Assembly";
+      headerProduct4.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+     <p>Doc.No.: PBA/QC/R/11</p>
+                
+                <p>Original Date:30.10.2019</p>
+                <p>Rev.No: 01</p>
+				<p>Rev.Date: 01.08.2020</p>
+  `;
+    }
+	function Maintainance() {
+      const headerTitle5 = document.querySelector('.title h1');
+      const headerSubtitle5 = document.querySelector('.title h2');
+      const headerProduct5 = document.querySelector('.title h3');
+      
+      // Update content
+      headerTitle5.textContent = "Secondary Level Maintainance";
+     headerSubtitle5.textContent = "STATION2 - Lip Ring & Spring Seat Assembly";
+      headerProduct5.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
+	  
+	      // Handle doc-info element
+  let docInfo1 = document.querySelector('.doc-info');
+  
+  // If the doc-info element doesn't exist, create it
+  if (!docInfo1) {
+    docInfo1 = document.createElement('div');
+    docInfo1.classList.add('doc-info');
+    
+    // Append to the header
+    document.querySelector('.header').appendChild(docInfo1);
+  }
+  
+  // Clear previous content if any
+  docInfo1.innerHTML = '';
+  
+  // Add new content with <p> tags
+  docInfo1.innerHTML = `
+<p>Doc.No.: PBA/MTCE/R/02</p>
+                
+                <p>Rev.No.: 04</p>
+                <p>Rev.Date: 02.12.2023</p>
+  `;
+    }
+	
+</script>
+<style>
+   
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+        background-color: #ffffff; 
+    }
+</style>
+
+</body>
+</html>

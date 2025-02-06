@@ -282,6 +282,32 @@
             color: #155724;
             cursor: pointer;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
 		
     </style>
     <script>
@@ -504,21 +530,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
 		else if (!isValid) {
-        alert("Please give input before saving!");
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		
 		return isValid;
@@ -605,60 +633,60 @@
                 <td rowspan="3">Top Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF1_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_TF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_TF_Check Fixture_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage</td>
-                <td><select  name="VPA_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF2_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
+                <td><select  name="Cap Handle Oiling_TF_Check the Tip of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_TF_Check the Tip of the Fixture_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF3_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_TF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_TF_Check Fixture wear out_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
 			 <td rowspan="3">2</td>
                 <td rowspan="3">Bottom Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_BF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_BF_Check Fixture_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_BF_Check the Tip of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_BF_Check the Tip of the Fixture_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_BF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_BF_Check Fixture wear out_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
             </tr>
 			<tr>
 			 <td rowspan="3">3</td>
                 <td rowspan="3">Spray Nozzle</td>
                 <td>Check Nozzle (Visual</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_7T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_SN_Check Nozzle_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_SN_Check Nozzle_Tool_Life_cnt" id="TM_7T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Holes of the Nozzle</td>
                 <td>There should be no Tip and Hole damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_SN_Check the Holes of the Nozzle_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_SN_Check the Holes of the Nozzle_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Nozzle wear out (Visual)</td>
                 <td>No usage of Wear out Nozzle</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_9T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle Oiling_SN_Check Nozzle wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle Oiling_SN_Check Nozzle wear out_Tool_Life_cnt"id="TM_9T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td rowspan="3">1</td>
@@ -666,80 +694,80 @@
                 <td rowspan="3">Bottom Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="LTU_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF1_Tool_Life_cnt"id="TM_10T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_BF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_BF_Check Fixture_Tool_Life_cnt"id="TM_10T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="LTU_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF2_Tool_Life_cnt"id="TM_11T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_BF_Check the Tip of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_BF_Check the Tip of the Fixture_Tool_Life_cnt"id="TM_11T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="LTU_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF3_Tool_Life_cnt" id="TM_12T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_BF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_BF_Check Fixture wear out_Tool_Life_cnt" id="TM_12T"style="width: 80px; height: 20px;"></td>
             </tr>
 			<tr>
 			 <td rowspan="3">2</td>
                 <td rowspan="3">Spring presence dolly</td>
                 <td>Check the Dolly (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_13T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_SPD_Check the Dolly_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_SPD_Check the Dolly_Tool_Life_cnt" id="TM_13T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Dolly</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_14T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_SPD_Check the Tip of the Dolly_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_SPD_Check the Tip of the Dolly_cnt"id="TM_14T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Dolly wear out (Visual)</td>
                 <td>No usage of Wear out Dolly</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_15T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_SPD_Check Dolly wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_SPD_Check Dolly wear out_Tool_Life_cnt"id="TM_15T" style="width: 80px; height: 20px;"></td>
             </tr>
 			<tr>
 			 <td rowspan="3">3</td>
                 <td rowspan="3">Pressing Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_16T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_PF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_PF_Check Fixture_Tool_Life_cnt" id="TM_16T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
-                <td>Check the Tip of the Fixture</td>
+                <td>Check Fixture of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_17T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_PF_Check Fixture of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_PF_Check Fixture of the Fixture_Tool_Life_cnt"id="TM_17T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_18T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_PF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_PF_Check Fixture wear out_Tool_Life_cnt"id="TM_18T" style="width: 80px; height: 20px;"></td>
             </tr>
 			<tr>
 			 <td rowspan="3">4</td>
                 <td rowspan="3">Ferrule clamping Gripper</td>
                 <td>Check Gripper (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_19T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_FCG_Check Gripper_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_FCG_Check Gripper_Tool_Life_cnt" id="TM_19T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Gripper</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_20T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_FCG_Check the Tip of the Gripper_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_FCG_Check the Tip of the Gripper_Tool_Life_cnt"id="TM_20T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Gripper wear out (Visual)</td>
                 <td>No usage of Wear out Gripper</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_21T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Cap Handle and Threaded ferrule Assembly_FCG_Check Gripper wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Cap Handle and Threaded ferrule Assembly_FCG_Check Gripper wear out_Tool_Life_cnt"id="TM_21T" style="width: 80px; height: 20px;"></td>
             </tr>
             
         </tbody>
@@ -772,6 +800,9 @@
 					<button class="close-btn" onclick="closeAlert()">×</button>
 					</div>
 					
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
+					</div>
                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>

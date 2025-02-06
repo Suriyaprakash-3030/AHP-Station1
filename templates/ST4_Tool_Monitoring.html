@@ -262,7 +262,32 @@
             align-items: center;
             animation: fadeIn 0.5s ease-in-out;
         }
-		
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -312,22 +337,10 @@
         document.getElementById("TM_1T").value = "";
 		document.getElementById("TM_2T").value = "";
 		document.getElementById("TM_3T").value = "";
-		document.getElementById("TM_4T").value = "";
-		document.getElementById("TM_5T").value = "";
-		document.getElementById("TM_6T").value = "";
-		document.getElementById("TM_7T").value = "";
-		document.getElementById("TM_8T").value = "";
-		document.getElementById("TM_9T").value = "";
-		document.getElementById("TM_10T").value = "";
-		document.getElementById("TM_11T").value = "";
-		document.getElementById("TM_12T").value = "";
-		document.getElementById("TM_13T").value = "";
-		document.getElementById("TM_14T").value = "";
-		document.getElementById("TM_15T").value = "";
-		document.getElementById("TM_remark").value = "";
-		document.getElementById("TM_qa-sign").value = "";
-		document.getElementById("TM_eng-sign").value = "";
-		document.getElementById("TM_calendar").value = "";
+		document.getElementById("remark").value = "";
+		document.getElementById("qa-sign").value = "";
+		document.getElementById("eng-sign").value = "";
+		document.getElementById("calendar").value = "";
         
     }
 		
@@ -355,65 +368,7 @@
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
-		{
-            id: 'TM_4T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_5T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_6T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_7T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_8T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_9T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_10T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_11T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_12T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },{
-            id: 'TM_13T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_14T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_15T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
+		
     ];
 	let isValid = true; // Flag to check if all conditions are met
 
@@ -435,7 +390,7 @@
     });
 
     // Validate empty-only fields
-    const emptyFields = ['TM_remark', 'TM_qa-sign', 'TM_eng-sign'];
+    const emptyFields = ['remark', 'qa-sign', 'eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -454,7 +409,7 @@
     });
 	
 	
-	 const dateInput = document.getElementById("TM_calendar");
+	 const dateInput = document.getElementById("calendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
@@ -468,17 +423,23 @@
     }
 	 
 		else if (!isValid) {
-        alert("Please give input before saving!");
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
+
+        
+		
+		
 		
 		return isValid;
 }
@@ -488,7 +449,7 @@
     </script>
 </head>
 <body>
-<form method="post" action="/Tool_Monitoring" onsubmit="return Validate()" autocomplete="off">
+<form method="post" action="/ST4_Tool_Monitoring" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -508,7 +469,7 @@
 </script>
     <div class="container">
         <header class="header">
-		 <a href="\Front_page">
+		 <a href="\Station4">
 		  <img src="/static/images/pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
 		   <img src="/static/images/Tool_Monitoring.png" alt="PreBo Logo" class="logo3">
 		  <div class="vl1"></div>
@@ -529,8 +490,8 @@
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "TM_calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="TM_calendar" />
+				<label for = "calendar">Date:</label>
+                    <input for = "date" name="Date" type="datetime-local" id="calendar" />
                 </h4>
                 <h4 style="font-weight: normal;">Shift:
                     <select name = "Shift">
@@ -564,20 +525,20 @@
                 <td rowspan="3">Mandrel</td>
                 <td>Check Mandrel (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF1_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Check Mandrel_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Check Mandrel_TotalLifeCount" id="TM_1T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Face of the mandrel</td>
                 <td>There should be no Tip damage.</td>
-                <td><select  name="VPA_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF2_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
+                <td><select  name="Check the Face of the mandrel_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Check the Face of the mandrel_TotalLifeCount" id="TM_2T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Mandrel wear out (Visual)</td>
                 <td>No usage of Wear Mandrel</td>
-                <td><select name="VPA_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF3_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Check Mandrel wear out_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Check Mandrel wear out_TotalLifeCount" id="TM_3T"style="width: 80px; height: 20px;"></td>
             </tr>
             
         </tbody>
@@ -592,22 +553,24 @@
               <div class="signatures">
 			  <div class="signature-box">
        <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="TM_remark" class="remark-input">
+        <input type="text" name ="Remark"id="remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="TM_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="TM_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
                      <button class="save"  onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Sved into Excel!</span>
-					<button class="close-btn" onclick="closeAlert()">×</button>
+					<span>✅ Success: Data Saved into Excel!</span>					
+					</div>
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
 					</div>
 					
                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>

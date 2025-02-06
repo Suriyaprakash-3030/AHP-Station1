@@ -272,6 +272,32 @@
             color: #155724;
             cursor: pointer;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -301,13 +327,11 @@
         document.getElementById("LS1").value = "";
 		document.getElementById("LS2").value = "";
 		document.getElementById("LS3").value = "";
-		document.getElementById("LS4").value = "";
-		document.getElementById("LS5").value = "";
-		document.getElementById("LS6").value = "";
+		document.getElementById("LS4").value = "";		
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
-		document.getElementById("calendar").value = "";
+		document.getElementById("lcalendar").value = "";
         
     }
 	
@@ -333,16 +357,7 @@
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
-		{
-            id: 'LS5',
-            validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-        {
-            id: 'LS6',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
+		
     ];
 	let isValid = true; // Flag to check if all conditions are met
 
@@ -383,7 +398,7 @@
     });
 	
 	
-	 const dateInput = document.getElementById("calendar");
+	 const dateInput = document.getElementById("lcalendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
@@ -392,21 +407,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
-else if (!isValid) {
-        alert("Please give input before saving!");
+		else if (!isValid) {
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		return isValid;
 }
@@ -454,8 +471,8 @@ else if (!isValid) {
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "calendar">Date:</label>
-                    <input type="datetime-local" name="Date"  id="calendar" />
+				<label for = "lcalendar">Date:</label>
+                    <input type="datetime-local" name="Date"  id="lcalendar" />
                 </h4>
                 <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
                     <select  name = "Shift">
@@ -484,16 +501,16 @@ else if (!isValid) {
                         <td>Lip ring & spring seat assembly</td>
                         <td>6 To 7 bar</td>
                         <td>Analogue pressure indicator</td>                        
-						<td><input type="number" name="VP_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="VP_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Lip ring & spring seat assembly_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Lip ring & spring seat assembly_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Vibratory Bowl</td>
                         <td>Controller bowl feeder - 075% Controller Linear feeder - 035%</td>
                         <td>Visual</td>                      
-						<td><input type="number" name="LT_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Vibratory Bowl_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Vibratory Bowl_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>
@@ -514,41 +531,40 @@ else if (!isValid) {
                         <td>Spray of interflon spray to the lip ring</td>
                         <td>Uniform spray of interflon to lip ring</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Spray of interflon spray to the lip ring_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Spray of interflon spray to the lip ring_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Assembly of Lip ring with  threaded ferrule assembly</td>
                         <td>Presence of  Lip Ring with correct orientation to Threaded Ferrule Assembly</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics2_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics2_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Assembly of Lip ring with  threaded ferrule assembly_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Assembly of Lip ring with  threaded ferrule assembly_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Assembly of Spring Seat  into threaded ferrule assembly</td>
                         <td>Presence of  Spring Seat & Threaded Ferrule Assembly</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics3_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics3_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Assembly of Spring Seat  into threaded ferrule assembly_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Assembly of Spring Seat  into threaded ferrule assembly_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Apperance </td>
-                        <td>Visual Defect not allowed 
-As per Defect catalouge</td>
+                        <td>Visual Defect not allowed As per Defect catalouge</td>
                         <td>Visual</td>                
-						<td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+						<td><select name = "Visual Defect not allowed As per Defect catalouge_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Visual Defect not allowed As per Defect catalouge_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Assembly of lip ring & spring seat</td>
                         <td>Gap between lip ring & spring seat assembly not allowed</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Assembly of lip ring & spring seat_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Assembly of lip ring & spring seat_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
 					
                 </table>
@@ -572,8 +588,12 @@ As per Defect catalouge</td>
                 <div class="actions">
                   <button class="save"  onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Sved into Excel!</span>
+					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
+					</div>
+					
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>

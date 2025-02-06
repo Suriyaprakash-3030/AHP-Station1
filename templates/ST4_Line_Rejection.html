@@ -272,6 +272,32 @@
             color: #155724;
             cursor: pointer;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -420,21 +446,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
-else if (!isValid) {
-        alert("Please give input before saving!");
+		else if (!isValid) {
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		return isValid;
 }
@@ -442,7 +470,7 @@ else if (!isValid) {
     </script>
 </head>
 <body>
-<form method="post" action="/ST4_Linesetup" onsubmit="return Validate()" autocomplete="off">
+<form method="post" action="/ST4_Line_Rejection" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -509,13 +537,13 @@ else if (!isValid) {
                         <td>1</td>
                         <td>Laser Marking Improper</td>
                                                 
-						<td><input type="number" name="Cap handle Damage CHD" id="LR_1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Laser Marking Improper" id="LR_1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Laser Marking Shifted</td>
                                               
-						<td><input type="number" name="Cap handle Damage CHD" id="LR_2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Laser Marking Shifted" id="LR_2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>
@@ -533,40 +561,40 @@ else if (!isValid) {
                         <td>1</td>
                         <td>Spring short Length</td>
                         
-                        <td><input type="number" name="Cap handle Damage CHD" id="LR_3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Spring short Length" id="LR_3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Stop Ring Damage/Crack</td>
                         
-                        <td><input type="number" name="Cap handle Damage CHD" id="LR_4" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Stop Ring Damage/Crack" id="LR_4" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Leakage Not Ok(LN3)</td>
                         
-                        <td><input type="number" name="Cap handle Damage CHD" id="LR_5" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Leakage Not Ok(LN3)" id="LR_5" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Cap handle came off</td>
                                         
-						<td><input type="number" name="Cap handle Damage CHD" id="LR_6" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>						
+						<td><input type="number" name="Cap handle came off" id="LR_6" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>						
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Cap handle Pad Printing Missing</td>
-                        <td><input type="number" name="Cap handle Damage CHD" id="LR_7" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Cap handle Pad Printing Missing" id="LR_7" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>6</td>
                         <td>Spring Struck(SS)</td>
-                        <td><input type="number" name="Cap handle Damage CHD" id="LR_8" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Spring Struck(SS)" id="LR_8" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>7</td>
                         <td>Fallen Down Particle (FD3)</td>
-                        <td><input type="number" name="Cap handle Damage CHD" id="LR_9" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Fallen Down Particle (FD3)" id="LR_9" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>
@@ -590,8 +618,12 @@ else if (!isValid) {
                 <div class="actions">
                   <button class="save"  onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Sved into Excel!</span>
+					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
+					</div>
+					
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>

@@ -279,6 +279,32 @@
             color: #155724;
             cursor: pointer;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -389,21 +415,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
-	else if (!isValid) {
-        alert("Please give input before saving!");
+		else if (!isValid) {
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		
 		
@@ -541,6 +569,9 @@
 					
 					</div>
 
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
+					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
 				

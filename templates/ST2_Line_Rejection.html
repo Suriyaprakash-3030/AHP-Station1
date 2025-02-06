@@ -276,6 +276,32 @@
             font-weight: bold;
             color: green;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -300,7 +326,27 @@
                 document.querySelectorAll('select').forEach(select => select.value = 'OK');
             });
         });
-		
+		function calculateResults() {
+    // Get the total count value
+    const totalCount = parseFloat(document.getElementById("TC").value);
+
+    // Loop through the 10 mean count inputs
+    for (let i = 1; i <= 6; i++) {
+        const meanCount = parseFloat(document.getElementById(`LR_${i}`).value);
+        const resultElement = document.getElementById(`result${i}`);
+
+        // Check if both totalCount and meanCount are valid numbers
+        if (!isNaN(totalCount) && !isNaN(meanCount) && meanCount !== 0) {
+            const result = (meanCount/totalCount)*100 ; // Perform the division
+            resultElement.textContent = " " + result.toFixed(2); // Display result
+            //console.log(`Result ${i}: ${result.toFixed(2)}`); // Print result in console
+        } else {
+            resultElement.textContent = ""; // Clear result if invalid input
+          //  console.log(`Result ${i}: Invalid input or division by zero.`); // Log invalid result
+        }
+    }
+}
+
 		function clearForm() {
         document.getElementById("LR_1").value = "";
 		document.getElementById("LR_2").value = "";
@@ -308,12 +354,6 @@
 		document.getElementById("LR_4").value = "";
 		document.getElementById("LR_5").value = "";
 		document.getElementById("LR_6").value = "";		
-		document.getElementById("result1").value = "";
-		document.getElementById("result2").value = "";
-		document.getElementById("result3").value = "";
-		document.getElementById("result4").value = "";
-		document.getElementById("result5").value = "";
-		document.getElementById("result6").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
 		document.getElementById("calendar").value = "";	
@@ -379,9 +419,9 @@
     });
 
     // Validate empty-only fields
-    const emptyFields = ['TC',' remark', ' qa-sign', ' eng-sign'];
+    const emptyFields = ['remark', 'qa-sign', 'eng-sign'];
 
-    emptyFields.forEach((id) => {
+ emptyFields.forEach((id) => {
         const field = document.getElementById(id);
         const value = field.value.trim();
 
@@ -398,60 +438,42 @@
     });
 	
 	
-	 const dateInput = document.getElementById(" calendar");
+	 const dateInput = document.getElementById("calendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-                
+               
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+				 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
-		 
-	else  {
-        alert("Please give input before saving!");
+		else if (!isValid) {
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
-				return isValid;
+		return isValid;
 		
 		}
 		
     </script>
-	<script>
-	function calculateResults() {
-    // Get the total count value
-    const totalCount = parseFloat(document.getElementById("TC").value);
+	
+	
 
-    // Loop through the 10 mean count inputs
-    for (let i = 1; i <= 10; i++) {
-        const meanCount = parseFloat(document.getElementById(`LR_${i}`).value);
-        const resultElement = document.getElementById(`result${i}`);
-
-        // Check if both totalCount and meanCount are valid numbers
-        if (!isNaN(totalCount) && !isNaN(meanCount) && meanCount !== 0) {
-            const result = (meanCount/totalCount)*100 ; // Perform the division
-            resultElement.textContent = " " + result.toFixed(2); // Display result
-            console.log(`Result ${i}: ${result.toFixed(2)}`); // Print result in console
-        } else {
-            resultElement.textContent = ""; // Clear result if invalid input
-            console.log(`Result ${i}: Invalid input or division by zero.`); // Log invalid result
-        }
-    }
-}
-
-	</script>
+	
 </head>
 <body>
 <form method="post" action="/ST2_Line_Rejection" onsubmit="return Validate()" autocomplete="off">
@@ -494,7 +516,7 @@
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = " calendar">Date:</label>
+				<label for = "calendar">Date:</label>
                    <input for = "date" name="Date" type="datetime-local" id="calendar" />
                 </h4>
 				 
@@ -590,6 +612,10 @@
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
+					
+					</div>
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>

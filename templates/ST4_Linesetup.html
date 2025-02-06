@@ -272,6 +272,32 @@
             color: #155724;
             cursor: pointer;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -298,21 +324,29 @@
         });
 		
 			function clearForm() {
-        document.getElementById("VP_1.1").value = "";
-		document.getElementById("VP_1.2").value = "";
-		document.getElementById("LTP_1.1").value = "";
-		document.getElementById("LTP_1.2").value = "";
-		document.getElementById("LS_4.1").value = "";
-		document.getElementById("LS_4.2").value = "";
-		document.getElementById("LS_5.1").value = "";
-		document.getElementById("LS_5.2").value = "";
-		document.getElementById("LS_6.1").value = "";
-		document.getElementById("LS_6.2").value = "";
-		document.getElementById("LS_7.1").value = "";		
-		document.getElementById("LS_7.2").value = "";				
-		document.getElementById("LS_remark").value = "";
-		document.getElementById("LS_qa-sign").value = "";
-		document.getElementById("LS_eng-sign").value = "";
+        document.getElementById("LS1").value = "";
+		document.getElementById("LS2").value = "";
+		document.getElementById("LS3").value = "";
+		document.getElementById("LS4").value = "";
+		document.getElementById("LS5").value = "";
+		document.getElementById("LS6").value = "";
+		document.getElementById("LS7").value = "";
+		document.getElementById("LS8").value = "";
+		document.getElementById("LS9").value = "";
+		document.getElementById("LS10").value = "";
+		document.getElementById("LS11").value = "";
+		document.getElementById("LS12").value = "";
+		document.getElementById("LS13").value = "";
+		document.getElementById("LS14").value = "";
+		document.getElementById("LS15").value = "";
+		document.getElementById("LS16").value = "";
+		document.getElementById("LS17").value = "";
+		document.getElementById("LS18").value = "";
+		document.getElementById("LS19").value = "";
+		document.getElementById("LS20").value = "";		
+		document.getElementById("remark").value = "";
+		document.getElementById("qa-sign").value = "";
+		document.getElementById("eng-sign").value = "";
 		document.getElementById("LS_calendar").value = "";
         
     }
@@ -320,65 +354,107 @@
 		function Validate() {
 		const fields = [
         {
-            id: 'LS_4.1',
+            id: 'LS1',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'VP_1.1',
+            id: 'LS2',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'VP_1.2',
+            id: 'LS3',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LTP_1.1',
+            id: 'LS4',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LTP_1.2',
+            id: 'LS5',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
-        {
-            id: 'LS_4.2',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-        {
-            id: 'LS_5.1',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
 		{
-            id: 'LS_5.2',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS_6.1',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS_6.2',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS_7.1',
-           validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS_7.2',
+            id: 'LS6',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
+		{
+            id: 'LS7',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS8',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS9',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS10',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS11',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS12',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS13',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS14',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS15',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS16',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS17',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS18',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS19',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS20',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+
+		
     ];
 	let isValid = true; // Flag to check if all conditions are met
 
@@ -400,7 +476,7 @@
     });
 
     // Validate empty-only fields
-    const emptyFields = ['LS_remark', 'LS_qa-sign', 'LS_eng-sign'];
+    const emptyFields = ['remark', 'qa-sign', 'eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -428,21 +504,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
-else if (!isValid) {
-        alert("Please give input before saving!");
+		else if (!isValid) {
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		return isValid;
 }
@@ -520,41 +598,41 @@ else if (!isValid) {
                         <td>Main Pressure</td>
                         <td>6 To 7.5 bar</td>
                         <td>Digital Air pressure indicator</td>                        
-						<td><input type="number" name="VP_setup" id = "VP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="VP_Re_Setup" id = "VP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Main Pressure_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Main Pressure_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>ATEQ Test Pressure</td>
                         <td>3 + 0.2 bar</td>
                         <td>ATEQ Unit</td>                      
-						<td><input type="number" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="ATEQ Test Pressure_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="ATEQ Test Pressure_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3</td>
-                        <td>ATEQ Stabilization time: </td>
+                        <td>ATEQ Stabilization time</td>
                         <td>3 secs</td>
                         <td>ATEQ Unit</td>                      
-						<td><input type="number" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="ATEQ Stabilization time_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="ATEQ Stabilization time_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4</td>
-                        <td>ATEQ Testing time: : </td>
+                        <td>ATEQ Testing time</td>
                         <td>5 secs</td>
                         <td>ATEQ Unit</td>                      
-						<td><input type="number" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="ATEQ Testing time_setup" id = "LS7" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="ATEQ Testing time_Re_setup" id = "LS8" style="width: 80px; height: 20px;"></td>
                     </tr><tr>
                         <td>5</td>
-                        <td>Laser Marking: </td>
+                        <td>Laser Marking</td>
                         <td>Speed- 300mm/sec     
 Power- 12%
 Frequency- 20khz</td>
                         <td>Visual</td>                      
-						<td><input type="number" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Laser Marking_setup" id = "LS9" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Laser Marking_Re_setup" id = "LS10" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>
@@ -575,63 +653,62 @@ Frequency- 20khz</td>
                         <td>Stroke checking of the part before placing into leakage test</td>
                         <td>3 times</td>
                         <td>Stroke m/c</td>
-                        <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Stroke checking of the part before placing into leakage test_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Stroke checking of the part before placing into leakage test_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>Leakage Test
-ICL</td>
+                        <td>Leakage Test ICL</td>
                         <td>< 0.5Cm3 /min</td>
                         <td>ATEQ unit</td>
-                        <td><select name = "product-characteristics2_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics2_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Leakage Test ICL_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Leakage Test ICL_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Zero Master</td>
                         <td>< 0.1 Cm3 /min</td>
                         <td>ATEQ unit</td>
-                        <td><select name = "product-characteristics3_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics3_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Zero Master_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Zero Master_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Know Master Leakage </td>
                         <td>< 0.3 Cm3 /min</td>
                         <td>ATEQ unit</td>                
-						<td><input type="text" name="product-characteristics4_setup" id = "LS_4.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="product-characteristics4_Re_setup" id = "LS_4.2" style="width: 80px; height: 20px;"></td>						
+						<td><input type="text" name="Know Master Leakage_setup" id = "LS11" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Know Master Leakage_Re_setup" id = "LS12" style="width: 80px; height: 20px;"></td>						
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Leakage NOK Master</td>
                         <td>> 0.5 Cm3 /min</td>
                         <td>ATEQ unit</td>
-                        <td><input type="text" name="product-characteristics5_setup" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="product-characteristics5_Re_setup" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Leakage NOK Master_setup" id = "LS13" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Leakage NOK Master_Re_setup" id = "LS14" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>6</td>
                         <td>Without Spring Master (stoke test)</td>
                         <td>Red signal will be indicated on the particular station in the display screen</td>
                         <td>Stroke m/c</td>
-                        <td><input type="text" name="product-characteristics5_setup" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="product-characteristics5_Re_setup" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Without Spring Master (stoke test)_setup" id = "LS15" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Without Spring Master (stoke test)_Re_setup" id = "LS16" style="width: 80px; height: 20px;"></td>
                     </tr><tr>
                         <td>7</td>
                         <td>Stop ring reverse assembly Master stoke test</td>
                         <td>Red signal will be indicated on the particular station in the display screen</td>
                         <td>Stroke m/c</td>
-                        <td><input type="text" name="product-characteristics5_setup" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="product-characteristics5_Re_setup" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Stop ring reverse assembly Master stoke test_setup" id = "LS17" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Stop ring reverse assembly Master stoke test_Re_setup" id = "LS18" style="width: 80px; height: 20px;"></td>
                     </tr><tr>
                         <td>8</td>
                         <td>Laser Marking</td>
                         <td>2447 222 126 BOSCH LOGO, XXX(MFD), P</td>
                         <td>Visual</td>
-                        <td><input type="text" name="product-characteristics5_setup" id = "LS_5.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="product-characteristics5_Re_setup" id = "LS_5.2" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Laser Marking2_setup" id = "LS19" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" name="Laser Marking2_Re_setup" id = "LS20" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>
@@ -641,15 +718,15 @@ ICL</td>
                <div class="signatures">
 			  <div class="signature-box">
         <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="LS_remark" class="remark-input">
+        <input type="text" name ="Remark"id="remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="LS_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="LS_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="eng-sign" class="signature-input">
     </div>
 </div>
                 <div class="actions">
@@ -657,6 +734,10 @@ ICL</td>
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
+					</div>
+					
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>

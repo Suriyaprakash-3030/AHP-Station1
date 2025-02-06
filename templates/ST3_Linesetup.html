@@ -272,6 +272,32 @@
             color: #155724;
             cursor: pointer;
         }
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -393,21 +419,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
-else if (!isValid) {
-        alert("Please give input before saving!");
+		else if (!isValid) {
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		return isValid;
 }
@@ -485,24 +513,24 @@ else if (!isValid) {
                         <td>Oil Spray Pressure</td>
                         <td>3 to 6 Bar</td>
                         <td>Pressure Gauge</td>                        
-						<td><input type="number" name="VP_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="VP_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Oil Spray Pressure_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Oil Spray Pressure_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Pressure</td>
                         <td>8 to 8.5 Bar</td>
                         <td>Pressure Gauge</td>                      
-						<td><input type="number" name="LT_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Pressure1_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Pressure1_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3</td>
                         <td>Pressure</td>
                         <td>7.5 to 8 Bar</td>
                         <td>Pressure Gauge</td>                      
-						<td><input type="number" name="LT_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" name="Pressure2_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Pressure2_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>
@@ -523,42 +551,40 @@ else if (!isValid) {
                         <td>Spraying of Oil into cap handle Inner diameter</td>
                         <td>Oil presence in the cap handle</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Oil presence in the cap handle_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Oil presence in the cap handle_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Assembly of Compression Spring into Cap Handle inner diameter</td>
-                        <td>Presence of  Compression Spring into Cap Handle
-
-Presence of compression spring and stem in cap</td>
+                        <td>Presence of  Compression Spring into Cap Handle Presence of compression spring and stem in cap</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics2_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics2_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Presence of  Compression Spring into Cap Handle Presence of compression spring and stem in cap_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Presence of  Compression Spring into Cap Handle Presence of compression spring and stem in cap_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Assembly of Stop ring and Threaded ferrule Assembly</td>
                         <td>Presence of  Stop Ring with correct  orientation into threaded ferrule Assembly</td>
                         <td>Visual</td>
-                        <td><select name = "product-characteristics3_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics3_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Presence of  Stop Ring with correct  orientation into threaded ferrule Assembly_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Presence of  Stop Ring with correct  orientation into threaded ferrule Assembly_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Assembly of Cap Handle and Threaded ferrule Assembly </td>
                         <td>resence of Cap Handle  into threaded ferrule Assembly</td>
                         <td>Visual</td>                
-						<td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>			
+						<td><select name = "resence of Cap Handle  into threaded ferrule Assembly_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "resence of Cap Handle  into threaded ferrule Assembly_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>			
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Threaded ferrule sub assembly clamping</td>
                         <td>Side cylinder clamping to be ensured</td>
                         <td>Visual</td>
-                      <td><select name = "product-characteristics1_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "product-characteristics1_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                      <td><select name = "Side cylinder clamping to be ensured_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        <td><select name = "Side cylinder clamping to be ensured_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
 					
                 </table>
@@ -584,6 +610,10 @@ Presence of compression spring and stem in cap</td>
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
+					</div>
+					
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>

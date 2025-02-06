@@ -34,6 +34,7 @@ excel_files = {
     "ST2_Tool_Monitoring": "templates/Excel/ST2/ST2_Tool_Monitoring.xlsx",
     "ST3_Tool_Monitoring": "templates/Excel/ST3/ST3_Tool_Monitoring.xlsx",
     "ST4_Tool_Monitoring": "templates/Excel/ST4/ST4_Tool_Monitoring.xlsx",
+    "AHP_FI": "templates/Excel/AHP_FI.xlsx",
   
 }
 
@@ -70,6 +71,9 @@ def Station3():
 def Station4():
     return render_template("Station4.html") 
 
+@app.route("/AHP_FI")
+def AHP_FI():
+    return render_template("AHP_FI.html")
     
 @app.route("/ST1_Line_Rejection")
 def ST1_Line_Rejection():

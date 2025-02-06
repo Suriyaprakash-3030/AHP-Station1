@@ -282,7 +282,32 @@
             color: #155724;
             cursor: pointer;
         }
-		
+		.alert1 {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #d95a51;
+            color: #155724;
+            border: 1px solid #e9bfbc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .alert1.show {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+		  .alert1 .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -321,13 +346,10 @@
 		document.getElementById("TM_10T").value = "";
 		document.getElementById("TM_11T").value = "";
 		document.getElementById("TM_12T").value = "";
-		document.getElementById("TM_13T").value = "";
-		document.getElementById("TM_14T").value = "";
-		document.getElementById("TM_15T").value = "";
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
-		document.getElementById("calendar").value = "";
+		document.getElementById("lcalendar").value = "";
         
     }
 		
@@ -399,20 +421,6 @@
             id: 'TM_12T',
              validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
-        },{
-            id: 'TM_13T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_14T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'TM_15T',
-             validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
         },
     ];
 	let isValid = true; // Flag to check if all conditions are met
@@ -454,7 +462,7 @@
     });
 	
 	
-	 const dateInput = document.getElementById("calendar");
+	 const dateInput = document.getElementById("lcalendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
@@ -463,21 +471,23 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 if (isValid) {
+			 	 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
 		else if (!isValid) {
-        alert("Please give input before saving!");
+        showAlert1();
     }
 	function showAlert() {
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.add("show");
         }
-
-        function closeAlert() {
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("show");
+		function showAlert1() {
+            const alertBox1 = document.getElementById("alertBox1");
+            alertBox1.classList.add("show");
+			  setTimeout(() => {
+        alertBox1.classList.remove("show");  // Auto-close after 1 second
+      }, 2500);
         }
 		
 		return isValid;
@@ -529,8 +539,8 @@
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="calendar" />
+				<label for = "lcalendar">Date:</label>
+                    <input for = "date" name="Date" type="datetime-local" id="lcalendar" />
                 </h4>
                 <h4 style="font-weight: normal;">Shift:
                     <select name = "Shift">
@@ -564,40 +574,40 @@
                 <td rowspan="3">Top Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF1_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Lip Ring Assembly_TF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Lip Ring Assembly_TF_Check Fixture_Tool_Life_cnt" id="TM_1T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage</td>
-                <td><select  name="VPA_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF2_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
+                <td><select  name="Lip Ring Assembly_TF_Check the Tip of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Lip Ring Assembly_TF_Check the Tip of the Fixture_Tool_Life_cnt" id="TM_2T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_TF3_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Lip Ring Assembly_TF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Lip Ring Assembly_TF_Check Fixture wear out_Tool_Life_cnt" id="TM_3T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
 			 <td rowspan="3">2</td>
                 <td rowspan="3">Bottom Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Lip Ring Assembly_BF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Lip Ring Assembly_BF_Check Fixture_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Lip Ring Assembly_BF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Lip Ring Assembly_BF_Check Fixture_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Lip Ring Assembly_BF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Lip Ring Assembly_BF_Check Fixture wear out_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td rowspan="3">3</td>
@@ -605,40 +615,40 @@
                 <td rowspan="3">Top Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="LTU_TF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF1_Tool_Life_cnt"id="TM_7T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Spring Seat Assembly_TF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Spring Seat Assembly_TF_Check Fixture_Tool_Life_cnt"id="TM_7T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="LTU_TF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF2_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Spring Seat Assembly_TF_Check the Tip of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Spring Seat Assembly_TF_Check the Tip of the Fixture_Tool_Life_cnt"id="TM_8T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="LTU_TF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="LTU_TF3_Tool_Life_cnt" id="TM_9T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Spring Seat Assembly_TF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Spring Seat Assembly_TF_Check Fixture wear out_Tool_Life_cnt" id="TM_9T"style="width: 80px; height: 20px;"></td>
             </tr>
 			<tr>
 			 <td rowspan="3">2</td>
                 <td rowspan="3">Bottom Fixture</td>
                 <td>Check Fixture (Visual)</td>
                 <td>There should be no Cracks or damage.</td>
-                <td><select name="VPA_BF1_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF1_Tool_Life_cnt" id="TM_4T"style="width: 80px; height: 20px;"></td>
+                <td><select name="Spring Seat Assembly_BF_Check Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Spring Seat Assembly_BF_Check Fixture_Tool_Life_cnt" id="TM_10T"style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check the Tip of the Fixture</td>
                 <td>There should be no Tip damage.</td>
-                <td><select name="VPA_BF2_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF2_Tool_Life_cnt"id="TM_5T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Spring Seat Assembly_BF_Check the Tip of the Fixture_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Spring Seat Assembly_BF_Check the Tip of the Fixture_Tool_Life_cnt"id="TM_11T" style="width: 80px; height: 20px;"></td>
             </tr>
             <tr>
                 <td>Check Fixture wear out (Visual)</td>
                 <td>No usage of Wear out Fixture</td>
-                <td><select name="VPA_BF3_Tool_Life_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                <td><input type="number" name="VPA_BF3_Tool_Life_cnt"id="TM_6T" style="width: 80px; height: 20px;"></td>
+                <td><select name="Spring Seat Assembly_BF_Check Fixture wear out_OBS"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="Spring Seat Assembly_BF_Check Fixture wear out_Tool_Life_cnt"id="TM_12T" style="width: 80px; height: 20px;"></td>
             </tr>
             
         </tbody>
@@ -669,8 +679,11 @@
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Saved into Excel!</span>
 					<button class="close-btn" onclick="closeAlert()">×</button>
-					</div>
 					
+					</div>
+					<div class="alert1" id="alertBox1">
+					<span>❌ Warning: Invalid Data!</span>					
+					</div>
                    <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
             </footer>

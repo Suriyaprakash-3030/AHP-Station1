@@ -335,6 +335,7 @@
 		document.getElementById("2").value = "";
 		document.getElementById("3").value = "";
 		document.getElementById("4").value = "";
+		document.getElementById("5").value = "";
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
@@ -362,6 +363,11 @@
         },
 		 {
             id: '4',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: '5',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
@@ -484,7 +490,7 @@
             </div>
             <div class="title">
                 <h1>Secondary Level Maintainance</h1>  
-				<h2>3st station: Cap Handle Assembly</h2>
+				<h2>station 3: Cap Handle Assembly</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
@@ -528,28 +534,28 @@
                         <td>Asssembly of threaded ferrule & stop ring in to cap handle (Pressing Pressure) SFS parts production</td>
 						<td>8 To 8.5 bar</td>
 						<td>Analogue pressure gauge</td>
-                        <td><select name ="Asssembly of threaded ferrule & stop ring in to cap handle (Pressing Pressure) SFS parts production"><option id="4PAB"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
+                        <td><input type="number" name="Asssembly of threaded ferrule & stop ring in to cap handle (Pressing Pressure) SFS parts production" id = "2"class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3P7 C</td>
                         <td>Asssembly of threaded ferrule & stop ring in to cap handle (Pressing Pressure) Plast mould parts production</td>
 						<td>'6.0 To 6.5 bar</td>
 						<td>Analogue pressure gauge</td>
-                        <td><input type="number" name="Asssembly of threaded ferrule & stop ring in to cap handle (Pressing Pressure) Plast mould parts production" id = "2" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Asssembly of threaded ferrule & stop ring in to cap handle (Pressing Pressure) Plast mould parts production" id = "3" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3P7 D</td>
                        <td>Air out of pressure gauges</td>
 						<td>Null</td>
 						<td>By manual</td>
-                        <td><input type="number" name="Air out of pressure gauges" id = "3" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" name="Air out of pressure gauges" id = "4" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3P7 E</td>
                         <td>Threaded Ferrule Sub assembly Fixture Alignment</td>
 						<td>Miss alignment not allowed</td>
-						<td>By Mandre</td>
-                        <td><input type="number" name="Threaded Ferrule Sub assembly Fixture Alignment" id = "4" class="input-field" style="width: 80px; height: 20px;"></td>
+						<td>By Mandrel</td>
+                        <td><input type="number" name="Threaded Ferrule Sub assembly Fixture Alignment" id = "5" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>

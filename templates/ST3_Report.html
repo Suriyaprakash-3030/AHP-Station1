@@ -45,7 +45,7 @@
       totalProduction = parseInt(cells[2].textContent) || 0;
 
       // Sum up failed counts from columns 3 to 13
-      for (let colIndex = 3; colIndex < 13; colIndex++) {
+      for (let colIndex = 3; colIndex < 7; colIndex++) {
         totalFailures += parseInt(cells[colIndex].textContent) || 0;
       }
     }
@@ -83,7 +83,7 @@
     // ================================
     // ✅ STEP 2: LINE CHARTS (Second)
     // ================================
-    for (let colIndex = 2; colIndex < 13; colIndex++) {
+    for (let colIndex = 2; colIndex < 7; colIndex++) {
       let columnName = headers[colIndex].textContent.trim();
       let dataArray = [['Date', 'Count']];
 

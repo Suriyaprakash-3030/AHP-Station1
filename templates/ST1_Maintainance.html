@@ -331,33 +331,40 @@
         });
 		
 		function clearForm() {
-        document.getElementById("4P7A").value = "";
-		document.getElementById("4P7C").value = "";
-		document.getElementById("4P7D").value = "";
-		document.getElementById("M_remark").value = "";
-		document.getElementById("M_qa-sign").value = "";
-		document.getElementById("M_eng-sign").value = "";
-		document.getElementById("M_calendar").value = "";
+        document.getElementById("1").value = "";		
+		document.getElementById("3").value = "";
+		document.getElementById("4").value = "";		
+		document.getElementById("5").value = "";
+		document.getElementById("remark").value = "";
+		document.getElementById("qa-sign").value = "";
+		document.getElementById("eng-sign").value = "";
+		document.getElementById("calendar").value = "";
         
     }
 	
 	
 		function Validate() {
 		const fields = [
-        {
-            id: '4P7A',
-            validate: (value) => value >= 6 && value <= 7.5,
-            errorMessage: "Value must be between 6 and 7.5 BAR",
+      {
+            id: '1',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
         },
-        {
-            id: '4P7C',
-            validate: (value) => value >= 72.51 && value <= 73.51,
-            errorMessage: "Value must be between 72.51 and 73.51 BAR",
+		
+		{
+            id: '3',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
         },
-        {
-            id: '4P7D',
-            validate: (value) => value >= 56.24 && value <= 57.24,
-            errorMessage: "Value must be between 56.24 and 57.24 BAR",
+		{
+            id: '4',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: '5',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
         },
     ];
 	let isValid = true; // Flag to check if all conditions are met
@@ -387,7 +394,7 @@
 });
 
     // Validate empty-only fields
-    const emptyFields = ['M_remark', 'M_qa-sign', 'M_eng-sign'];
+    const emptyFields = ['remark', 'qa-sign', 'eng-sign'];
 
     emptyFields.forEach((id) => {
         const field = document.getElementById(id);
@@ -406,7 +413,7 @@
     });
 	
 	
-	 const dateInput = document.getElementById("M_calendar");
+	 const dateInput = document.getElementById("calendar");
 	
 	if (!dateInput.value) {
 				isValid = false;
@@ -415,7 +422,7 @@
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-			 	 if (isValid) {
+			if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
@@ -486,8 +493,8 @@
         <div class="content">
           <div class="calendar">
                 <h4 style="font-weight: normal;">
-				<label for = "M_calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="M_calendar" />
+				<label for = "calendar">Date:</label>
+                    <input for = "date" name="Date" type="datetime-local" id="calendar" />
                 </h4>
                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
                     <select name = "Shift">
@@ -511,32 +518,39 @@
 						<th>Value</th>                        
                     </tr>
                     <tr>
-                        <td>4 P7 A</td>
-                        <td>Main Pressure</td>
-						<td>6 to 7.5 bar</td>
-						<td>Digital Pressure Gauge Indicator</td>
-                        <td><input type="number" id="4P7A" name = "Main Pressure"class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td>1P7 A</td>
+                        <td>Pressure of vaccum for the valve plate</td>
+						<td>0.95 To 1.50 bar</td>
+						<td>Digital Pressure Gauge </td>
+                        <td><input type="number" id="1" name = "Pressure of vaccum for the valve plate"class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
  					<tr>
-                        <td>4 P7 B</td>
-                        <td>Leakage Test (Fixture Alignment)</td>
-						<td>Miss alignment not allowed</td>
-						<td>By Manual</td>
-                        <td><select name ="Leakage Test (Fixture Alignment)"><option id="4PAB"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
+                        <td>1P7 B</td>
+                        <td>Filling pressure for the leakage</td>
+						<td>1 To 1.2 bar</td>
+						<td>Ateq unit</td>
+                        <td><select name ="Filling pressure for the leakage"><option id="2"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
-                        <td>4 P7 C</td>
-                        <td>TDC Value</td>
-						<td>MAX : 73.51 MIN : 72.51</td>
-						<td>By Manual</td>
-                        <td><input type="number" id="4P7C" name = "TDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td>1P7 C</td>
+                        <td>Fixture Alignment</td>
+						<td>No miss alignment</td>
+						<td>By Mandrel</td>
+                        <td><input type="number" id="3" name = "Fixture Alignment1" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
-                        <td>4 P7 D</td>
-                       <td>BDC Value</td>
-						<td>MAX : 57.24 MIN : 56.24</td>
-						<td>By Manual</td>
-                        <td><input type="number" id="4P7D" name = "BDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td>1P7 D</td>
+                       <td>Fixture Alignment</td>
+						<td>No miss alignment</td>
+						<td>By Mandrel</td>
+                        <td><input type="number" id="4" name = "Fixture Alignment2" class="input-field" style="width: 80px; height: 20px;"></td>
+                    </tr>
+					<tr>
+                        <td>1P7 E</td>
+                       <td>Fixture Alignment</td>
+						<td>No miss alignment</td>
+						<td>By Mandrel</td>
+                        <td><input type="number" id="5" name = "Fixture Alignment3" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>
@@ -549,15 +563,15 @@
               <div class="signatures">
 			  <div class="signature-box">
         <label for="remark">Remark:</label>
-        <input type="text" name ="Remark"id="M_remark" class="remark-input">
+        <input type="text" name ="Remark"id="remark" class="remark-input">
     </div>
     <div class="signature-box">
         <label for="qa-sign">Operator Sign:</label>
-        <input type="text" name="QA-Sign" id="M_qa-sign" class="signature-input">
+        <input type="text" name="QA-Sign" id="qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
         <label for="eng-sign">Engineer Sign:</label>
-        <input type="text" name = "Engg-Sign"id="M_eng-sign" class="signature-input">
+        <input type="text" name = "Engg-Sign"id="eng-sign" class="signature-input">
     </div>
 </div>
 
@@ -565,11 +579,10 @@
 				
                     <button class="save" type = "submit" id="saveButton" onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
-					<span>✅ Success: Data Sved into Excel!</span>
+					<span>✅ Success: Data Saved into Excel!</span>
 					
 					</div>
-
-					<div class="alert1" id="alertBox1">
+<div class="alert1" id="alertBox1">
 					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>

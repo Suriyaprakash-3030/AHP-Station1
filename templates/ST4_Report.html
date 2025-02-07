@@ -45,7 +45,7 @@
       totalProduction = parseInt(cells[2].textContent) || 0;
 
       // Sum up failed counts from columns 3 to 13
-      for (let colIndex = 3; colIndex < 13; colIndex++) {
+      for (let colIndex = 3; colIndex < 12; colIndex++) {
         totalFailures += parseInt(cells[colIndex].textContent) || 0;
       }
     }
@@ -83,7 +83,7 @@
     // ================================
     // ✅ STEP 2: LINE CHARTS (Second)
     // ================================
-    for (let colIndex = 2; colIndex < 13; colIndex++) {
+    for (let colIndex = 2; colIndex < 12; colIndex++) {
       let columnName = headers[colIndex].textContent.trim();
       let dataArray = [['Date', 'Count']];
 
@@ -401,12 +401,12 @@ table th {
 
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Line_Rejection');Line_Rejection();setTimeout(LineRejection, 1000);">Line_Rejection</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Line_Setup');Line_Setup(); ">Line_Setup</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_POKA-YOKE'); P_Y();">POKA-YOKE</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Maintainance'); Maintainance();">Maintainance</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Tool_Monitoring');Tool_Monitoring();">Over All Report</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Line_Rejection');Line_Rejection();setTimeout(LineRejection, 1000);">Line_Rejection</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Line_Setup');Line_Setup(); ">Line_Setup</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST4_POKA-YOKE'); P_Y();">POKA-YOKE</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Maintainance'); Maintainance();">Maintainance</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Tool_Monitoring');Tool_Monitoring();">Over All Report</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>

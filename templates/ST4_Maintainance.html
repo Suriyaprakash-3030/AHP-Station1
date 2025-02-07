@@ -6,7 +6,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Long Cang' rel='stylesheet'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280, initial-scale=1.0">
-    <title>Line_Rejection</title>
+    <title>Secondary Level Maintainance</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
     <style>
@@ -39,8 +39,9 @@
             position: relative;
         }
         .header .title {
+		            
+            flex: 1;		
             text-align: center;
-            flex: 1;
         }
         .header .title h1 {
             color: #black;
@@ -48,6 +49,7 @@
         }
         .header .title h2, .header .title h3 {
             margin: 5px 0;
+			
 			color: #black;
 			font-weight: normal
         }
@@ -64,7 +66,6 @@
             left: 10px;
             width: 200px;
 			height :100px;
-			
         }
 		.vl1 {
 			border-left: 2px double green;
@@ -220,6 +221,12 @@
             right: 10px;
             width: 100px;
         }
+		.logo2 {
+            position: absolute;
+            top: 1px;
+            left: 950px;
+            width: 80px;
+        }
 		.glow-red {
             border: 2px solid red;
             box-shadow: 0 0 10px red;
@@ -272,10 +279,6 @@
             color: #155724;
             cursor: pointer;
         }
-		span {
-            font-weight: bold;
-            color: green;
-        }
 		.alert1 {
             display: none;
             position: fixed;
@@ -326,109 +329,68 @@
                 document.querySelectorAll('select').forEach(select => select.value = 'OK');
             });
         });
-		function calculateResults() {
-    // Get the total count value
-    const totalCount = parseFloat(document.getElementById("TC").value);
-
-    // Loop through the 10 mean count inputs
-    for (let i = 1; i <= 6; i++) {
-        const meanCount = parseFloat(document.getElementById(`LR_${i}`).value);
-        const resultElement = document.getElementById(`result${i}`);
-
-        // Check if both totalCount and meanCount are valid numbers
-        if (!isNaN(totalCount) && !isNaN(meanCount) && meanCount !== 0) {
-            const result = (meanCount/totalCount)*100 ; // Perform the division
-            resultElement.textContent = " " + result.toFixed(2); // Display result
-            //console.log(`Result ${i}: ${result.toFixed(2)}`); // Print result in console
-        } else {
-            resultElement.textContent = ""; // Clear result if invalid input
-          //  console.log(`Result ${i}: Invalid input or division by zero.`); // Log invalid result
-        }
-    }
-}
-
+		
 		function clearForm() {
-		
-		 document.getElementById("TC").value = "";
-    for (let i = 1; i <= 6; i++) {
-        document.getElementById(`LR_${i}`).value = "";
-        document.getElementById(`result${i}`).textContent = ""; // Clear result for each mean count
-    }
-		
-        document.getElementById("LR_1").value = "";
-		document.getElementById("LR_2").value = "";
-		document.getElementById("LR_3").value = "";
-		document.getElementById("LR_4").value = "";
-		document.getElementById("LR_5").value = "";
-		document.getElementById("LR_6").value = "";		
+        document.getElementById("1").value = "";		
+		document.getElementById("3").value = "";
+		document.getElementById("4").value = "";
+		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
-		document.getElementById("calendar").value = "";	
-		document.getElementById("TC").value = "";		
+		document.getElementById("calendar").value = "";
+        
     }
-		
-		
-		
+	
+	
 		function Validate() {
 		const fields = [
-        {
-            id: 'LR_1',
+      {
+            id: '1',
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
-        {
-            id: 'LR_2',
-            validate: (value) => value >= 0 ,
-            errorMessage: "Invalid_Value",
-        },
-        {
-            id: 'LR_3',
-            validate: (value) => value >=  0,
+		 
+		 {
+            id: '3',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LR_4',
-            validate: (value) => value >= 0 ,
+            id: '4',
+            validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
-		{
-            id: 'LR_5',
-            validate: (value) => value >= 0 ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LR_6',
-            validate: (value) => value >= 0 ,
-            errorMessage: "Invalid_Value",
-        },
-		
-		
     ];
-		
-		
-		let isValid = true; // Flag to check if all conditions are met
+	let isValid = true; // Flag to check if all conditions are met
 
     // Validate range-based fields
     fields.forEach(({ id, validate, errorMessage }) => {
-        const field = document.getElementById(id);
-        const value = parseFloat(field.value.trim());
+    const field = document.getElementById(id);
+    const value = field.value.trim();
 
-        if (isNaN(value) || !validate(value)) {
-			 isValid = false;
-            field.classList.remove('glow-green');
-            field.classList.add('glow-red');
-            field.title = errorMessage; // Set tooltip for error message
-        } else {
-            field.classList.remove('glow-red');
-            field.classList.add('glow-green');
-            field.title = ""; // Clear tooltip
-        }
-    });
+    if (value === "") {
+        // If the field is empty, set isValid to false and apply error styling
+        isValid = false;
+        field.classList.remove('glow-green');
+        field.classList.add('glow-red');
+        field.title = "This field cannot be empty"; // Tooltip for empty field
+    } else if (!validate(parseFloat(value))) {
+        // If validation fails but the field is not empty, apply error styling without affecting isValid
+        field.classList.remove('glow-green');
+        field.classList.add('glow-red');
+        field.title = errorMessage; // Tooltip for specific validation error
+    } else {
+        // If valid, apply success styling
+        field.classList.remove('glow-red');
+        field.classList.add('glow-green');
+        field.title = ""; // Clear tooltip
+    }
+});
 
     // Validate empty-only fields
     const emptyFields = ['remark', 'qa-sign', 'eng-sign'];
 
- emptyFields.forEach((id) => {
+    emptyFields.forEach((id) => {
         const field = document.getElementById(id);
         const value = field.value.trim();
 
@@ -450,11 +412,11 @@
 	if (!dateInput.value) {
 				isValid = false;
                 dateInput.classList.add("glow-red"); // Add the red glow effect
-               
+               // alert("Please select a date before saving!"); // Optional: Show an alert
             } else {
                 dateInput.classList.remove("glow-red"); // Remove the red glow effect                
             }
-				 if (isValid) {
+			   if (isValid) {
         showAlert(); // Call the function to display the success message
     }
 	 
@@ -472,18 +434,18 @@
         alertBox1.classList.remove("show");  // Auto-close after 1 second
       }, 2500);
         }
+		
+		
+		
 		return isValid;
-		
-		}
-		
-    </script>
-	
-	
+}
 
+    </script>
 	
 </head>
 <body>
-<form method="post" action="/ST2_Line_Rejection" onsubmit="return Validate()" autocomplete="off">
+	<form method="post" action="/ST4_Maintainance" onsubmit="return Validate()" autocomplete="off">
+    
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -501,21 +463,23 @@
         dateTimeElement.textContent = now.toLocaleString('en-GB', options); // 'en-GB' for 24-hour format
     }, 1000);
 </script>
+
     <div class="container">
         <header class="header">
-		<a href="\Station2">
+		  <a href="\Station4">
 		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
+		   <img src="static\images\maintanance.png" alt="PreBo Logo" class="logo2">
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>
             <div class="doc-info">
-                <p>Doc.No.: PBA/QC/R/06</p>
-                <p>Original Date: 30-10-2019</p>
-                <p>Rev.No.: </p>
-                <p>Rev.Date: </p>
+                <p>Doc.No.: PBA/MTCE/R/02</p>
+                
+                <p>Rev.No.: 04</p>
+                <p>Rev.Date: 02.12.2023</p>
             </div>
             <div class="title">
-                <h1>Line Rejection Datasheet</h1>
-                <h2>2st station: Lip Ring & Spring seat Ass</h2>
+                <h1>Secondary Level Maintainance</h1>  
+				<h2>4st station: Stroke & Leakage Testing</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
@@ -524,20 +488,15 @@
           <div class="calendar">
                 <h4 style="font-weight: normal;">
 				<label for = "calendar">Date:</label>
-                   <input for = "date" name="Date" type="datetime-local" id="calendar" />
+                    <input for = "date" name="Date" type="datetime-local" id="calendar" />
                 </h4>
-				 
-                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
+               <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
                     <select name = "Shift">
                         <option id="LR_S1" value="SHIFT1">SHIFT_1</option>
                         <option id="LR_S2" value="SHIFT2">SHIFT_2</option>
                         <option id="LR_S3" value="SHIFT3">SHIFT_3</option>
                     </select>
                 </h4>
-				<h4 style="font-weight: normal;"><label for = "Total_Count">Production_Quantity:</label>
-                    <input type="number" name="Total Count:" id="TC" oninput="calculateResults()" style="width: 80px; height: 20px;">
-                </h4>
-				
             </div>
 			
 			
@@ -547,52 +506,40 @@
                 <table>
                     <tr>
                         <th>Sr.No</th>
-                        <th>Rejection Type</th>
-                        <th>Count</th> 
-						<th>Percentage</th> 
-						
+                        <th>Parameter</th>
+                        <th>Specification</th>
+						<th>Verification Method</th>
+						<th>Value</th>                        
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Threaded Ferrule Damage</td>
-                        <td><input type="number" name="Threaded Ferrule Damage" id="LR_1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result1"></span></td>
+                        <td>4 P7 A</td>
+                        <td>Main Pressure</td>
+						<td>6 to 7.5 bar</td>
+						<td>Digital Pressure Gauge Indicator</td>
+                        <td><input type="number" name="Main Pressure" id = "1"class="input-field" style="width: 80px; height: 20px;"></td>
+                    </tr>
+ 					<tr>
+                        <td>4 P7 B</td>
+                        <td>Leakage Test (Fixture Alignment)</td>
+						<td>Miss alignment not allowed</td>
+						<td>By Manual</td>
+                        <td><select name ="Leakage Test (Fixture Alignment)" id = "2"><option id="4PAB"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
                     </tr>
 					<tr>
-                        <td>2</td>
-                        <td>Lip Ring Damage</td>
-                        <td><input type="number" name="Lip Ring Damage" id="LR_2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result2"></span></td>
+                        <td>4 P7 C</td>
+                        <td>TDC Value</td>
+						<td>MAX : 73.51 MIN : 72.51</td>
+						<td>By Manual</td>
+                        <td><input type="number" id="3" name = "TDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
-                        <td>3</td>
-                        <td>Lip Ring Orientation Not Ok</td>
-                        <td><input type="number" name="Lip Ring Orientation Not Ok" id="LR_3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result3"></span></td>
-                    </tr>
-					<tr>
-                        <td>4</td>
-                        <td>Spring seat damage</td>
-                        <td><input type="number" name="Spring seat damage" id="LR_4" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result4"></span></td>
+                        <td>4 P7 D</td>
+                       <td>BDC Value</td>
+						<td>MAX : 57.24 MIN : 56.24</td>
+						<td>By Manual</td>
+                        <td><input type="number" id="4" name = "BDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
-					<tr>
-                        <td>5</td>
-                        <td>Spring seat Orientation Not Ok</td>
-                        <td><input type="number" name="Spring seat Orientation Not Ok" id="LR_5" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result5"></span></td>
-                    </tr>
-					
-					<tr>
-                        <td>6</td>
-                        <td>Fallen Down Part FD2</td>
-                        <td><input type="number" name="Fallen Down Part FD2"  id="LR_6" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-						 <td><span id="result6"></span></td>
-                    </tr>
-					
-					
-                    
                 </table>
             </section>
 
@@ -614,24 +561,30 @@
         <input type="text" name = "Engg-Sign"id="eng-sign" class="signature-input">
     </div>
 </div>
+
                 <div class="actions">
-                    <button class="save"  onclick="Validate()" >SAVE</button>
+				
+                    <button class="save" type = "submit" id="saveButton" onclick="Validate()" >SAVE</button>
 					 <div class="alert" id="alertBox">
 					<span>✅ Success: Data Saved into Excel!</span>
-					<button class="close-btn" onclick="closeAlert()">×</button>
 					
 					</div>
-					<div class="alert1" id="alertBox1">
+<div class="alert1" id="alertBox1">
 					<span>❌ Warning: Invalid Data!</span>					
 					</div>
                     <button type="button" class="clear" onclick="clearForm()">CLEAR</button>
                 </div>
+				
             </footer>
 
         </div>
 
         
     </div>
+	
+	
 	</form>
+	
+	
 </body>
 </html>

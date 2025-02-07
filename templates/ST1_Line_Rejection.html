@@ -349,6 +349,13 @@
 }
 		
 		function clearForm() {
+		
+		 document.getElementById("TC").value = "";
+			for (let i = 1; i <= 10; i++) {
+        document.getElementById(`LR_${i}`).value = "";
+        document.getElementById(`result${i}`).textContent = ""; // Clear result for each mean count
+    }
+		
         document.getElementById("LR_1").value = "";
 		document.getElementById("LR_2").value = "";
 		document.getElementById("LR_3").value = "";
@@ -358,7 +365,7 @@
 		document.getElementById("LR_7").value = "";
 		document.getElementById("LR_8").value = "";
 		document.getElementById("LR_9").value = "";
-		document.getElementById("LR_10").value = "";
+		document.getElementById("LR_10").value = "";		  
 		document.getElementById("TC").value = "";	
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";

@@ -8,32 +8,32 @@ app = Flask(__name__)
 
 
 # Define the root path for the Excel files
-station1_excel_path = os.path.join(os.getcwd(), 'templates', 'Excel', 'ST1')
+station1_excel_path = os.path.join(os.getcwd(), 'templates', 'Excel')
 
 
 
 excel_files = {
  
-    "ST1_Maintainance": "templates/Excel/ST1/ST1_Maintainance.xlsx",
-    "ST2_Maintainance": "templates/Excel/ST2/ST2_Maintainance.xlsx",
-    "ST3_Maintainance": "templates/Excel/ST3/ST3_Maintainance.xlsx",
-    "ST4_Maintainance": "templates/Excel/ST4/ST4_Maintainance.xlsx",
-    "ST1_Line_Rejection": "templates/Excel/ST1/ST1_Line_Rejection.xlsx",
-    "ST2_Line_Rejection": "templates/Excel/ST2/ST2_Line_Rejection.xlsx",
-    "ST3_Line_Rejection": "templates/Excel/ST3/ST3_Line_Rejection.xlsx",
-    "ST4_Line_Rejection": "templates/Excel/ST4/ST4_Line_Rejection.xlsx",
-    "ST1_Linesetup": "templates/Excel/ST1/ST1_Line_setup.xlsx",
-    "ST2_Linesetup": "templates/Excel/ST2/ST2_Line_setup.xlsx",
-    "ST3_Linesetup": "templates/Excel/ST3/ST3_Line_setup.xlsx",
-    "ST4_Linesetup": "templates/Excel/ST4/ST4_Line_setup.xlsx",
-    "ST1_Poka_yoke": "templates/Excel/ST1/ST1_POKA-YOKE.xlsx",    
-    "ST2_Poka_yoke": "templates/Excel/ST2/ST2_POKA-YOKE.xlsx",    
-    "ST3_Poka_yoke": "templates/Excel/ST3/ST3_POKA-YOKE.xlsx",    
-    "ST4_Poka_yoke": "templates/Excel/ST4/ST4_POKA-YOKE.xlsx",    
-    "ST1_Tool_Monitoring": "templates/Excel/ST1/ST1_Tool_Monitoring.xlsx",
-    "ST2_Tool_Monitoring": "templates/Excel/ST2/ST2_Tool_Monitoring.xlsx",
-    "ST3_Tool_Monitoring": "templates/Excel/ST3/ST3_Tool_Monitoring.xlsx",
-    "ST4_Tool_Monitoring": "templates/Excel/ST4/ST4_Tool_Monitoring.xlsx",
+    "ST1_Maintainance": "templates/Excel/ST1_Maintainance.xlsx",
+    "ST2_Maintainance": "templates/Excel/ST2_Maintainance.xlsx",
+    "ST3_Maintainance": "templates/Excel/ST3_Maintainance.xlsx",
+    "ST4_Maintainance": "templates/Excel/ST4_Maintainance.xlsx",
+    "ST1_Line_Rejection": "templates/Excel/ST1_Line_Rejection.xlsx",
+    "ST2_Line_Rejection": "templates/Excel/ST2_Line_Rejection.xlsx",
+    "ST3_Line_Rejection": "templates/Excel/ST3_Line_Rejection.xlsx",
+    "ST4_Line_Rejection": "templates/Excel/ST4_Line_Rejection.xlsx",
+    "ST1_Linesetup": "templates/Excel/ST1_Line_setup.xlsx",
+    "ST2_Linesetup": "templates/Excel/ST2_Line_setup.xlsx",
+    "ST3_Linesetup": "templates/Excel/ST3_Line_setup.xlsx",
+    "ST4_Linesetup": "templates/Excel/ST4_Line_setup.xlsx",
+    "ST1_Poka_yoke": "templates/Excel/ST1_POKA-YOKE.xlsx",    
+    "ST2_Poka_yoke": "templates/Excel/ST2_POKA-YOKE.xlsx",    
+    "ST3_Poka_yoke": "templates/Excel/ST3_POKA-YOKE.xlsx",    
+    "ST4_Poka_yoke": "templates/Excel/ST4_POKA-YOKE.xlsx",    
+    "ST1_Tool_Monitoring": "templates/Excel/ST1_Tool_Monitoring.xlsx",
+    "ST2_Tool_Monitoring": "templates/Excel/ST2_Tool_Monitoring.xlsx",
+    "ST3_Tool_Monitoring": "templates/Excel/ST3_Tool_Monitoring.xlsx",
+    "ST4_Tool_Monitoring": "templates/Excel/ST4_Tool_Monitoring.xlsx",
     "AHP_FI": "templates/Excel/AHP_FI.xlsx",
   
 }

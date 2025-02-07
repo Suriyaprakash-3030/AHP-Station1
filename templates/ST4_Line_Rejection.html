@@ -298,6 +298,10 @@
             color: #155724;
             cursor: pointer;
         }
+		span {
+            font-weight: bold;
+            color: green;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -324,6 +328,13 @@
         });
 		
 			function clearForm() {
+			
+			 document.getElementById("TC").value = "";
+    for (let i = 1; i <= 10; i++) {
+        document.getElementById(`LR_${i}`).value = "";
+        document.getElementById(`result${i}`).textContent = ""; // Clear result for each mean count
+    }
+			
         document.getElementById("LR_1").value = "";
 		document.getElementById("LR_2").value = "";
 		document.getElementById("LR_3").value = "";
@@ -468,6 +479,29 @@
 }
 
     </script>
+	<script>
+	function calculateResults() {
+    // Get the total count value
+    const totalCount = parseFloat(document.getElementById("TC").value);
+
+    // Loop through the 10 mean count inputs
+    for (let i = 1; i <= 9; i++) {
+        const meanCount = parseFloat(document.getElementById(`LR_${i}`).value);
+        const resultElement = document.getElementById(`result${i}`);
+
+        // Check if both totalCount and meanCount are valid numbers
+        if (!isNaN(totalCount) && !isNaN(meanCount) && meanCount !== 0) {
+            const result = (meanCount/totalCount)*100 ; // Perform the division
+            resultElement.textContent = " " + result.toFixed(2); // Display result
+            console.log(`Result ${i}: ${result.toFixed(2)}`); // Print result in console
+        } else {
+            resultElement.textContent = ""; // Clear result if invalid input
+            console.log(`Result ${i}: Invalid input or division by zero.`); // Log invalid result
+        }
+    }
+}
+
+	</script>
 </head>
 <body>
 <form method="post" action="/ST4_Line_Rejection" onsubmit="return Validate()" autocomplete="off">
@@ -520,6 +554,9 @@
                         <option value = "SHIFT_3">SHIFT_3</option>
                     </select>
                 </h4>
+				<h4 style="font-weight: normal;"><label for = "Total_Count">Production_Quantity:</label>
+                    <input type="number" name="Total Count:" id="TC" oninput="calculateResults()" style="width: 80px; height: 20px;">
+                </h4>
             </div>
 			
 			
@@ -531,20 +568,22 @@
                         <th>Sr.No</th>
                         <th>Rejection Type</th>
 						<th>Count</th>
-                        
+                        <th>Percentage</th>
                     </tr>
                     <tr>
                         <td>1</td>
                         <td>Laser Marking Improper</td>
                                                 
 						<td><input type="number" name="Laser Marking Improper" id="LR_1" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+						 <td><span id="result1"></span></td>
+				   </tr>
                     <tr>
                         <td>2</td>
                         <td>Laser Marking Shifted</td>
                                               
 						<td><input type="number" name="Laser Marking Shifted" id="LR_2" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+						 <td><span id="result2"></span></td>
+				   </tr>
                 </table>
             </section>
 
@@ -555,47 +594,54 @@
                         <th>Sr.No</th>
                         <th>Rejection Type</th>
 						<th>Count</th>
-                        
+                        <th>Percentage</th>
                     </tr>
                     <tr>
                         <td>1</td>
                         <td>Spring short Length</td>
                         
                         <td><input type="number" name="Spring short Length" id="LR_3" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+						 <td><span id="result3"></span></td>
+				   </tr>
                     <tr>
                         <td>2</td>
                         <td>Stop Ring Damage/Crack</td>
                         
                         <td><input type="number" name="Stop Ring Damage/Crack" id="LR_4" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+                     <td><span id="result4"></span></td>
+					</tr>
                     <tr>
                         <td>3</td>
                         <td>Leakage Not Ok(LN3)</td>
                         
                         <td><input type="number" name="Leakage Not Ok(LN3)" id="LR_5" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+                     <td><span id="result5"></span></td>
+					</tr>
                     <tr>
                         <td>4</td>
                         <td>Cap handle came off</td>
                                         
 						<td><input type="number" name="Cap handle came off" id="LR_6" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>						
-                    </tr>
+ <td><span id="result6"></span></td>                
+				</tr>
                     <tr>
                         <td>5</td>
                         <td>Cap handle Pad Printing Missing</td>
                         <td><input type="number" name="Cap handle Pad Printing Missing" id="LR_7" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+                     <td><span id="result7"></span></td>
+					</tr>
 					<tr>
                         <td>6</td>
                         <td>Spring Struck(SS)</td>
                         <td><input type="number" name="Spring Struck(SS)" id="LR_8" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+                     <td><span id="result8"></span></td>
+					</tr>
 					<tr>
                         <td>7</td>
                         <td>Fallen Down Particle (FD3)</td>
                         <td><input type="number" name="Fallen Down Particle (FD3)" id="LR_9" oninput="calculateResults()" style="width: 80px; height: 20px;"></td>
-                    </tr>
+                     <td><span id="result9"></span></td>
+					</tr>
 					
                 </table>
             </section>

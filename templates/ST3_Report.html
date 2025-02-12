@@ -332,17 +332,43 @@ table th {
 	
 .outer_box {
     background-color: #f1fbfb;
-    width: 650px;
+    max-width: 90%; /* Responsive width */
     border: 2px solid green;
     padding: 20px;
     margin: 20px;
-    
-    /* Move to the right corner */
-    position: absolute; 
-    top: 150px; /* Adjust as needed */
-    right: 180px; /* Moves to the right edge */
-	border-radius: 50px;
+    position: absolute;
+    top: 150px;
+    right: 10px;
+    border-radius: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Spacing between items */
+    justify-content: space-between;
 }
+
+.outer_box label,
+.outer_box input,
+.outer_box button {
+    flex: 1 1 auto; /* Items will grow/shrink to fit */
+    min-width: 150px; /* Ensure inputs/buttons don’t get too small */
+}
+
+.outer_box button {
+    flex: 0 1 30%; /* Ensure buttons don’t take too much space */
+}
+
+@media (max-width: 768px) {
+    .outer_box {
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .outer_box button {
+        width: 100%; /* Buttons take full width on smaller screens */
+    }
+}
+
 
 	 #charts_container {
       display: grid;
@@ -389,7 +415,7 @@ table th {
             <div class="doc-info"></div>
             <div class="title">
                 <h1>Table & Data Analytics</h1>
-                <h2>station 3 - Cap Handle & Threaded Ferrule sub assembly</h2>
+                <h2>STATION3 - Cap Handle & Threaded Ferrule sub assembly</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
@@ -410,19 +436,24 @@ table th {
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>
-<div class = "outer_box">
-   <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" class="form-control">
-     
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" class="form-control">
-      
-       
-    
-        <button class="btn btn-primary " onclick="filterTable();">Filter</button>
-		 <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
-		 <button class="btn btn-secondary" onclick="setTimeout(LineRejection, 1000);">Chart Refresh</button>
-		 </div>
+<div class="outer_box">
+  <div class="form-group">
+    <label for="start_date">Start Date:</label>
+    <input type="date" id="start_date" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="end_date">End Date:</label>
+    <input type="date" id="end_date" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-primary" onclick="filterTable();">Filter</button>
+    <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+    <button class="btn btn-secondary" onclick="setTimeout(LineRejection, 1000);">Chart Refresh</button>
+  </div>
+</div>
+
 		 
 		 
 		 

@@ -3,6 +3,9 @@ import openpyxl
 import pandas as pd
 import os
 import time
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
@@ -37,6 +40,7 @@ excel_files = {
     "AHP_FI": "templates/Excel/AHP_FI.xlsx",
   
 }
+
 
 def save_to_excel(app_name, data):
     file_name = excel_files[app_name]
@@ -216,21 +220,52 @@ def get_excel_data(filename):
         return jsonify({'error': str(e)}), 500
 
 
-@app.route("/<path:app_name>", methods=["POST"])  # Allows slashes in app_name
+def send_email(station_name, failed_params):
+    sender_email = "dmsprebo@gmail.com"  # Replace with your email
+    recipient_emails = ["suriyaprakash3030@gmail.com", "gagan.kumar@prettl.com" , "suriya.prakash@prettl.com"]  # Replace with the recipient's email
+    password = "smjqsoibldztfggk"  # Replace with your email password
+
+    subject = f"Alert: {station_name} - Failed Parameters"
+    body = f"Station {station_name} has the following failed parameters:\n\n"
+    body += "\n".join(f"- {param}" for param in failed_params)
+    body += "\n\nPlease check immediately."
+
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = ", ".join(recipient_emails)  # Join the recipients with commas
+    message["Subject"] = subject
+    message.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender_email, password)
+            server.send_message(message)
+        print(f"Email sent to {', '.join(recipient_emails)} for station {station_name}.")
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+
+@app.route("/<path:app_name>", methods=["POST"])
 def submit(app_name):
-    actual_app_name = os.path.basename(app_name)  # Extracts last part after the final slash
-    
-    print(f"\n---- Processing request for: {actual_app_name} ----")  
+    actual_app_name = os.path.basename(app_name)
+    print(f"\n---- Processing request for: {actual_app_name} ----")
 
     if actual_app_name not in excel_files:
         return "Invalid application", 400
-    
+
     data = request.form.to_dict()
     save_to_excel(actual_app_name, data)  # Pass only the last part
-    
-    print(f"Received data for {actual_app_name}: {data}")  
-    
-    time.sleep(2)    
+    print(f"Received data for {actual_app_name}: {data}")
+
+    # Check for "n_ok" values
+    failed_params = [key for key, value in data.items() if value.lower() == "nok"]
+
+    if failed_params:
+        print(f"Alert: {actual_app_name} has the following failed parameters: {failed_params}")
+        send_email(actual_app_name, failed_params)  # Send email with failed parameters
+
+    time.sleep(2)
     return render_template(f"{app_name}.html")
 
 

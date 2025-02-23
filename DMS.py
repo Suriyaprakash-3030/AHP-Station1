@@ -1,11 +1,14 @@
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, redirect, url_for, jsonify, send_from_directory
 import openpyxl
+import schedule
 import pandas as pd
 import os
 import time
+import threading
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -41,6 +44,22 @@ excel_files = {
   
 }
 
+shift_timings = {
+    "SHIFT_1": (6, 30, 14, 30),
+    "SHIFT_2": (14, 30, 22, 30),   
+    "SHIFT_3": (22, 30, 6, 30),
+}
+
+# Set shift end times (Modify these for testing)
+shift_end_times = {
+    "SHIFT_1": "14:30",  # Change for testing
+    "SHIFT_2": "22:30",  # Change for testing
+    "SHIFT_3": "06:30",  # Change for testing
+}
+
+
+POKA_YOKE_APPS = {"ST1_Poka_yoke", "ST2_Poka_yoke", "ST3_Poka_yoke", "ST4_Poka_yoke"}
+LINE_REJECTION_APPS = {"ST1_Line_Rejection", "ST2_Line_Rejection", "ST3_Line_Rejection", "ST4_Line_Rejection", "AHP_FI"}
 
 def save_to_excel(app_name, data):
     file_name = excel_files[app_name]
@@ -178,6 +197,19 @@ def ST3_Report():
 @app.route("/ST4_Report")
 def ST4_Report():
     return render_template("ST4_Report.html")    
+    
+@app.route("/AHP_REVISION")
+def AHP_REVISION():
+    return render_template("AHP_REVISION.html")      
+
+@app.route("/FI_REPORT")
+def FI_REPORT():
+    return render_template("FI_REPORT.html")      
+
+@app.route('/Excel/<filename>')
+def serve_excel(filename):
+    return send_from_directory('templates/Excel', filename)
+
 
 @app.route('/get_excel_data/<filename>', methods=['GET'])
 def get_excel_data(filename):
@@ -220,12 +252,37 @@ def get_excel_data(filename):
         return jsonify({'error': str(e)}), 500
 
 
-def send_email(station_name, failed_params):
+def PY_send_email(station_name, failed_params):
     sender_email = "dmsprebo@gmail.com"  # Replace with your email
-    recipient_emails = ["suriyaprakash3030@gmail.com", "gagan.kumar@prettl.com" , "suriya.prakash@prettl.com"]  # Replace with the recipient's email
+    recipient_emails = ["shopfloor.prebo01@prettl.com", "basavaraj.hiremath@prettl.com" , "shishir.cn@prettl.com" , "nagaraj.cm@prettl.com"]  # Replace with the recipient's email
     password = "smjqsoibldztfggk"  # Replace with your email password
 
-    subject = f"Alert: {station_name} - Failed Parameters"
+    subject = f"🚨Alert: {station_name} - Failed Parameters🚨"
+    body = f"Station {station_name} has the following failed parameters:\n\n"
+    body += "\n".join(f"- {param}" for param in failed_params)
+    body += "\n\nPlease check immediately."
+
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = ", ".join(recipient_emails)  # Join the recipients with commas
+    message["Subject"] = subject
+    message.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender_email, password)
+            server.send_message(message)
+        print(f"Email sent to {', '.join(recipient_emails)} for station {station_name}.")
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+def LR_send_email(station_name, failed_params):
+    sender_email = "dmsprebo@gmail.com"  # Replace with your email
+    recipient_emails = ["shopfloor.prebo01@prettl.com" , "shishir.cn@prettl.com"]  # Replace with the recipient's email
+    password = "smjqsoibldztfggk"  # Replace with your email password
+
+    subject = f"🚨Alert: {station_name} - Failed Parameters🚨"
     body = f"Station {station_name} has the following failed parameters:\n\n"
     body += "\n".join(f"- {param}" for param in failed_params)
     body += "\n\nPlease check immediately."
@@ -246,6 +303,7 @@ def send_email(station_name, failed_params):
         print(f"Failed to send email: {e}")
 
 
+
 @app.route("/<path:app_name>", methods=["POST"])
 def submit(app_name):
     actual_app_name = os.path.basename(app_name)
@@ -255,19 +313,137 @@ def submit(app_name):
         return "Invalid application", 400
 
     data = request.form.to_dict()
-    save_to_excel(actual_app_name, data)  # Pass only the last part
+    save_to_excel(actual_app_name, data)  # Save data to Excel
     print(f"Received data for {actual_app_name}: {data}")
 
-    # Check for "n_ok" values
-    failed_params = [key for key, value in data.items() if value.lower() == "nok"]
-
-    if failed_params:
-        print(f"Alert: {actual_app_name} has the following failed parameters: {failed_params}")
-        send_email(actual_app_name, failed_params)  # Send email with failed parameters
+    # Call poka-yoke email check only if the application is in POKA_YOKE_APPS
+    if actual_app_name in POKA_YOKE_APPS:
+        check_and_send_poka_yoke_email(actual_app_name, data)
+    elif actual_app_name in LINE_REJECTION_APPS:
+        check_and_send_line_rejection_email(actual_app_name, data)
+        
 
     time.sleep(2)
     return render_template(f"{app_name}.html")
 
+def check_and_send_poka_yoke_email(actual_app_name, data):
+    failed_params = [key for key, value in data.items() if value.lower() == "nok"]
+
+    if failed_params:
+        print(f"Alert: {actual_app_name} has the following failed parameters: {failed_params}")
+        PY_send_email(actual_app_name, failed_params)  # Send email with failed parameters
+
+def check_and_send_line_rejection_email(actual_app_name, data):            
+    failed_params = [key for key, value in list (data.items())[3:-3] if float(value) > 0]
+
+    if failed_params:
+        print(f"Alert: {actual_app_name} has the following failed parameters: {failed_params}")
+        LR_send_email(actual_app_name, failed_params)  # Send email with failed parameters
+        
+
+# ✅ Function to get current shift end time
+def get_shift_end_time():
+    now = datetime.now()
+    for shift, time_str in shift_end_times.items():
+        end_time = datetime.strptime(time_str, "%H:%M").replace(
+            year=now.year, month=now.month, day=now.day
+        )
+        if now < end_time:
+            return end_time
+    return now + timedelta(days=1)  # If no shift matches, move to next day
+
+# ✅ Function to check missing entries
+def check_entries(shift_start, shift_end):
+    missing_entries = []
+
+    for station, file_path in excel_files.items():
+        if not os.path.exists(file_path):
+            print(f"❌ File {file_path} does not exist")
+            missing_entries.append(station)
+            continue
+
+        try:
+            df = pd.read_excel(file_path)
+
+            # Check if "Date" column exists
+            if df.empty or "Date" not in df.columns or df["Date"].dropna().empty:
+                print(f"❌ No valid 'Date' column in {station}")
+                missing_entries.append(station)
+                continue
+
+            # Convert "Date" column to datetime
+            df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+            df = df.dropna(subset=["Date"])  # Drop invalid dates
+
+            if df.empty:
+                print(f"❌ All dates invalid in {station}")
+                missing_entries.append(station)
+                continue
+
+            # 🔹 Filter only entries within shift time
+            shift_entries = df[(df["Date"] >= shift_start) & (df["Date"] <= shift_end)]
+
+            if shift_entries.empty:
+                print(f"🚨 No entries found for {station} during shift {shift_start} to {shift_end}")
+                missing_entries.append(station)
+            else:
+                print(f"✅ Data found for {station}, skipping.")
+
+        except Exception as e:
+            print(f"Error reading {file_path}: {e}")
+            missing_entries.append(station)
+
+    return missing_entries
+
+# ✅ Function to monitor shifts
+def monitor_shifts():
+    while True:
+        shift_end = get_shift_end_time()
+        shift_start = shift_end - timedelta(hours=8)  # Assume 8-hour shift
+
+        sleep_time = (shift_end - datetime.now()).total_seconds()
+        print(f"🕒 Waiting until {shift_end} to check shift entries...")
+        time.sleep(sleep_time)
+
+        missing_entries = check_entries(shift_start, shift_end)
+
+        if missing_entries:
+            send_email(missing_entries, shift_start, shift_end)
+
+# ✅ Start monitoring in a background thread
+def start_monitoring():
+    monitor_thread = threading.Thread(target=monitor_shifts, daemon=True)
+    monitor_thread.start()
+
+
+def send_email(missing_entries, shift_start, shift_end):
+    sender_email = "dmsprebo@gmail.com"
+    recipient_emails = ["suriyaprakash3030@gmail.com", "suriya.prakash@prettl.com"]
+    password = "smjqsoibldztfggk"  # Replace with your email password
+
+    subject = f"🚨 No Entries from {shift_start.strftime('%H:%M')} to {shift_end.strftime('%H:%M')} 🚨"
+    body = f"The following stations have no entries between {shift_start.strftime('%H:%M')} and {shift_end.strftime('%H:%M')}:\n\n" + "\n".join(missing_entries)
+
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = ", ".join(recipient_emails)  # Join the recipients with commas
+    message["Subject"] = subject
+    message.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:  # Replace with your SMTP server
+            server.starttls()
+            server.login(sender_email, password)
+            server.send_message(message)
+            print(f"✅ Email sent successfully to {recipient_emails}")
+    except Exception as e:
+        print(f"❌ Failed to send email: {e}")
+
+
+
+
+
 
 if __name__ == "__main__":
+    start_monitoring()   
     app.run(debug=True, host="0.0.0.0", port=5000)

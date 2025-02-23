@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -37,7 +37,7 @@
       let latestRow = dataRows[dataRows.length - 1];
       let cells = latestRow.querySelectorAll("td");
       totalProduction = parseInt(cells[2].textContent) || 0;
-      for (let colIndex = 3; colIndex < 12; colIndex++) {
+      for (let colIndex = 3; colIndex < 21; colIndex++) {
         totalFailures += parseInt(cells[colIndex].textContent) || 0;
       }
     }
@@ -75,7 +75,7 @@
     // ================================
     let dataArray = [['Date']];
 
-    for (let colIndex = 2; colIndex < 12; colIndex++) {
+    for (let colIndex = 2; colIndex < 21; colIndex++) {
       dataArray[0].push(headers[colIndex].textContent.trim());
     }
 
@@ -92,7 +92,7 @@
         dateMap.set(dateKey, [dateKey]);
       }
 
-      for (let colIndex = 2; colIndex < 12; colIndex++) {
+      for (let colIndex = 2; colIndex < 21; colIndex++) {
         let countValue = parseInt(cells[colIndex].textContent) || 0;
         dateMap.get(dateKey).push(countValue);
       }
@@ -125,7 +125,7 @@
         minValue: 0
       },
       pointSize: 5,
-      colors: colors.slice(0, 12),
+      colors: colors.slice(0, 11),
       chartArea: { width: '75%', height: '70%' }
     };
 
@@ -133,6 +133,7 @@
     chart.draw(data, options);
   }
 </script>
+
 
 
 
@@ -406,14 +407,14 @@ table th {
 </script>
     <div class="container">
         <header class="header">
-		<a href="\Station4">
+		<a href="\Station1">
 		  <img src="static\images\pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo"></a>
 		  <div class="vl1"></div>
 		  <div class="vl2"></div>
             <div class="doc-info"></div>
             <div class="title">
                 <h1>Table & Data Analytics</h1>
-                <h2>station 4 - Stroke & Leakage Test</h2>
+                <h2>station 1: Valve Plate, Spring, Filler Piece & Clamping sleeve assembly</h2>
                 <h3>Product Name/No: AL Hand Primer Assembly/2447.222.126</h3>
             </div>
         </header>
@@ -425,12 +426,7 @@ table th {
 
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Line_Rejection');Line_Rejection();setTimeout(LineRejection, 1000);">Line_Rejection</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Line_Setup');Line_Setup(); ">Line_Setup</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST4_POKA-YOKE'); P_Y();">POKA-YOKE</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Maintainance'); Maintainance();">Maintainance</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST4_Tool_Monitoring');Tool_Monitoring();">Over All Report</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('AHP_FI');AHP_FI();setTimeout(LineRejection, 1000);">Final Inspection</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>
@@ -542,14 +538,14 @@ const startDate = document.getElementById("start_date").value;
 		
 	  
 	  
-function Line_Rejection() {
+function AHP_FI() {
       const headerTitle1 = document.querySelector('.title h1');
       const headerSubtitle1 = document.querySelector('.title h2');
       const headerProduct1 = document.querySelector('.title h3');
       
       // Update content
-      headerTitle1.textContent = "Line Rejection Datasheet";
-      headerSubtitle1.textContent = " STATION4 - Stroke & Leakage Test";
+      headerTitle1.textContent = "Final Inspection Datasheet";
+      headerSubtitle1.textContent = "Hand Primer Assembly";
       headerProduct1.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
 	  
 	    // Handle doc-info element
@@ -577,142 +573,7 @@ function Line_Rejection() {
                 <p>Rev.Date: </p>
   `;
     }
-	function Line_Setup() {
-      const headerTitle2 = document.querySelector('.title h1');
-      const headerSubtitle2 = document.querySelector('.title h2');
-      const headerProduct2 = document.querySelector('.title h3');	  
-	  
-      
-      // Update content
-	  
-      headerTitle2.textContent = "Set Up Approval & Inprocess Inspection Report";
-      headerSubtitle2.textContent = " STATION4 - Stroke & Leakage Test";
-      headerProduct2.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
-	  
-	      // Handle doc-info element
-  let docInfo1 = document.querySelector('.doc-info');
-  
-  // If the doc-info element doesn't exist, create it
-  if (!docInfo1) {
-    docInfo1 = document.createElement('div');
-    docInfo1.classList.add('doc-info');
-    
-    // Append to the header
-    document.querySelector('.header').appendChild(docInfo1);
-  }
-  
-  // Clear previous content if any
-  docInfo1.innerHTML = '';
-  
-  // Add new content with <p> tags
-  docInfo1.innerHTML = `
-    <p>Doc.No.: PBA/QC/R/06</p>
-                <p>Original Date: 30-10-2019</p>
-                <p>Rev.No.: </p>
-                <p>Rev.Date: </p>
-  `;
-	  
-    }
-	function P_Y() {
-      const headerTitle3 = document.querySelector('.title h1');
-      const headerSubtitle3 = document.querySelector('.title h2');
-      const headerProduct3 = document.querySelector('.title h3');
-      
-      // Update content
-      headerTitle3.textContent = "POKA-YOKE Check Sheet";
-     headerSubtitle3.textContent = " STATION4 - Stroke & Leakage Test";
-      headerProduct3.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
-	  
-	      // Handle doc-info element
-  let docInfo1 = document.querySelector('.doc-info');
-  
-  // If the doc-info element doesn't exist, create it
-  if (!docInfo1) {
-    docInfo1 = document.createElement('div');
-    docInfo1.classList.add('doc-info');
-    
-    // Append to the header
-    document.querySelector('.header').appendChild(docInfo1);
-  }
-  
-  // Clear previous content if any
-  docInfo1.innerHTML = '';
-  
-  // Add new content with <p> tags
-  docInfo1.innerHTML = `
-<p>Doc.No.: PBA/QC/R/16</p>                
-                <p>Dated:30.10.2019</p>
-				 <p>Rev.No: 02</p>
-                <p>Rev.Date: 12.10.2023</p>
-  `;
-    }
-	function Tool_Monitoring() {
-      const headerTitle4 = document.querySelector('.title h1');
-      const headerSubtitle4 = document.querySelector('.title h2');
-      const headerProduct4 = document.querySelector('.title h3');
-      
-      // Update content
-      headerTitle4.textContent = "Tool Life Monitoring Sheet";
-      headerSubtitle4.textContent = " STATION4 - Stroke & Leakage Test";
-      headerProduct4.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
-	  
-	      // Handle doc-info element
-  let docInfo1 = document.querySelector('.doc-info');
-  
-  // If the doc-info element doesn't exist, create it
-  if (!docInfo1) {
-    docInfo1 = document.createElement('div');
-    docInfo1.classList.add('doc-info');
-    
-    // Append to the header
-    document.querySelector('.header').appendChild(docInfo1);
-  }
-  
-  // Clear previous content if any
-  docInfo1.innerHTML = '';
-  
-  // Add new content with <p> tags
-  docInfo1.innerHTML = `
-     <p>Doc.No.: PBA/QC/R/11</p>
-                
-                <p>Original Date:30.10.2019</p>
-                <p>Rev.No: 01</p>
-				<p>Rev.Date: 01.08.2020</p>
-  `;
-    }
-	function Maintainance() {
-      const headerTitle5 = document.querySelector('.title h1');
-      const headerSubtitle5 = document.querySelector('.title h2');
-      const headerProduct5 = document.querySelector('.title h3');
-      
-      // Update content
-      headerTitle5.textContent = "Secondary Level Maintainance";
-     headerSubtitle5.textContent = " STATION4 - Stroke & Leakage Test";
-      headerProduct5.textContent = "Product Name/No: AL Hand Primer Assembly/2447.222.126";
-	  
-	      // Handle doc-info element
-  let docInfo1 = document.querySelector('.doc-info');
-  
-  // If the doc-info element doesn't exist, create it
-  if (!docInfo1) {
-    docInfo1 = document.createElement('div');
-    docInfo1.classList.add('doc-info');
-    
-    // Append to the header
-    document.querySelector('.header').appendChild(docInfo1);
-  }
-  
-  // Clear previous content if any
-  docInfo1.innerHTML = '';
-  
-  // Add new content with <p> tags
-  docInfo1.innerHTML = `
-<p>Doc.No.: PBA/MTCE/R/02</p>
-                
-                <p>Rev.No.: 04</p>
-                <p>Rev.Date: 02.12.2023</p>
-  `;
-    }
+	
 	
 </script>
 <style>

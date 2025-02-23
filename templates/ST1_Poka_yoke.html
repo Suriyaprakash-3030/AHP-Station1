@@ -361,15 +361,7 @@
         }
     });
 	
-	const dateInput = document.getElementById("PY_calendar");
-	
-	if (!dateInput.value) {
-				isValid = false;
-                dateInput.classList.add("glow-red"); // Add the red glow effect
-                
-            } else {
-                dateInput.classList.remove("glow-red"); // Remove the red glow effect                
-            }
+	 
 				 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
@@ -393,7 +385,7 @@
     </script>
 </head>
 <body>
-<form method="post" action="/ST1_Poka_yoke" onsubmit="return Validate()" autocomplete="off">
+<form method="post" action="/ST1_Poka_yoke" onsubmit="return (Validate() && setHiddenFields() )" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -422,7 +414,7 @@
                 <p>Doc.No.: PBA/QC/R/16</p>
                 
                 <p>Dated:30.10.2019</p>
-                <p>Rev.No&Date: 02/12.10.2023</p>
+                <p>Rev.No&Date: </p>
             </div>
             <div class="title">
                 <h1>POKA-YOKE Check Sheet</h1>  
@@ -432,19 +424,37 @@
         </header>
 
         <div class="content">
-          <div class="calendar">
-                <h4 style="font-weight: normal;">
-				<label for = "PY_calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="PY_calendar" />
-                </h4>
-                <h4 style="font-weight: normal;"><label for = "shift">Shift:</label>
-                    <select name = "Shift">
-                        <option id="LR_S1" value="SHIFT1">SHIFT_1</option>
-                        <option id="LR_S2" value="SHIFT2">SHIFT_2</option>
-                        <option id="LR_S3" value="SHIFT3">SHIFT_3</option>
-                    </select>
-                </h4>
-            </div>
+          <input type="hidden" name="Date" id="hiddenDate">
+			<input type="hidden" name="Shift" id="hiddenShift">
+			<script>
+  function setHiddenFields() {
+    let now = new Date();
+    let hours = now.getHours();
+    let shift = "";
+
+       // Determine shift based on local time
+    if ((hours === 6 && minutes >= 30) || (hours > 6 && hours < 14) || (hours === 14 && minutes < 30)) {
+    shift = "SHIFT_1";
+} else if ((hours === 14 && minutes >= 30) || (hours > 14 && hours < 22) || (hours === 22 && minutes < 30)) {
+    shift = "SHIFT_2";
+} else {
+    shift = "SHIFT_3";
+}
+
+    // Format date-time in YYYY-MM-DDTHH:MM format (without timezone conversion)
+    let year = now.getFullYear();
+    let month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    let day = String(now.getDate()).padStart(2, '0');
+    let hoursLocal = String(now.getHours()).padStart(2, '0');
+    let minutes = String(now.getMinutes()).padStart(2, '0');
+    let localDateTime = `${year}-${month}-${day}T${hoursLocal}:${minutes}`;
+
+    // Set hidden input values
+    document.getElementById("hiddenDate").value = localDateTime;
+    document.getElementById("hiddenShift").value = shift;
+}
+
+</script>
 			
 			
 

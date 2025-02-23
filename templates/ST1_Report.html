@@ -14,59 +14,49 @@
   google.charts.setOnLoadCallback(LineRejection);
 
   function LineRejection() {
-    let table = document.querySelector(".table"); // Ensure the table has class "table"
-
-    if (!table) return; // Stop if the table is not found
-
+    let table = document.querySelector(".table");
+    if (!table) return;
     let rows = table.querySelectorAll("tr");
+    if (rows.length < 2) return;
 
-    if (rows.length < 2) return; // Ensure at least one data row
-
-    let headers = rows[0].querySelectorAll("th"); // Get column headers
-    let dataRows = Array.from(rows).slice(1); // Skip header row
+    let headers = rows[0].querySelectorAll("th");
+    let dataRows = Array.from(rows).slice(1);
 
     let container = document.getElementById("charts_container");
-    container.innerHTML = ""; // Clear existing charts before redrawing
+    container.innerHTML = "";
 
     let colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF', '#33FFF1', '#000000', '#FF3333', '#33A1FF', '#B833FF'];
 
     // ================================
-    // ✅ STEP 1: PRODUCTION GAUGE CHART (First)
+    // ✅ STEP 1: PRODUCTION GAUGE CHART
     // ================================
     let totalProduction = 0;
     let totalFailures = 0;
 
-    // Get the latest row (latest data)
     if (dataRows.length > 0) {
       let latestRow = dataRows[dataRows.length - 1];
       let cells = latestRow.querySelectorAll("td");
-
-      // Get total production from column 2
       totalProduction = parseInt(cells[2].textContent) || 0;
-
-      // Sum up failed counts from columns 3 to 13
       for (let colIndex = 3; colIndex < 13; colIndex++) {
         totalFailures += parseInt(cells[colIndex].textContent) || 0;
       }
     }
 
-    // Calculate production percentage
     let productionPercentage = totalProduction > 0
       ? ((totalProduction - totalFailures) / totalProduction) * 100
       : 0;
 
-    // Create Gauge Chart container **FIRST**
     let gaugeDiv = document.createElement("div");
     gaugeDiv.id = "gauge_chart";
     gaugeDiv.style.width = "400px";
     gaugeDiv.style.height = "300px";
     gaugeDiv.style.display = "inline-block";
     gaugeDiv.style.margin = "10px";
-    container.appendChild(gaugeDiv); // Append first
+    container.appendChild(gaugeDiv);
 
     let gaugeData = google.visualization.arrayToDataTable([
       ['Label', 'Value'],
-      ['Productivity', productionPercentage] // Dynamically set value
+      ['Productivity', productionPercentage]
     ]);
 
     let gaugeOptions = {
@@ -81,60 +71,70 @@
     gaugeChart.draw(gaugeData, gaugeOptions);
 
     // ================================
-    // ✅ STEP 2: LINE CHARTS (Second)
+    // ✅ STEP 2: COMBINED LINE CHART WITH ZOOM & SHIFT SPLIT
     // ================================
+    let dataArray = [['Date']];
+
     for (let colIndex = 2; colIndex < 13; colIndex++) {
-      let columnName = headers[colIndex].textContent.trim();
-      let dataArray = [['Date', 'Count']];
-
-      // Loop through each row to get values for this column
-      dataRows.forEach(row => {
-        let cells = row.querySelectorAll("td");
-        let dateString = cells[0].textContent.trim(); // Assuming first column is Date
-        let countValue = parseInt(cells[colIndex].textContent) || 0; // Get count for this column
-
-        // Convert date string to JavaScript Date object
-        let dateParts = dateString.split('-'); // Assuming format "YYYY-MM-DD"
-        let dateObj = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
-
-        dataArray.push([dateObj, countValue]);
-      });
-
-      // Create a div for each chart
-      let chartDiv = document.createElement("div");
-      chartDiv.id = "chart_" + colIndex;
-      chartDiv.style.width = "400px";
-      chartDiv.style.height = "300px";
-      chartDiv.style.display = "inline-block";
-      chartDiv.style.margin = "10px";
-      container.appendChild(chartDiv); // Append after gauge chart
-
-      let data = google.visualization.arrayToDataTable(dataArray);
-
-      let options = {
-        title: columnName,
-        width: 400,
-        height: 300,
-        legend: { position: 'none' },
-        hAxis: {
-          title: 'Date',
-          format: 'MMM dd', // Formats date as "Jan 01"
-          gridlines: { count: 4 }
-        },
-        vAxis: {
-          title: 'Count',
-          minValue: 0
-        },
-        pointSize: 5,
-        colors: [colors[(colIndex - 2) % colors.length]], // Assign unique color
-        chartArea: { width: '70%', height: '70%' }
-      };
-
-      let chart = new google.visualization.LineChart(chartDiv);
-      chart.draw(data, options);
+      dataArray[0].push(headers[colIndex].textContent.trim());
     }
+
+    let dateMap = new Map();
+
+    dataRows.forEach(row => {
+      let cells = row.querySelectorAll("td");
+      let dateString = cells[0].textContent.trim();
+      let shift = cells[1].textContent.trim(); // Assuming shift info is in second column
+      let dateParts = dateString.split('-');
+      let dateKey = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]} (${shift})`;
+      
+      if (!dateMap.has(dateKey)) {
+        dateMap.set(dateKey, [dateKey]);
+      }
+
+      for (let colIndex = 2; colIndex < 13; colIndex++) {
+        let countValue = parseInt(cells[colIndex].textContent) || 0;
+        dateMap.get(dateKey).push(countValue);
+      }
+    });
+
+    let sortedDates = Array.from(dateMap.keys()).sort();
+    sortedDates.forEach(date => dataArray.push(dateMap.get(date)));
+
+    let chartDiv = document.createElement("div");
+    chartDiv.id = "combined_chart";
+    chartDiv.style.width = "800px";
+    chartDiv.style.height = "500px";
+    chartDiv.style.margin = "20px auto";
+    container.appendChild(chartDiv);
+
+    let data = google.visualization.arrayToDataTable(dataArray);
+
+    let options = {
+      title: 'Data Flow Chart',
+      width: 800,
+      height: 500,
+      legend: { position: 'bottom' },
+      explorer: { actions: ['dragToZoom', 'rightClickToReset'] }, // Enable zoom feature
+      hAxis: {
+        title: 'Date & Shift',
+        gridlines: { count: 6 }
+      },
+      vAxis: {
+        title: 'Count',
+        minValue: 0
+      },
+      pointSize: 5,
+      colors: colors.slice(0, 11),
+      chartArea: { width: '75%', height: '70%' }
+    };
+
+    let chart = new google.visualization.LineChart(chartDiv);
+    chart.draw(data, options);
   }
 </script>
+
+
 
 
 
@@ -431,7 +431,7 @@ table th {
   <a href="javascript:void(0)" onclick="loadExcelData('ST1_POKA-YOKE'); P_Y();">POKA-YOKE</a>
   <a href="javascript:void(0)" onclick="loadExcelData('ST1_Maintainance'); Maintainance();">Maintainance</a>
   <a href="javascript:void(0)" onclick="loadExcelData('ST1_Tool_Monitoring');Tool_Monitoring();">Tool_Monitoring</a>
-  <a href="javascript:void(0)" onclick="loadExcelData('ST1_Tool_Monitoring');Tool_Monitoring();">Over All Report</a>
+  <a href="javascript:void(0)" onclick="loadExcelData('AHP_FI');AHP_FI();">Final Inspection</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Select_Table</span>

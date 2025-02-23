@@ -337,6 +337,9 @@
         document.getElementById("TM_1T").value = "";
 		document.getElementById("TM_2T").value = "";
 		document.getElementById("TM_3T").value = "";
+		document.getElementById("TM_4T").value = "";
+		document.getElementById("TM_5T").value = "";
+		document.getElementById("TM_6T").value = "";
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
@@ -368,7 +371,21 @@
             validate: (value) => value >= 0  ,
             errorMessage: "Invalid_Value",
         },
-		
+		{
+            id: 'TM_4T',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_5T',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'TM_6T',
+            validate: (value) => value >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
     ];
 	let isValid = true; // Flag to check if all conditions are met
 
@@ -409,15 +426,7 @@
     });
 	
 	
-	 const dateInput = document.getElementById("calendar");
 	
-	if (!dateInput.value) {
-				isValid = false;
-                dateInput.classList.add("glow-red"); // Add the red glow effect
-                
-            } else {
-                dateInput.classList.remove("glow-red"); // Remove the red glow effect                
-            }
 			 if (isValid) {
         showAlert(); // Call the function to display the success message
     }
@@ -449,7 +458,7 @@
     </script>
 </head>
 <body>
-<form method="post" action="/ST4_Tool_Monitoring" onsubmit="return Validate()" autocomplete="off">
+<form method="post" action="/ST4_Tool_Monitoring" onsubmit="return (Validate() && setHiddenFields() )" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -488,19 +497,37 @@
         </header>
 
         <div class="content">
-          <div class="calendar">
-                <h4 style="font-weight: normal;">
-				<label for = "calendar">Date:</label>
-                    <input for = "date" name="Date" type="datetime-local" id="calendar" />
-                </h4>
-                <h4 style="font-weight: normal;">Shift:
-                    <select name = "Shift">
-                        <option value="SHIFT1">SHIFT_1</option>
-                        <option value="SHIFT2">SHIFT_2</option>
-                        <option value="SHIFT3">SHIFT_3</option>
-                    </select>
-                </h4>
-            </div>
+         <input type="hidden" name="Date" id="hiddenDate">
+			<input type="hidden" name="Shift" id="hiddenShift">
+			<script>
+  function setHiddenFields() {
+    let now = new Date();
+    let hours = now.getHours();
+    let shift = "";
+
+    // Determine shift based on local time
+    if (hours >= 6 && hours < 14) {
+        shift = "SHIFT_1";
+    } else if (hours >= 14 && hours < 22) {
+        shift = "SHIFT_2";
+    } else {
+        shift = "SHIFT_3";
+    }
+
+    // Format date-time in YYYY-MM-DDTHH:MM format (without timezone conversion)
+    let year = now.getFullYear();
+    let month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    let day = String(now.getDate()).padStart(2, '0');
+    let hoursLocal = String(now.getHours()).padStart(2, '0');
+    let minutes = String(now.getMinutes()).padStart(2, '0');
+    let localDateTime = `${year}-${month}-${day}T${hoursLocal}:${minutes}`;
+
+    // Set hidden input values
+    document.getElementById("hiddenDate").value = localDateTime;
+    document.getElementById("hiddenShift").value = shift;
+}
+
+</script>
 			
 			
 
@@ -539,6 +566,29 @@
                 <td>No usage of Wear Mandrel</td>
                 <td><select name="Check Mandrel wear out_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                 <td><input type="number" name="Check Mandrel wear out_TotalLifeCount" id="TM_3T"style="width: 80px; height: 20px;"></td>
+            </tr>
+			
+			<tr>
+                <td rowspan="3">2</td>
+				 
+                <td rowspan="3">Hand Primer Leakage checking Unit</td>
+                <td rowspan="3">PU Pad</td>
+                <td>Check PU Pad (Visual)</td>
+                <td>There should be no Cracks or damage.</td>
+                <td><select name="Check PU Pad (Visual)_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="There should be no Cracks or damage_TotalLifeCount" id="TM_4T" style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check the Face of the PU Pad</td>
+                <td>There should be no Face damage.</td>
+                <td><select  name="Check the Face of the PU Pad_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="There should be no Face damage_TotalLifeCount" id="TM_5T"style="width: 80px; height: 20px;"></td>
+            </tr>
+            <tr>
+                <td>Check PU Pad wear out (Visual)</td>
+                <td>No usage of Wear out PU Pad</td>
+                <td><select name="Check PU Pad wear out (Visual)_Observation"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                <td><input type="number" name="No usage of Wear out PU Pad_TotalLifeCount" id="TM_6T"style="width: 80px; height: 20px;"></td>
             </tr>
             
         </tbody>

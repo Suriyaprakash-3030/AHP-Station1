@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>AHP Revision History</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Kelly+Slab|Long+Cang" rel="stylesheet">
+
+    <!-- XLSX Library for Reading Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            width: 1280px;
+            min-height: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00a65a;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .header .title {
+            text-align: center;
+            flex: 1;
+        }
+
+        .header .title h1, .header .title h2 {
+            margin: 5px 0;
+            color: black;
+        }
+ .header .logo {
+    position: absolute;
+    top:20px;
+    left: 10px;
+    width: 200px;
+    height :80px;
+  }
+        
+
+        .vl1, .vl2 {
+            border-left: 2px double green;
+            height: 100px;
+            position: absolute;
+            top: 0;
+        }
+
+        .vl1 { left: 200px; margin-left: -3px; }
+        .vl2 { left: 1050px; margin-left: -3px; }
+
+        .date-time {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Date & Time -->
+    <div class="date-time" id="date-time"></div>
+
+    <script>
+        const dateTimeElement = document.getElementById('date-time');
+        setInterval(() => {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: false 
+            };
+            dateTimeElement.textContent = now.toLocaleString('en-GB', options);
+        }, 1000);
+    </script>
+
+    <!-- Container -->
+    <div class="container">
+        <header class="header">
+            <a href="/AhpAllStation">
+                <img src="static/images/pre-bo-cmyk-10.png" alt="PreBo Logo" class="logo">
+            </a>
+            <div class="vl1"></div>
+
+            <div class="title">
+                <h1>AHP REVISION HISTORY</h1>
+                <h2>Setup Approval Revision History</h2>
+				
+				
+            </div>
+        </header>
+
+        <div class="content">
+           
+            <div id="table_container"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchExcelData();
+        });
+
+        function fetchExcelData() {
+            fetch('/Excel/AHP_Revision_Histroy.xlsx')
+                .then(response => response.blob())
+                .then(blob => {
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        let data = new Uint8Array(e.target.result);
+                        let workbook = XLSX.read(data, { type: 'array' });
+                        let sheetName = workbook.SheetNames[0];
+                        let sheet = workbook.Sheets[sheetName];
+                        let jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                        displayTable(jsonData);
+                    };
+                    reader.readAsArrayBuffer(blob);
+                })
+                .catch(error => console.error("Error loading Excel file:", error));
+        }
+
+        function displayTable(data) {
+            let tableContainer = document.getElementById("table_container");
+            let table = document.createElement("table");
+
+            data.forEach((row, rowIndex) => {
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
+                    let td = rowIndex === 0 ? document.createElement("th") : document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+
+            tableContainer.innerHTML = "";
+            tableContainer.appendChild(table);
+        }
+    </script>
+
+</body>
+</html>

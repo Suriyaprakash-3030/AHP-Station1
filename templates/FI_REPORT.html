@@ -35,9 +35,9 @@
 
     if (dataRows.length > 0) {
       let latestRow = dataRows[dataRows.length - 1];
-      let cells = latestRow.querySelectorAll("td");
+      let cells = Array.from(latestRow.querySelectorAll("td")).slice(0, -3);
       totalProduction = parseInt(cells[2].textContent) || 0;
-      for (let colIndex = 3; colIndex < 21; colIndex++) {
+      for (let colIndex = 3; colIndex < cells.length; colIndex++) {
         totalFailures += parseInt(cells[colIndex].textContent) || 0;
       }
     }
@@ -50,8 +50,7 @@
     gaugeDiv.id = "gauge_chart";
     gaugeDiv.style.width = "400px";
     gaugeDiv.style.height = "300px";
-    gaugeDiv.style.display = "inline-block";
-    gaugeDiv.style.margin = "10px";
+    gaugeDiv.style.margin = "10px auto";
     container.appendChild(gaugeDiv);
 
     let gaugeData = google.visualization.arrayToDataTable([
@@ -71,51 +70,65 @@
     gaugeChart.draw(gaugeData, gaugeOptions);
 
     // ================================
-    // ✅ STEP 2: COMBINED LINE CHART WITH ZOOM & SHIFT SPLIT
+    // ✅ STEP 2: LINE CHARTS
     // ================================
-    let dataArray = [['Date']];
+    let totalCountArray = [['Date', 'Total Production']];
+    let defectCountArray = [['Date']];
 
-    for (let colIndex = 2; colIndex < 21; colIndex++) {
-      dataArray[0].push(headers[colIndex].textContent.trim());
+    for (let colIndex = 3; colIndex < 21; colIndex++) {
+      defectCountArray[0].push(headers[colIndex].textContent.trim());
     }
 
-    let dateMap = new Map();
+    let dateMapTotal = new Map();
+    let dateMapDefects = new Map();
 
     dataRows.forEach(row => {
-      let cells = row.querySelectorAll("td");
+      let cells = Array.from(row.querySelectorAll("td")).slice(0, -3);
       let dateString = cells[0].textContent.trim();
-      let shift = cells[1].textContent.trim(); // Assuming shift info is in second column
-      let dateParts = dateString.split('-');
-      let dateKey = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]} (${shift})`;
-      
-      if (!dateMap.has(dateKey)) {
-        dateMap.set(dateKey, [dateKey]);
+      let shift = cells[1].textContent.trim(); 
+      let dateKey = `${dateString} (${shift})`;
+
+      let totalProduction = parseInt(cells[2].textContent) || 0;
+
+      if (!dateMapTotal.has(dateKey)) {
+        dateMapTotal.set(dateKey, [dateKey, totalProduction]);
+        dateMapDefects.set(dateKey, [dateKey]);
       }
 
-      for (let colIndex = 2; colIndex < 21; colIndex++) {
+      for (let colIndex = 3; colIndex < cells.length; colIndex++) {
         let countValue = parseInt(cells[colIndex].textContent) || 0;
-        dateMap.get(dateKey).push(countValue);
+        dateMapDefects.get(dateKey).push(countValue);
       }
     });
 
-    let sortedDates = Array.from(dateMap.keys()).sort();
-    sortedDates.forEach(date => dataArray.push(dateMap.get(date)));
+    let sortedDates = Array.from(dateMapTotal.keys()).sort();
+    sortedDates.forEach(date => {
+      totalCountArray.push(dateMapTotal.get(date));
+      defectCountArray.push(dateMapDefects.get(date));
+    });
 
-    let chartDiv = document.createElement("div");
-    chartDiv.id = "combined_chart";
-    chartDiv.style.width = "800px";
-    chartDiv.style.height = "500px";
-    chartDiv.style.margin = "20px auto";
-    container.appendChild(chartDiv);
+    let totalChartDiv = document.createElement("div");
+    totalChartDiv.id = "total_chart";
+    totalChartDiv.style.width = "800px";
+    totalChartDiv.style.height = "400px";
+    totalChartDiv.style.margin = "20px auto";
+    container.appendChild(totalChartDiv);
 
-    let data = google.visualization.arrayToDataTable(dataArray);
+    let defectChartDiv = document.createElement("div");
+    defectChartDiv.id = "defect_chart";
+    defectChartDiv.style.width = "800px";
+    defectChartDiv.style.height = "400px";
+    defectChartDiv.style.margin = "20px auto";
+    container.appendChild(defectChartDiv);
+
+    let totalData = google.visualization.arrayToDataTable(totalCountArray);
+    let defectData = google.visualization.arrayToDataTable(defectCountArray);
 
     let options = {
-      title: 'Data Flow Chart',
       width: 800,
-      height: 500,
+      height: 400,
       legend: { position: 'bottom' },
-      explorer: { actions: ['dragToZoom', 'rightClickToReset'] }, // Enable zoom feature
+      explorer: { actions: ['dragToZoom', 'rightClickToReset'] },
       hAxis: {
         title: 'Date & Shift',
         gridlines: { count: 6 }
@@ -125,21 +138,16 @@
         minValue: 0
       },
       pointSize: 5,
-      colors: colors.slice(0, 11),
       chartArea: { width: '75%', height: '70%' }
     };
 
-    let chart = new google.visualization.LineChart(chartDiv);
-    chart.draw(data, options);
+    let totalChart = new google.visualization.LineChart(totalChartDiv);
+    totalChart.draw(totalData, { ...options, title: 'Total Production Count', colors: ['#FF5733'] });
+
+    let defectChart = new google.visualization.LineChart(defectChartDiv);
+    defectChart.draw(defectData, { ...options, title: 'Defect Breakdown', colors: colors.slice(0, defectCountArray[0].length - 1) });
   }
 </script>
-
-
-
-
-
-
-
 
 
 

@@ -206,6 +206,11 @@ def AHP_REVISION():
 def FI_REPORT():
     return render_template("FI_REPORT.html")      
 
+@app.route("/AHP_ESCALATION")
+def AHP_ESCALATION():
+    return render_template("AHP_ESCALATION.html")
+
+
 @app.route('/Excel/<filename>')
 def serve_excel(filename):
     return send_from_directory('templates/Excel', filename)

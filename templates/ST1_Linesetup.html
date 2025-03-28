@@ -352,22 +352,22 @@
         },
 		{
             id: 'VP_1.1',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'VP_1.2',
-            validate: (value) => value >= 0  ,
+           validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LTP_1.1',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LTP_1.2',
-            validate: (value) => value >= 0  ,
+           validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
         {
@@ -470,7 +470,7 @@
     </script>
 </head>
 <body>
-<form method="post" action="/ST1_Linesetup" onsubmit="return (Validate() && setHiddenFields() )" autocomplete="off">
+<form method="post" action="/ST1_Linesetup" onsubmit="return Validate()" autocomplete="off">
     <div class="date-time" id="date-time"></div>
 <script>
     const dateTimeElement = document.getElementById('date-time');
@@ -537,7 +537,7 @@
     document.getElementById("hiddenDate").value = localDateTime;
     document.getElementById("hiddenShift").value = shift;
 }
-
+ window.onload = setHiddenFields;
 </script>
 			
 			
@@ -558,16 +558,16 @@
                         <td>Vacuum pressure</td>
                         <td>0.95 - 1.50 bar</td>
                         <td>Digital Pressure Indicator</td>                        
-						<td><input type="number" name="VP_setup" id = "VP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="VP_Re_Setup" id = "VP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="VP_setup" id = "VP_1.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="VP_Re_Setup" id = "VP_1.2" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Leak Test pressure</td>
                         <td>1.0 + 0.2 bar</td>
                         <td>ATEQ unit</td>                      
-						<td><input type="number" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="LT_setup" id = "LTP_1.1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="LT_Re_setup" id = "LTP_1.2" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>

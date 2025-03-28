@@ -347,25 +347,16 @@
 		const fields = [
       {
             id: '1',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		
 		{
-            id: '3',
-            validate: (value) => value >= 0  ,
+            id: '2',
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
-		{
-            id: '4',
-            validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: '5',
-            validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
+		
     ];
 	let isValid = true; // Flag to check if all conditions are met
 
@@ -532,35 +523,36 @@
                         <td>Pressure of vaccum for the valve plate</td>
 						<td>0.95 To 1.50 bar</td>
 						<td>Digital Pressure Gauge </td>
-                        <td><input type="number" id="1" name = "Pressure of vaccum for the valve plate"class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" id="1" name = "Pressure of vaccum for the valve plate"class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
  					<tr>
                         <td>1P7 B</td>
                         <td>Filling pressure for the leakage</td>
 						<td>1 To 1.2 bar</td>
 						<td>Ateq unit</td>
-                        <td><select name ="Filling pressure for the leakage"><option id="2"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>
+                         <td><input type="number" step="0.01" id="2" name = "Filling pressure for the leakage"class="input-field" style="width: 80px; height: 20px;"></td>
+						
                     </tr>
 					<tr>
                         <td>1P7 C</td>
                         <td>Fixture Alignment</td>
 						<td>No miss alignment</td>
 						<td>By Mandrel</td>
-                        <td><input type="number" id="3" name = "Fixture Alignment1" class="input-field" style="width: 80px; height: 20px;"></td>
+						<td><select name ="Fixture Alignment1"><option id="3"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>                        
                     </tr>
 					<tr>
                         <td>1P7 D</td>
                        <td>Fixture Alignment</td>
 						<td>No miss alignment</td>
 						<td>By Mandrel</td>
-                        <td><input type="number" id="4" name = "Fixture Alignment2" class="input-field" style="width: 80px; height: 20px;"></td>
+						<td><select name ="Fixture Alignment2"><option id="4"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>                      
                     </tr>
 					<tr>
                         <td>1P7 E</td>
                        <td>Fixture Alignment</td>
 						<td>No miss alignment</td>
 						<td>By Mandrel</td>
-                        <td><input type="number" id="5" name = "Fixture Alignment3" class="input-field" style="width: 80px; height: 20px;"></td>
+						<td><select name ="Fixture Alignment3"><option id="5"  value="OK">OK</option><option id="4PAB" value="NOK">NOT_OK</option></select></td>                      
                     </tr>
 					
                 </table>

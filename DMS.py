@@ -282,19 +282,18 @@ def PY_send_email(station_name, failed_params):
     except Exception as e:
         print(f"Failed to send email: {e}")
 
-def LR_send_email(station_name, failed_params):
-    sender_email = "dmsprebo@gmail.com"  # Replace with your email
-    recipient_emails = ["shopfloor.prebo01@prettl.com" , "shishir.cn@prettl.com"]  # Replace with the recipient's email
-    password = "smjqsoibldztfggk"  # Replace with your email password
+def LR_send_email(station_name, failed_params, failure_percentage, recipient_emails):
+    sender_email = "dmsprebo@gmail.com"
+    password = "smjqsoibldztfggk"
 
-    subject = f"🚨Alert: {station_name} - Failed Parameters🚨"
-    body = f"Station {station_name} has the following failed parameters:\n\n"
+    subject = f"🚨Alert: {station_name} - {failure_percentage:.2f}% Failure Rate🚨"
+    body = f"Station {station_name} has the following failed parameters ({failure_percentage:.2f}%):\n\n"
     body += "\n".join(f"- {param}" for param in failed_params)
     body += "\n\nPlease check immediately."
 
     message = MIMEMultipart()
     message["From"] = sender_email
-    message["To"] = ", ".join(recipient_emails)  # Join the recipients with commas
+    message["To"] = ", ".join(recipient_emails)
     message["Subject"] = subject
     message.attach(MIMEText(body, "plain"))
 
@@ -306,6 +305,7 @@ def LR_send_email(station_name, failed_params):
         print(f"Email sent to {', '.join(recipient_emails)} for station {station_name}.")
     except Exception as e:
         print(f"Failed to send email: {e}")
+
 
 
 
@@ -338,12 +338,32 @@ def check_and_send_poka_yoke_email(actual_app_name, data):
         print(f"Alert: {actual_app_name} has the following failed parameters: {failed_params}")
         PY_send_email(actual_app_name, failed_params)  # Send email with failed parameters
 
-def check_and_send_line_rejection_email(actual_app_name, data):            
-    failed_params = [key for key, value in list (data.items())[3:-3] if float(value) > 0]
+def check_and_send_line_rejection_email(actual_app_name, data):
+    total_count = int(data.get('totalCount', 0))
+    failed_params = [key for key, value in list(data.items())[3:-3] if float(value) > 0]
+    failure_count = len(failed_params)
+
+    if total_count > 0:
+        failure_percentage = (failure_count / total_count) * 100
+    else:
+        failure_percentage = 0
+
+    if failure_percentage >= 3:  # Example threshold
+        recipient_emails = ["anurag.khurana@prettl.com", "mahesh.bv@prettl.com", "nagaraj.cm@prettl.com", "shishir.cn@prettl.com", "basavaraj.hiremath@prettl.com", "shopfloor.prebo01@prettl.com"]
+    elif failure_percentage >= 2:
+        recipient_emails = ["mahesh.bv@prettl.com", "nagaraj.cm@prettl.com", "shishir.cn@prettl.com", "basavaraj.hiremath@prettl.com", "shopfloor.prebo01@prettl.com"]
+    elif failure_percentage >= 1.5:
+        recipient_emails = ["nagaraj.cm@prettl.com", "shishir.cn@prettl.com", "basavaraj.hiremath@prettl.com", "shopfloor.prebo01@prettl.com"]    
+    elif failure_percentage >= 1:
+        recipient_emails = ["basavaraj.hiremath@prettl.com", "shopfloor.prebo01@prettl.com"]
+    elif failure_percentage >= 0.75:
+        recipient_emails = ["shopfloor.prebo01@prettl.com"]
+    else:
+        recipient_emails = ["shopfloor.prebo01@prettl.com"]
 
     if failed_params:
-        print(f"Alert: {actual_app_name} has the following failed parameters: {failed_params}")
-        LR_send_email(actual_app_name, failed_params)  # Send email with failed parameters
+        print(f"Alert: {actual_app_name} has the following failed parameters ({failure_percentage:.2f}%): {failed_params}")
+        LR_send_email(actual_app_name, failed_params, failure_percentage, recipient_emails)
         
 
 # ✅ Function to get current shift end time
@@ -423,7 +443,7 @@ def start_monitoring():
 
 def send_email(missing_entries, shift_start, shift_end):
     sender_email = "dmsprebo@gmail.com"
-    recipient_emails = ["suriyaprakash3030@gmail.com", "suriya.prakash@prettl.com"]
+    recipient_emails = ["basavaraj.hiremath@prettl.com"]
     password = "smjqsoibldztfggk"  # Replace with your email password
 
     subject = f"🚨 No Entries from {shift_start.strftime('%H:%M')} to {shift_end.strftime('%H:%M')} 🚨"
@@ -446,9 +466,6 @@ def send_email(missing_entries, shift_start, shift_end):
 
 
 
-
-
-
 if __name__ == "__main__":
     start_monitoring()   
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)

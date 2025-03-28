@@ -355,102 +355,125 @@
 		const fields = [
         {
             id: 'LS1',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS2',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS3',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS4',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS5',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS6',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS7',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS8',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS9',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS10',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS11',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS12',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS13',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS14',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS15',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS16',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS17',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS18',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS19',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS20',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: 'LS21',
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		
+		{
+            id: 'LS22',
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		
+		{
+            id: 'LS23',
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		
+		{
+            id: 'LS24',
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 
@@ -608,32 +631,32 @@
                         <td>Main Pressure</td>
                         <td>6 To 7.5 bar</td>
                         <td>Digital Air pressure indicator</td>                        
-						<td><input type="number" name="Main Pressure_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="Main Pressure_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="Main Pressure_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Main Pressure_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>ATEQ Test Pressure</td>
                         <td>3 + 0.2 bar</td>
                         <td>ATEQ Unit</td>                      
-						<td><input type="number" name="ATEQ Test Pressure_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="ATEQ Test Pressure_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="ATEQ Test Pressure_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="ATEQ Test Pressure_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3</td>
                         <td>ATEQ Stabilization time</td>
                         <td>3 secs</td>
                         <td>ATEQ Unit</td>                      
-						<td><input type="number" name="ATEQ Stabilization time_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="ATEQ Stabilization time_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="ATEQ Stabilization time_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="ATEQ Stabilization time_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4</td>
                         <td>ATEQ Testing time</td>
                         <td>5 secs</td>
                         <td>ATEQ Unit</td>                      
-						<td><input type="number" name="ATEQ Testing time_setup" id = "LS7" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="ATEQ Testing time_Re_setup" id = "LS8" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="ATEQ Testing time_setup" id = "LS7" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="ATEQ Testing time_Re_setup" id = "LS8" style="width: 80px; height: 20px;"></td>
                     </tr><tr>
                         <td>5</td>
                         <td>Laser Marking</td>
@@ -641,8 +664,8 @@
 Power- 12%
 Frequency- 20khz</td>
                         <td>Visual</td>                      
-						<td><input type="number" name="Laser Marking_setup" id = "LS9" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="Laser Marking_Re_setup" id = "LS10" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="Laser Marking_setup" id = "LS9" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Laser Marking_Re_setup" id = "LS10" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>
@@ -663,6 +686,7 @@ Frequency- 20khz</td>
                         <td>Stroke checking of the part before placing into leakage test</td>
                         <td>3 times</td>
                         <td>Stroke m/c</td>
+						
                         <td><select name = "Stroke checking of the part before placing into leakage test_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                         <td><select name = "Stroke checking of the part before placing into leakage test_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
                     </tr>
@@ -671,54 +695,54 @@ Frequency- 20khz</td>
                         <td>Leakage Test ICL</td>
                         <td>< 0.5Cm3 /min</td>
                         <td>ATEQ unit</td>
-                        <td><select name = "Leakage Test ICL_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "Leakage Test ICL_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                    </tr>
+						<td><input type="number" step="0.01" name="Leakage Test ICL_setup" id = "LS21" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Leakage Test ICL_Re_setup" id = "LS22" style="width: 80px; height: 20px;"></td>
+                          </tr>
                     <tr>
                         <td>3</td>
                         <td>Zero Master</td>
                         <td>< 0.1 Cm3 /min</td>
                         <td>ATEQ unit</td>
-                        <td><select name = "Zero Master_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                        <td><select name = "Zero Master_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
-                    </tr>
+						<td><input type="number" step="0.01" name="Zero Master_setup" id = "LS23" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Zero Master_Re_setup" id = "LS24" style="width: 80px; height: 20px;"></td>
+                        </tr>
                     <tr>
                         <td>4</td>
                         <td>Know Master Leakage </td>
                         <td>< 0.3 Cm3 /min</td>
                         <td>ATEQ unit</td>                
-						<td><input type="text" name="Know Master Leakage_setup" id = "LS11" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="Know Master Leakage_Re_setup" id = "LS12" style="width: 80px; height: 20px;"></td>						
+						<td><input type="text" step="0.01" name="Know Master Leakage_setup" id = "LS11" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Know Master Leakage_Re_setup" id = "LS12" style="width: 80px; height: 20px;"></td>						
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Leakage NOK Master</td>
                         <td>> 0.5 Cm3 /min</td>
                         <td>ATEQ unit</td>
-                        <td><input type="text" name="Leakage NOK Master_setup" id = "LS13" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="Leakage NOK Master_Re_setup" id = "LS14" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Leakage NOK Master_setup" id = "LS13" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Leakage NOK Master_Re_setup" id = "LS14" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>6</td>
                         <td>Without Spring Master (stoke test)</td>
                         <td>Red signal will be indicated on the particular station in the display screen</td>
                         <td>Stroke m/c</td>
-                        <td><input type="text" name="Without Spring Master (stoke test)_setup" id = "LS15" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="Without Spring Master (stoke test)_Re_setup" id = "LS16" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Without Spring Master (stoke test)_setup" id = "LS15" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Without Spring Master (stoke test)_Re_setup" id = "LS16" style="width: 80px; height: 20px;"></td>
                     </tr><tr>
                         <td>7</td>
                         <td>Stop ring reverse assembly Master stoke test</td>
                         <td>Red signal will be indicated on the particular station in the display screen</td>
                         <td>Stroke m/c</td>
-                        <td><input type="text" name="Stop ring reverse assembly Master stoke test_setup" id = "LS17" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="Stop ring reverse assembly Master stoke test_Re_setup" id = "LS18" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Stop ring reverse assembly Master stoke test_setup" id = "LS17" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Stop ring reverse assembly Master stoke test_Re_setup" id = "LS18" style="width: 80px; height: 20px;"></td>
                     </tr><tr>
                         <td>8</td>
                         <td>Laser Marking</td>
                         <td>2447 222 126 BOSCH LOGO, XXX(MFD), P</td>
                         <td>Visual</td>
-                        <td><input type="text" name="Laser Marking2_setup" id = "LS19" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" name="Laser Marking2_Re_setup" id = "LS20" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Laser Marking2_setup" id = "LS19" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01" name="Laser Marking2_Re_setup" id = "LS20" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>

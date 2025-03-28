@@ -341,8 +341,44 @@
     }
 		
 				function Validate() {
+				const fields = [
+        {
+            id: '1',
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: '2',
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+		{
+            id: '3',
+            validate: (value) => parseFloat(value) >= 0  ,
+            errorMessage: "Invalid_Value",
+        },
+	
+		
+
+		
+    ];
 				let isValid = true;
-				
+				    // Validate range-based fields
+    fields.forEach(({ id, validate, errorMessage }) => {
+        const field = document.getElementById(id);
+        const value = parseFloat(field.value.trim());
+
+        if (isNaN(value) || !validate(value)) {
+			 isValid = false;
+            field.classList.remove('glow-green');
+            field.classList.add('glow-red');
+            field.title = errorMessage; // Set tooltip for error message
+        } else {
+            field.classList.remove('glow-red');
+            field.classList.add('glow-green');
+            field.title = ""; // Clear tooltip
+        }
+    });
 				const emptyFields = ['PY_remark', 'PY_qa-sign', 'PY_eng-sign'];
 
     emptyFields.forEach((id) => {
@@ -492,21 +528,21 @@
                        <td>Leakage OK master</td>
 						<td> 0.5 cm3/min </td>
 						
-                        <td><select name = "Leakage OK master1"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
+                       <td><input type="number" step="0.01" name="Leakage OK master" id = "1" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4E</td>
                        <td>Leakage NOK master2</td>
 						<td>>0.5cm3/min</td>
 						
-                        <td><select name = "Leakage NOK master2"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
+                     <td><input type="number" step="0.01" name="Leakage NOK master2" id = "2" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4F</td>
                        <td>Zero master</td>
 						<td>0.1 cm3/min</td>
 						
-                        <td><select name = "Zero master"><option value="OK">OK</option><option value="NOK">NOT_OK</option></select></td>
+                      <td><input type="number" step="0.01" name="Zero master" id = "3" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4G</td>

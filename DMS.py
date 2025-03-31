@@ -318,15 +318,36 @@ def submit(app_name):
         return "Invalid application", 400
 
     data = request.form.to_dict()
-    save_to_excel(actual_app_name, data)  # Save data to Excel
-    print(f"Received data for {actual_app_name}: {data}")
 
-    # Call poka-yoke email check only if the application is in POKA_YOKE_APPS
+    # Check if 'Date' is missing or empty, then add current date
+    if not data.get("Date"):
+        data["Date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Check if 'Shift' is missing or empty, then determine shift
+    if not data.get("Shift"):
+        now = datetime.now()
+        hour, minute = now.hour, now.minute
+
+        if (hour == 6 and minute >= 30) or (6 < hour < 14) or (hour == 14 and minute < 30):
+            shift = "SHIFT_1"
+        elif (hour == 14 and minute >= 30) or (14 < hour < 22) or (hour == 22 and minute < 30):
+            shift = "SHIFT_2"
+        else:
+            shift = "SHIFT_3"
+        
+        data["Shift"] = shift
+
+    # Print updated data for debugging
+    print(f"Final Data for {actual_app_name}: {data}")
+
+    # Save to Excel
+    save_to_excel(actual_app_name, data)
+
+    # Email notifications if needed
     if actual_app_name in POKA_YOKE_APPS:
         check_and_send_poka_yoke_email(actual_app_name, data)
     elif actual_app_name in LINE_REJECTION_APPS:
         check_and_send_line_rejection_email(actual_app_name, data)
-        
 
     time.sleep(2)
     return render_template(f"{app_name}.html")

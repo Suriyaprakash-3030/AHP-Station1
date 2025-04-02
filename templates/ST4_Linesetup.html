@@ -338,12 +338,9 @@
 		document.getElementById("LS12").value = "";
 		document.getElementById("LS13").value = "";
 		document.getElementById("LS14").value = "";
-		document.getElementById("LS15").value = "";
-		document.getElementById("LS16").value = "";
-		document.getElementById("LS17").value = "";
-		document.getElementById("LS18").value = "";
 		document.getElementById("LS19").value = "";
-		document.getElementById("LS20").value = "";		
+		document.getElementById("LS120").value = "";
+				
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
 		document.getElementById("eng-sign").value = "";
@@ -424,26 +421,6 @@
             errorMessage: "Invalid_Value",
         },
 		{
-            id: 'LS15',
-            validate: (value) => parseFloat(value) >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS16',
-            validate: (value) => parseFloat(value) >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS17',
-            validate: (value) => parseFloat(value) >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
-            id: 'LS18',
-            validate: (value) => parseFloat(value) >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		{
             id: 'LS19',
             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
@@ -453,6 +430,7 @@
             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
+		
 		{
             id: 'LS21',
             validate: (value) => parseFloat(value) >= 0  ,
@@ -727,15 +705,17 @@ Frequency- 20khz</td>
                         <td>Without Spring Master (stoke test)</td>
                         <td>Red signal will be indicated on the particular station in the display screen</td>
                         <td>Stroke m/c</td>
-                        <td><input type="text" step="0.01" name="Without Spring Master (stoke test)_setup" id = "LS15" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" step="0.01" name="Without Spring Master (stoke test)_Re_setup" id = "LS16" style="width: 80px; height: 20px;"></td>
+						<td><select name = "Without Spring Master (stoke test)_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+						<td><select name = "Without Spring Master (stoke test)_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                       
                     </tr><tr>
                         <td>7</td>
                         <td>Stop ring reverse assembly Master stoke test</td>
                         <td>Red signal will be indicated on the particular station in the display screen</td>
                         <td>Stroke m/c</td>
-                        <td><input type="text" step="0.01" name="Stop ring reverse assembly Master stoke test_setup" id = "LS17" style="width: 80px; height: 20px;"></td>
-                        <td><input type="text" step="0.01" name="Stop ring reverse assembly Master stoke test_Re_setup" id = "LS18" style="width: 80px; height: 20px;"></td>
+						<td><select name = "Stop ring reverse assembly Master stoke test_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+						<td><select name = "Stop ring reverse assembly Master stoke test_Re_setup"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>
+                        
                     </tr><tr>
                         <td>8</td>
                         <td>Laser Marking</td>

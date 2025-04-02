@@ -332,8 +332,6 @@
 		
 		function clearForm() {
         document.getElementById("1").value = "";		
-		document.getElementById("2").value = "";
-		document.getElementById("3").value = "";
 		document.getElementById("4").value = "";
 		document.getElementById("remark").value = "";
 		document.getElementById("qa-sign").value = "";
@@ -347,22 +345,12 @@
 		const fields = [
         {
             id: '1',
-            validate: (value) => value >= 0  ,
+             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
-        },
-		 {
-            id: '2',
-            validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
-		 {
-            id: '3',
-            validate: (value) => value >= 0  ,
-            errorMessage: "Invalid_Value",
-        },
+        },		 
 		 {
             id: '4',
-            validate: (value) => value >= 0  ,
+             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
     ];
@@ -531,28 +519,28 @@
                         <td>Lip ring & spring seat assembly</td>
 						<td>6 To 7 bar</td>
 						<td>Analogue pressure gauge </td>
-                        <td><input type="number" id="1" name = "Lip ring & spring seat assembly"class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" id="1" name = "Lip ring & spring seat assembly"class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
  					<tr>
                         <td>2P7 C</td>
                         <td>Fixture Alignment</td>
 						<td>'No miss alignment</td>
 						<td>By Mandrel</td>
-                        <td><input type="number" id="2" name = "Fixture Alignment1"class="input-field" style="width: 80px; height: 20px;"></td>
+						<td><select name = "Fixture Alignment1"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>                       
                     </tr>
 					<tr>
                         <td>2P7 D</td>
                         <td>Fixture Alignment</td>
 						<td>No miss alignment</td>
 						<td>By Mandrel</td>
-                        <td><input type="number" name = "Fixture Alignment2" id = "3" class="input-field" style="width: 80px; height: 20px;"></td>
+						<td><select name = "Fixture Alignment12"><option value = "OK">OK</option><option value = "NOK">NOT_OK</option></select></td>                        
                     </tr>
 					<tr>
                         <td>2P7 E</td>
                        <td>Vibro m/c Air pressure</td>
 						<td>3 To 4 bar</td>
 						<td>Analogue pressure gauge</td>
-                        <td><input type="number" name="Vibro m/c Air pressure" id = "4" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Vibro m/c Air pressure" id = "4" class="input-field" style="width: 80px; height: 20px;"></td>
                     
 					
                 </table>

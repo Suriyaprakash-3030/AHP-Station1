@@ -341,32 +341,32 @@
 		const fields = [
         {
             id: 'LS1',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS2',
-            validate: (value) => value >= 0  ,
+             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS3',
-            validate: (value) => value >= 0  ,
+             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS4',
-            validate: (value) => value >= 0  ,
+             validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: 'LS5',
-            validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
         {
             id: 'LS6',
-           validate: (value) => value >= 0  ,
+            validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
      
@@ -523,24 +523,24 @@
                         <td>Oil Spray Pressure</td>
                         <td>3 to 6 Bar</td>
                         <td>Pressure Gauge</td>                        
-						<td><input type="number" name="Oil Spray Pressure_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="Oil Spray Pressure_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="Oil Spray Pressure_setup" id = "LS1" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Oil Spray Pressure_Re_Setup" id = "LS2" style="width: 80px; height: 20px;"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Pressure</td>
                         <td>8 to 8.5 Bar</td>
                         <td>Pressure Gauge</td>                      
-						<td><input type="number" name="Pressure1_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="Pressure1_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="Pressure1_setup" id = "LS3" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Pressure1_Re_setup" id = "LS4" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>3</td>
                         <td>Pressure</td>
                         <td>7.5 to 8 Bar</td>
                         <td>Pressure Gauge</td>                      
-						<td><input type="number" name="Pressure2_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
-                        <td><input type="number" name="Pressure2_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
+						<td><input type="number" step="0.01" name="Pressure2_setup" id = "LS5" style="width: 80px; height: 20px;"></td>
+                        <td><input type="number" step="0.01" name="Pressure2_Re_setup" id = "LS6" style="width: 80px; height: 20px;"></td>
                     </tr>
                 </table>
             </section>

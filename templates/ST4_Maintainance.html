@@ -346,18 +346,18 @@
 		const fields = [
       {
             id: '1',
-            validate: (value) => value >= 0  ,
+           validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		 
 		 {
             id: '3',
-            validate: (value) => value >= 0  ,
+           validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
 		{
             id: '4',
-            validate: (value) => value >= 0  ,
+           validate: (value) => parseFloat(value) >= 0  ,
             errorMessage: "Invalid_Value",
         },
     ];
@@ -525,7 +525,7 @@
                         <td>Main Pressure</td>
 						<td>6 to 7.5 bar</td>
 						<td>Digital Pressure Gauge Indicator</td>
-                        <td><input type="number" name="Main Pressure" id = "1"class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01 name="Main "Pressure" id = "1"class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
  					<tr>
                         <td>4 P7 B</td>
@@ -539,14 +539,14 @@
                         <td>TDC Value</td>
 						<td>MAX : 73.51 MIN : 72.51</td>
 						<td>By Manual</td>
-                        <td><input type="number" id="3" name = "TDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01 id="3" name = "TDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					<tr>
                         <td>4 P7 D</td>
                        <td>BDC Value</td>
 						<td>MAX : 57.24 MIN : 56.24</td>
 						<td>By Manual</td>
-                        <td><input type="number" id="4" name = "BDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
+                        <td><input type="text" step="0.01 id="4" name = "BDC Value" class="input-field" style="width: 80px; height: 20px;"></td>
                     </tr>
 					
                 </table>
@@ -562,7 +562,7 @@
         <input type="text" name ="Remark"id="remark" class="remark-input">
     </div>
     <div class="signature-box">
-        <label for="qa-sign">Operator Sign:</label>
+        <label for="qa-sign">QA Sign:</label>
         <input type="text" name="QA-Sign" id="qa-sign" class="signature-input">
     </div>
     <div class="signature-box">
